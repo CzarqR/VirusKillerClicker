@@ -5,18 +5,42 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import com.myniprojects.viruskiller.GameState
 
 import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.screens.menu.MenuViewModel
+import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
 
 
-class GameFragment : Fragment() {
+class GameFragment : Fragment()
+{
+
+    private lateinit var viewModel: GameViewModel
+    private lateinit var binding: FragmentGameBinding
+
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false)
+    ): View?
+    {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_game,
+            container,
+            false
+        )
+
+        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
 }

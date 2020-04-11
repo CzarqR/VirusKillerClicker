@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import com.myniprojects.viruskiller.GameState
 
 import com.myniprojects.viruskiller.R
-import com.myniprojects.viruskiller.screens.menu.MenuViewModel
 import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
 
 

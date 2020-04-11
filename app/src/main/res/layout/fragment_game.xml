@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{gameViewModel.gameState.money.toString()}" />
+                android:text="@{Integer.toString(gameViewModel.gameState.virus.hp)}" />
 
             <TextView
                 android:layout_width="match_parent"

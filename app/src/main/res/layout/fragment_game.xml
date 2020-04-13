@@ -18,10 +18,13 @@
 
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:orientation="horizontal"
-            android:weightSum="3"
+
+            android:weightSum="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -30,19 +33,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{Integer.toString(gameViewModel.gameState.virus.hp)}" />
+                android:gravity="center"
+                android:text="@{gameViewModel.gameState.killedViruses.toString()}" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="@{gameViewModel.gameState.savedLives.toString()}" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{gameViewModel.gameState.killedViruses.toString()}" />
+                android:gravity="center"
+                android:text="@{gameViewModel.gameState.money.toString()}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{gameViewModel.gameState.lvl.toString()}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{@string/xp(gameViewModel.gameState.xp,gameViewModel.gameState.xpToNextLvl)}" />
 
 
         </LinearLayout>
@@ -51,13 +71,48 @@
         <ImageView
             android:layout_width="203dp"
             android:layout_height="222dp"
+            android:layout_marginBottom="32dp"
             android:contentDescription="@string/virus_image"
             android:onClick="@{() -> gameViewModel.virusClick()}"
-            android:src="@android:drawable/presence_busy"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:imageResource="@{gameViewModel.gameState.virus.img}"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{gameViewModel.gameState.virus.hp.toString()}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{gameViewModel.gameState.virus.lvl.toString()}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{gameViewModel.gameState.virus.reward.toString()}" />
+
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

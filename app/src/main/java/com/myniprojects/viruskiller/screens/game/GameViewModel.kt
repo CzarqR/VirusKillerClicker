@@ -21,6 +21,6 @@ class GameViewModel : ViewModel()
 
     fun virusClick()
     {
-        gameState.killedViruses()
+        gameState.attackViruses()
     }
 }

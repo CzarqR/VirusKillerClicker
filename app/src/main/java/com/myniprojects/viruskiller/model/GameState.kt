@@ -22,7 +22,20 @@ class GameState
     val virus: LiveData<Virus>
         get() = _virus
 
-    //endregion
+    private val _lvl = MutableLiveData<Int>()
+    val lvl: LiveData<Int>
+        get() = _lvl
+
+    private val _xp = MutableLiveData<Int>()
+    val xp: LiveData<Int>
+        get() = _xp
+
+    private val _xpToNextLvl = MutableLiveData<Int>()
+    val xpToNextLvl: LiveData<Int>
+        get() = _xpToNextLvl
+
+    private val xpArray = arrayOf(10, 20, 40, 80, 160, 320, 640, 1280, 2480)
+
 
     init
     {
@@ -30,29 +43,42 @@ class GameState
         _money.value = 0
         _killedViruses.value = 0
         _savedLives.value = 0
-        _virus.value = Virus(1)
-        Timber.i(_virus.value.toString())
+        _lvl.value = 0
+        _xp.value = 0
+        _xpToNextLvl.value = xpArray[_lvl.value!!]
+        loadRandomVirus()
 
     }
 
 
-    companion object
+    fun attackViruses()
     {
-        private val virus1 = arrayOf(15, 50)
-        private val virus2 = arrayOf(25, 100)
+        if (_virus.value!!.attackVirus())//virus dead
+        {
+            Timber.i("Dead")
 
-        val viruses = arrayOf(virus1, virus2)
-        val maxLvl = viruses.size
+            _money.value = _money.value!!.plus(_virus.value!!.reward.value!!)
+            _xp.value = _xp.value!!.plus((_virus.value!!.reward.value!!).div(10))
+
+            if (_xp.value!! >= _xpToNextLvl.value!!) //lvl upgrade
+            {
+                Timber.i("New Lvl")
+                _lvl.value = _lvl.value!!.plus(1)
+                _xpToNextLvl.value = xpArray[_lvl.value!!]
+            }
+            _killedViruses.value = _killedViruses.value!!.plus(1)
+
+            loadRandomVirus()
+        }
+        else
+        {
+            Timber.i("Is alive")
+        }
     }
 
-
-
-    fun killedViruses()
+    fun loadRandomVirus()
     {
-        Timber.i("Clicked")
-        _virus.value!!.attackVirus()
-        Timber.i(_virus.value.toString())
-
+        _virus.value = Virus((0.._lvl.value!!).random())
     }
 
 

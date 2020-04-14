@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.myniprojects.viruskiller.R
 import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
+import timber.log.Timber
 
 
 class GameFragment : Fragment()
@@ -37,6 +38,13 @@ class GameFragment : Fragment()
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
         return binding.root
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle)
+    {
+        super.onSaveInstanceState(outState)
+        viewModel.saveGame() //saving when shutting off app
     }
 
 }

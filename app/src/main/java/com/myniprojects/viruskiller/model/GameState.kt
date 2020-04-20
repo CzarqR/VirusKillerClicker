@@ -1,12 +1,14 @@
 package com.myniprojects.viruskiller.model
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.myniprojects.viruskiller.R
 import timber.log.Timber
 
-class GameState
+class GameState(private val context: Context)
 {
     private val _money = MutableLiveData<Int>()
     val money: LiveData<Int>
@@ -24,7 +26,7 @@ class GameState
     val virus: Virus
         get() = _virus
 
-    private lateinit var _bonus: Bonus
+    private var _bonus: Bonus
     val bonus: Bonus
         get() = _bonus
 
@@ -45,16 +47,30 @@ class GameState
 
     init
     {
-        //TODO load saved game state
-        _money.value = 0
-        _killedViruses.value = 0
-        _savedLives.value = 0
-        _lvl.value = 0
-        _xp.value = 0
+        Timber.i("INIT GameState")
+        val gameStateData: GameStateData = loadGame()
+        Timber.i("Load saved game instance: $gameStateData")
+
+        _money.value = gameStateData.money
+        _killedViruses.value = gameStateData.killedViruses
+        _savedLives.value = gameStateData.savedLives
+        _lvl.value = gameStateData.lvl
+        _xp.value = gameStateData.xp
         _xpToNextLvl.value = xpArray[_lvl.value!!]
-        _bonus = Bonus(0, 0, 0, 0, 40, 1, 120, 1F, 2)
+        _bonus = Bonus(
+            gameStateData.bonus_savedLivesMultiplier0,
+            gameStateData.bonus_savedLivesMultiplier1,
+            gameStateData.bonus_savedLivesMultiplier2,
+            gameStateData.bonus_savedLivesMultiplier3,
+            gameStateData.bonus_criticalAttack,
+            gameStateData.bonus_coinsPerMinutes,
+            gameStateData.bonus_storage,
+            gameStateData.bonus_rewardMultiplier,
+            gameStateData.bonus_numbersAttackPerClick
+        )
         _virus = Virus()
         _virus.setNewVirus((0.._lvl.value!!).random().toByte())
+
 
     }
 
@@ -103,19 +119,29 @@ class GameState
 
     fun saveGame()
     {
-        //todo
         val gs = GameStateData(this)
-        Timber.i(gs.toString())
-
+        Timber.i("Saving game. Instance $gs")
         val gson = Gson()
         val jsonString = gson.toJson(gs)
-        Timber.i(jsonString)
 
-        val sType = object : TypeToken<GameStateData>()
-        {}.type
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
+        with(sharedPreferences.edit()) {
 
-        val newGS = gson.fromJson<GameStateData>(jsonString, sType)
-        Timber.i(newGS.toString())
+            putString(context.getString(R.string.game_state_key), jsonString)
+            commit()
+        }
+
+
+    }
+
+    private fun loadGame() : GameStateData
+    {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val jsonString = sharedPreferences.getString(context.getString(R.string.game_state_key), "")
+        val gson = Gson()
+        return gson.fromJson(jsonString, GameStateData::class.java)
+
+
     }
 
 

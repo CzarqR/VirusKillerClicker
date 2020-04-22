@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
 
 android {
     compileSdkVersion 29
@@ -64,5 +66,7 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.27'
 
     implementation 'com.google.code.gson:gson:2.8.6'
+
+
 
 }

@@ -115,13 +115,12 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/butShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:onClick="@{()-> gameViewModel.goToShop()}"
-            android:text="Shop"
+            android:text="@string/shop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>

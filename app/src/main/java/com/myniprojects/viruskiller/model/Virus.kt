@@ -49,6 +49,18 @@ class Virus()
     val img: LiveData<Int>
         get() = _img
 
+    constructor(vD: VirusData):this()
+    {
+        if (vD.lvl >= maxLvl)
+        {
+            throw Exception("Virus lvl is too big")
+        }
+        _lvl.value = vD.lvl
+        _hp.value = vD.hp
+        _reward.value = viruses[vD.lvl.toInt()][1]
+        _img.value = viruses[vD.lvl.toInt()][2]
+        Timber.i("Load new virus from VirusData:  $this")
+    }
 
     fun setNewVirus(virusLvl: Byte)
     {
@@ -61,6 +73,19 @@ class Virus()
         _reward.value = viruses[virusLvl.toInt()][1]
         _img.value = viruses[virusLvl.toInt()][2]
         Timber.i("Set new virus:  $this")
+    }
+
+    fun loadOldVirus(virusLvl: Byte, virusHP: Int)
+    {
+        if (virusLvl >= maxLvl)
+        {
+            throw Exception("Virus lvl is too big")
+        }
+        _lvl.value = virusLvl
+        _hp.value = virusHP
+        _reward.value = viruses[virusLvl.toInt()][1]
+        _img.value = viruses[virusLvl.toInt()][2]
+        Timber.i("Load new virus:  $this")
     }
 
 
@@ -93,4 +118,20 @@ class Virus()
         return "Virus ${_lvl.value} lvl. ${_hp.value} HP. ${_reward.value} reward"
     }
 
+}
+
+data class VirusData(
+    val hp: Int,
+    val lvl: Byte
+)
+{
+    constructor(v: Virus) : this(
+        v.hp.value!!,
+        v.lvl.value!!
+    )
+
+    //todo set default as first virus
+    constructor() : this(
+        3, 0
+    )
 }

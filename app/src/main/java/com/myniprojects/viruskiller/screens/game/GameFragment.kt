@@ -7,9 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import com.google.gson.Gson
 
 import com.myniprojects.viruskiller.R
 import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
+import com.myniprojects.viruskiller.model.Bonuses
+import com.myniprojects.viruskiller.model.BonusesData
+import kotlinx.android.synthetic.main.fragment_game.*
 import timber.log.Timber
 
 
@@ -37,6 +42,20 @@ class GameFragment : Fragment()
 
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
+
+        binding.butShop.setOnClickListener {
+
+            val gson = Gson()
+            val bonusesDataString = gson.toJson(BonusesData(viewModel.gameState.bonuses))
+
+            val action = GameFragmentDirections.gameToShop(
+                bonusesDataString,
+                viewModel.gameState.money.value!!
+            )
+
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         return binding.root
     }
 

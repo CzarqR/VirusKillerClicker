@@ -37,12 +37,5 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
         gameState.attackViruses()
     }
 
-    fun goToShop()
-    {
-        Timber.i("GO TO SHOP")
-        Navigation.createNavigateOnClickListener(R.id.game_to_shop)
-    }
-
-
 }
 

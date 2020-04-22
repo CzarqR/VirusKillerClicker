@@ -22,13 +22,13 @@ class GameState(private val context: Context)
     val savedLives: LiveData<Int>
         get() = _savedLives
 
-    private var _virus: Virus
+    private lateinit var _virus: Virus
     val virus: Virus
         get() = _virus
 
-    private var _bonus: Bonus
-    val bonus: Bonus
-        get() = _bonus
+    private lateinit var _bonuses: Bonuses
+    val bonuses: Bonuses
+        get() = _bonuses
 
     private val _lvl = MutableLiveData<Int>()
     val lvl: LiveData<Int>
@@ -47,40 +47,18 @@ class GameState(private val context: Context)
 
     init
     {
-        Timber.i("INIT GameState")
-        val gameStateData: GameStateData = loadGame()
-        Timber.i("Load saved game instance: $gameStateData")
-
-        _money.value = gameStateData.money
-        _killedViruses.value = gameStateData.killedViruses
-        _savedLives.value = gameStateData.savedLives
-        _lvl.value = gameStateData.lvl
-        _xp.value = gameStateData.xp
-        _xpToNextLvl.value = xpArray[_lvl.value!!]
-        _bonus = Bonus(
-            gameStateData.bonus_savedLivesMultiplier0,
-            gameStateData.bonus_savedLivesMultiplier1,
-            gameStateData.bonus_savedLivesMultiplier2,
-            gameStateData.bonus_savedLivesMultiplier3,
-            gameStateData.bonus_criticalAttack,
-            gameStateData.bonus_coinsPerMinutes,
-            gameStateData.bonus_storage,
-            gameStateData.bonus_rewardMultiplier,
-            gameStateData.bonus_numbersAttackPerClick
-        )
-        _virus = Virus()
-        _virus.setNewVirus((0.._lvl.value!!).random().toByte())
-
+        Timber.i("Init  GameState")
+        loadGame()
 
     }
 
 
     fun attackViruses()
     {
-        var dmg: Int = 0
-        for (i in 1..bonus.numbersAttackPerClick.value!!)
+        var dmg = 0
+        for (i in 1..bonuses.numbersAttackPerClick.value!!)
         {
-            dmg += if ((1..100).random() >= bonus.criticalAttack.value!!) // crit
+            dmg += if ((1..100).random() >= bonuses.criticalAttack.value!!) // crit
             {
                 Timber.i("Crit")
                 2
@@ -119,28 +97,95 @@ class GameState(private val context: Context)
 
     fun saveGame()
     {
-        val gs = GameStateData(this)
-        Timber.i("Saving game. Instance $gs")
+        val gameStateData = GameStateData(this)
+        val virusData = VirusData(_virus)
+        val bonusesData = BonusesData(_bonuses)
+        Timber.i("Saving game. \nGameState $gameStateData\nBonuses$bonusesData\nVirus$virusData")
         val gson = Gson()
-        val jsonString = gson.toJson(gs)
+
+        val gameStateDataString = gson.toJson(gameStateData)
+        val virusDataString = gson.toJson(virusData)
+        val bonusesDataString = gson.toJson(bonusesData)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
         with(sharedPreferences.edit()) {
 
-            putString(context.getString(R.string.game_state_key), jsonString)
+            putString(context.getString(R.string.game_state_key), gameStateDataString)
+            putString(context.getString(R.string.virus_key), virusDataString)
+            putString(context.getString(R.string.bonuses_key), bonusesDataString)
             commit()
         }
 
 
     }
 
-    private fun loadGame() : GameStateData
+
+    private fun loadGame()
     {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val jsonString = sharedPreferences.getString(context.getString(R.string.game_state_key), "")
-        val gson = Gson()
-        return gson.fromJson(jsonString, GameStateData::class.java)
 
+        val gameStateDataString = sharedPreferences.getString(
+            context.getString(R.string.game_state_key),
+            context.getString(R.string.NotLoaded)
+        )
+        val virusDataString = sharedPreferences.getString(
+            context.getString(R.string.virus_key),
+            context.getString(R.string.NotLoaded)
+        )
+        val bonusesDataString = sharedPreferences.getString(
+            context.getString(R.string.bonuses_key),
+            context.getString(R.string.NotLoaded)
+        )
+
+        val gson = Gson()
+
+        val gameStateData: GameStateData
+
+        gameStateData =
+            if (gameStateDataString!! == context.getString(R.string.NotLoaded)) //first run, no saved game
+            {
+                GameStateData()
+            }
+            else
+            {
+                gson.fromJson(gameStateDataString, GameStateData::class.java)
+            }
+
+
+        val virusData: VirusData
+
+        virusData =
+            if (virusDataString!! == context.getString(R.string.NotLoaded)) //first run, no saved game
+            {
+                VirusData()
+            }
+            else
+            {
+                gson.fromJson(virusDataString, VirusData::class.java)
+            }
+
+
+        val bonusesData: BonusesData
+
+        bonusesData =
+            if (bonusesDataString!! == context.getString(R.string.NotLoaded)) //first run, no saved game
+            {
+                BonusesData()
+            }
+            else
+            {
+                gson.fromJson(bonusesDataString, BonusesData::class.java)
+            }
+
+        _money.value = gameStateData.money
+        _killedViruses.value = gameStateData.killedViruses
+        _lvl.value = gameStateData.lvl
+        _xp.value = gameStateData.xp
+        _savedLives.value = gameStateData.savedLives
+        _xpToNextLvl.value = xpArray[_lvl.value!!]
+
+        _bonuses = Bonuses(bonusesData)
+        _virus = Virus(virusData)
 
     }
 
@@ -152,19 +197,7 @@ private data class GameStateData(
     val killedViruses: Int,
     val savedLives: Int,
     val lvl: Int,
-    val xp: Int,
-    val virus_hp: Int,
-    val virus_reward: Int,
-    val virus_lvl: Byte,
-    val bonus_savedLivesMultiplier0: Byte,
-    val bonus_savedLivesMultiplier1: Byte,
-    val bonus_savedLivesMultiplier2: Byte,
-    val bonus_savedLivesMultiplier3: Byte,
-    val bonus_criticalAttack: Byte,
-    val bonus_numbersAttackPerClick: Byte,
-    val bonus_coinsPerMinutes: Int,
-    val bonus_rewardMultiplier: Float,
-    val bonus_storage: Int
+    val xp: Int
 )
 {
     constructor(g: GameState) : this(
@@ -172,21 +205,12 @@ private data class GameStateData(
         g.killedViruses.value!!,
         g.savedLives.value!!,
         g.lvl.value!!,
-        g.xp.value!!,
-        g.virus.hp.value!!,
-        g.virus.reward.value!!,
-        g.virus.lvl.value!!,
-        g.bonus.savedLivesMultiplier0.value!!,
-        g.bonus.savedLivesMultiplier1.value!!,
-        g.bonus.savedLivesMultiplier2.value!!,
-        g.bonus.savedLivesMultiplier3.value!!,
-        g.bonus.criticalAttack.value!!,
-        g.bonus.numbersAttackPerClick.value!!,
-        g.bonus.coinsPerMinutes.value!!,
-        g.bonus.rewardMultiplier.value!!,
-        g.bonus.storage.value!!
+        g.xp.value!!
     )
 
+    constructor() : this(
+        0, 0, 0, 0, 0
+    )
 
 }
 

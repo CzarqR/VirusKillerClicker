@@ -34,5 +34,12 @@
         android:id="@+id/shopFragment"
         android:name="com.myniprojects.viruskiller.screens.shop.ShopFragment"
         android:label="fragment_shop"
-        tools:layout="@layout/fragment_shop" />
+        tools:layout="@layout/fragment_shop" >
+        <argument
+            android:name="bonuses"
+            app:argType="string" />
+        <argument
+            android:name="money"
+            app:argType="integer" />
+    </fragment>
 </navigation>

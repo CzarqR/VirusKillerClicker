@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.databinding.FragmentShopBinding
 import com.myniprojects.viruskiller.model.Bonuses
 import com.myniprojects.viruskiller.model.BonusesData
 import com.myniprojects.viruskiller.utils.BonusAdapter
@@ -23,6 +25,7 @@ class ShopFragment : Fragment()
     private lateinit var viewModel: ShopViewModel
     private lateinit var viewModelFactory: ShopViewModelFactory
     private lateinit var bonusAdapter: BonusAdapter
+    private lateinit var binding: FragmentShopBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +39,13 @@ class ShopFragment : Fragment()
             BonusesData::class.java
         )
 
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_shop,
+            container,
+            false
+        )
+
         viewModelFactory = ShopViewModelFactory(
             ShopFragmentArgs.fromBundle(requireArguments()).money,
             Bonuses(bonusesData)
@@ -43,8 +53,18 @@ class ShopFragment : Fragment()
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ShopViewModel::class.java)
 
-        return inflater.inflate(R.layout.fragment_shop, container, false)
+
+        binding.shopViewModel = viewModel
+        binding.lifecycleOwner = this
+
+
+        viewModel._bonusList.observe(viewLifecycleOwner, Observer {
+            Timber.i("Changed")
+        })
+
+        return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
@@ -55,8 +75,8 @@ class ShopFragment : Fragment()
 
     private fun addDataSet()
     {
-        val data = Bonuses.getBonusList()
-        bonusAdapter.initList(data)
+        val data = viewModel.bonusList
+        bonusAdapter.initList(data.value!!)
     }
 
     private fun initRecyclerView()
@@ -64,8 +84,14 @@ class ShopFragment : Fragment()
         recycler_view.apply {
             layoutManager = LinearLayoutManager(this@ShopFragment.context)
             bonusAdapter = BonusAdapter()
+            bonusAdapter.shopViewModel = viewModel
             adapter = bonusAdapter
         }
+    }
+
+    fun updateField()
+    {
+        Timber.i("update in shop")
     }
 
 }

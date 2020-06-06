@@ -2,6 +2,7 @@ package com.myniprojects.viruskiller.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import timber.log.Timber
 
 class Bonuses(
     multiplier0: Byte,
@@ -9,48 +10,104 @@ class Bonuses(
     multiplier2: Byte,
     multiplier3: Byte,
     critAttack: Byte,
-    coinsPM: Int,
-    store: Int,
-    rewardMulti: Float,
+    coinsPM: Byte,
+    store: Byte,
+    rewardMulti: Byte,
     attackPC: Byte
 )
 {
+
+    //region bonuses
+
+    private val pricesSLM = intArrayOf(100, 200, 400, 800, 1600, 3200, 6400, 15000)
+    private val valuesSLM = arrayOf(0, 1, 2, 4, 8, 16, 32, 64, 150)
 
     private val _savedLivesMultiplier0 = MutableLiveData<Byte>()
     val savedLivesMultiplier0: LiveData<Byte>
         get() = _savedLivesMultiplier0
 
+    val savedLivesMultiplier0Value: Int
+        get() = valuesSLM[_savedLivesMultiplier0.value!!.toInt()]
+
     private val _savedLivesMultiplier1 = MutableLiveData<Byte>()
     val savedLivesMultiplier1: LiveData<Byte>
         get() = _savedLivesMultiplier1
+
+    val savedLivesMultiplier1Value: Int
+        get() = valuesSLM[_savedLivesMultiplier1.value!!.toInt()]
 
     private val _savedLivesMultiplier2 = MutableLiveData<Byte>()
     val savedLivesMultiplier2: LiveData<Byte>
         get() = _savedLivesMultiplier2
 
+    val savedLivesMultiplier2Value: Int
+        get() = valuesSLM[_savedLivesMultiplier2.value!!.toInt()]
+
     private val _savedLivesMultiplier3 = MutableLiveData<Byte>()
     val savedLivesMultiplier3: LiveData<Byte>
         get() = _savedLivesMultiplier3
 
-    private val _criticalAttack = MutableLiveData<Byte>()
+    val savedLivesMultiplier3Value: Int
+        get() = valuesSLM[_savedLivesMultiplier3.value!!.toInt()]
+
+
+    private val pricesCA = intArrayOf(200, 400, 800)
+    private val valuesCA = arrayOf(0, 1, 2, 4)
+
+    private val _criticalAttack = MutableLiveData<Byte>() //percentage value to give critical attack
     val criticalAttack: LiveData<Byte>
         get() = _criticalAttack
+
+    val criticalAttackValue: Int
+        get() = valuesCA[_criticalAttack.value!!.toInt()]
+
+
+    private val pricesNAPC = intArrayOf(200, 300, 800, 2000)
+    private val valuesNAPC = arrayOf(1, 2, 3, 4, 5)
 
     private val _numbersAttackPerClick = MutableLiveData<Byte>()
     val numbersAttackPerClick: LiveData<Byte>
         get() = _numbersAttackPerClick
 
-    private val _coinsPerMinutes = MutableLiveData<Int>()
-    val coinsPerMinutes: LiveData<Int>
+    val numbersAttackPerClickValue: Int
+        get() = valuesNAPC[_numbersAttackPerClick.value!!.toInt()]
+
+
+    private val pricesCPM = intArrayOf(200, 400, 800)
+    private val valuesCPM = arrayOf(1, 2, 4, 8)
+
+    private val _coinsPerMinutes = MutableLiveData<Byte>()
+    val coinsPerMinutes: LiveData<Byte>
         get() = _coinsPerMinutes
 
-    private val _rewardMultiplier = MutableLiveData<Float>()
-    val rewardMultiplier: LiveData<Float>
+    val coinsPerMinutesValue: Int
+        get() = valuesCPM[_coinsPerMinutes.value!!.toInt()]
+
+
+    private val pricesRM = intArrayOf(20000, 45000, 90000)
+    private val valuesRM = arrayOf(1F, 1.05F, 1.1F, 1.15F)
+
+    private val _rewardMultiplier =
+        MutableLiveData<Byte>()//multiplier the reward after killing virus
+    val rewardMultiplier: LiveData<Byte>
         get() = _rewardMultiplier
 
-    private val _storage = MutableLiveData<Int>()
-    val storage: LiveData<Int>
+    val rewardMultiplierValue: Float
+        get() = valuesRM[_rewardMultiplier.value!!.toInt()]
+
+
+    private val pricesS = intArrayOf(200, 400, 800)
+    private val valuesS = arrayOf(200, 500, 900, 1200)
+
+    private val _storage = MutableLiveData<Byte>()
+    val storage: LiveData<Byte>
         get() = _storage
+
+    val storageValue: Int
+        get() = valuesS[_storage.value!!.toInt()]
+
+
+    //endregion
 
     init
     {
@@ -77,21 +134,48 @@ class Bonuses(
         bD.numbersAttackPerClick
     )
 
-    companion object
+
+    @Suppress("UNCHECKED_CAST")
+    fun getBonusList(): MutableList<Bonus>
     {
-        fun getBonusList(): List<Bonus>
-        {
-            //todo return list based on class instance and remove from companion
-            val bonus1 = Bonus(10, 0, arrayOf(10, 20, 100, 400))
-            val bonus2 = Bonus(15, 1, arrayOf(1, 25, 250, 600))
-            val bonus3 = Bonus(10, 0, arrayOf(10, 20, 100, 400))
-            val bonus4 = Bonus(15, 1, arrayOf(1, 25, 250, 600))
-            val bonus5 = Bonus(10, 0, arrayOf(10, 20, 100, 400))
-            val bonus6 = Bonus(15, 1, arrayOf(1, 25, 250, 600))
-            val bonus7 = Bonus(10, 0, arrayOf(10, 20, 100, 400))
-            val bonus8 = Bonus(15, 1, arrayOf(1, 25, 250, 600))
-            return listOf(bonus1, bonus2, bonus3, bonus4, bonus5, bonus6, bonus7, bonus8)
-        }
+
+        val bonusSavedLivesMultiplier0 =
+            Bonus(_savedLivesMultiplier0.value!!, pricesSLM, valuesSLM as Array<Number>)
+
+        val bonusSavedLivesMultiplier1 =
+            Bonus(_savedLivesMultiplier1.value!!, pricesSLM, valuesSLM as Array<Number>)
+
+        val bonusSavedLivesMultiplier2 =
+            Bonus(_savedLivesMultiplier2.value!!, pricesSLM, valuesSLM as Array<Number>)
+
+        val bonusSavedLivesMultiplier3 =
+            Bonus(_savedLivesMultiplier3.value!!, pricesSLM, valuesSLM as Array<Number>)
+
+        val bonusCriticalAttack =
+            Bonus(_criticalAttack.value!!, pricesCA, valuesCA as Array<Number>)
+
+        val bonusNumberAttackPerClick =
+            Bonus(_numbersAttackPerClick.value!!, pricesNAPC, valuesNAPC as Array<Number>)
+
+        val bonusCoinsPerMinutes =
+            Bonus(_coinsPerMinutes.value!!, pricesCPM, valuesCPM as Array<Number>)
+
+        val bonusStorage = Bonus(_storage.value!!, pricesS, valuesS as Array<Number>)
+
+        val bonusRewardMultiplier =
+            Bonus(_rewardMultiplier.value!!, pricesRM, valuesRM as Array<Number>)
+
+        return mutableListOf(
+            bonusSavedLivesMultiplier0,
+            bonusSavedLivesMultiplier1,
+            bonusSavedLivesMultiplier2,
+            bonusSavedLivesMultiplier3,
+            bonusCriticalAttack,
+            bonusNumberAttackPerClick,
+            bonusCoinsPerMinutes,
+            bonusStorage,
+            bonusRewardMultiplier
+        )
     }
 
 
@@ -104,9 +188,9 @@ data class BonusesData(
     val savedLivesMultiplier3: Byte,
     val criticalAttack: Byte,
     val numbersAttackPerClick: Byte,
-    val coinsPerMinutes: Int,
-    val rewardMultiplier: Float,
-    val storage: Int
+    val coinsPerMinutes: Byte,
+    val rewardMultiplier: Byte,
+    val storage: Byte
 )
 {
     constructor(b: Bonuses) : this(
@@ -122,6 +206,6 @@ data class BonusesData(
     )
 
     constructor() : this(
-        0, 0, 0, 0, 0, 1, 0, 0F, 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0
     )
 }

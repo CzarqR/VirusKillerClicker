@@ -55,10 +55,11 @@ class GameState(private val context: Context)
 
     fun attackViruses()
     {
+        Timber.i("Number attack per click: ${bonuses.numbersAttackPerClickValue}. Critical Attack: ${bonuses.criticalAttackValue}")
         var dmg = 0
-        for (i in 1..bonuses.numbersAttackPerClick.value!!)
+        for (i in 1..bonuses.numbersAttackPerClickValue)
         {
-            dmg += if ((1..100).random() >= bonuses.criticalAttack.value!!) // crit
+            dmg += if ((1..100).random() < bonuses.criticalAttackValue) // crit
             {
                 Timber.i("Crit")
                 2

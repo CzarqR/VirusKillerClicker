@@ -175,6 +175,7 @@ class GameState(private val context: Context)
             }
             else
             {
+                Timber.i("Bonuses loaded")
                 gson.fromJson(bonusesDataString, BonusesData::class.java)
             }
 

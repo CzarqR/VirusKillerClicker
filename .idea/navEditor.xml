@@ -19,7 +19,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_gameFragment_to_shopFragment">
+                            <entry key="game_to_shop">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -72,9 +72,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="525" />
-                            <option name="y" value="138" />
+                            <option name="x" value="635" />
+                            <option name="y" value="172" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_shopFragment_to_gameFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

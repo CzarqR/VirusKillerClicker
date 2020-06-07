@@ -31,6 +31,7 @@ class GameFragment : Fragment()
         savedInstanceState: Bundle?
     ): View?
     {
+        Timber.i("Game ViewModel OnCreate")
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_game,
@@ -63,7 +64,15 @@ class GameFragment : Fragment()
     override fun onSaveInstanceState(outState: Bundle)
     {
         super.onSaveInstanceState(outState)
+        Timber.i("SaveInstanceState")
         viewModel.saveGame() //saving when shutting off app
+    }
+
+    override fun onStop()
+    {
+        super.onStop()
+        Timber.i("Stop")
+        viewModel.saveGame()
     }
 
 }

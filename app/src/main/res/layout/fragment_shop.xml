@@ -21,6 +21,13 @@
             android:textSize="24sp" />
 
 
+        <Button
+            android:id="@+id/butGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="game" />
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"

@@ -179,6 +179,8 @@ class Bonuses(
     }
 
 
+
+
 }
 
 data class BonusesData(
@@ -204,6 +206,8 @@ data class BonusesData(
         b.rewardMultiplier.value!!,
         b.storage.value!!
     )
+
+
 
     constructor() : this(
         0, 0, 0, 0, 0, 0, 0, 0, 0

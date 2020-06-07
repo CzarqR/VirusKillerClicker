@@ -41,5 +41,8 @@
         <argument
             android:name="money"
             app:argType="integer" />
+        <action
+            android:id="@+id/shop_to_game"
+            app:destination="@id/gameFragment" />
     </fragment>
 </navigation>

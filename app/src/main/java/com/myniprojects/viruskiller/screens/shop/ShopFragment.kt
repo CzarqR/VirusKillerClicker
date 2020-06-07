@@ -1,5 +1,6 @@
 package com.myniprojects.viruskiller.screens.shop
 
+import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,12 +9,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.databinding.FragmentShopBinding
 import com.myniprojects.viruskiller.model.Bonuses
 import com.myniprojects.viruskiller.model.BonusesData
+import com.myniprojects.viruskiller.screens.game.GameFragmentDirections
 import com.myniprojects.viruskiller.utils.BonusAdapter
 import kotlinx.android.synthetic.main.fragment_shop.*
 import timber.log.Timber
@@ -48,7 +51,8 @@ class ShopFragment : Fragment()
 
         viewModelFactory = ShopViewModelFactory(
             ShopFragmentArgs.fromBundle(requireArguments()).money,
-            Bonuses(bonusesData)
+            Bonuses(bonusesData),
+            requireContext()
         )
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(ShopViewModel::class.java)
@@ -57,10 +61,11 @@ class ShopFragment : Fragment()
         binding.shopViewModel = viewModel
         binding.lifecycleOwner = this
 
+        binding.butGame.setOnClickListener {
+            val action = ShopFragmentDirections.shopToGame()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
 
-        viewModel._bonusList.observe(viewLifecycleOwner, Observer {
-            Timber.i("Changed")
-        })
 
         return binding.root
     }
@@ -89,9 +94,12 @@ class ShopFragment : Fragment()
         }
     }
 
-    fun updateField()
+    override fun onStop()
     {
-        Timber.i("update in shop")
+        super.onStop()
+        Timber.i("Stop and saving")
+        viewModel.saveBonuses()
     }
+
 
 }

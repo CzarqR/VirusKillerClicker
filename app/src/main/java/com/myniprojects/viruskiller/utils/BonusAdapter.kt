@@ -77,7 +77,7 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
                 Timber.i("Value curr ${bonus.currVal()}")
                 Timber.i("Value next ${bonus.nextVal()}")
 
-                if (bonus.currPrice() < shopViewModel.Money)
+                if (bonus.currPrice() < shopViewModel.mon)
                 {
                     Timber.i("Updating")
                     shopViewModel.update(bonus.currPrice())

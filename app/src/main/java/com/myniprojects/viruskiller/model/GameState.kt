@@ -98,15 +98,15 @@ class GameState(private val context: Context)
 
     fun saveGame()
     {
+        Timber.i("Save game in GameState")
         val gameStateData = GameStateData(this)
         val virusData = VirusData(_virus)
-        val bonusesData = BonusesData(_bonuses)
-        Timber.i("Saving game. \nGameState $gameStateData\nBonuses$bonusesData\nVirus$virusData")
+
+
         val gson = Gson()
 
         val gameStateDataString = gson.toJson(gameStateData)
         val virusDataString = gson.toJson(virusData)
-        val bonusesDataString = gson.toJson(bonusesData)
 
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
@@ -114,7 +114,6 @@ class GameState(private val context: Context)
 
             putString(context.getString(R.string.game_state_key), gameStateDataString)
             putString(context.getString(R.string.virus_key), virusDataString)
-            putString(context.getString(R.string.bonuses_key), bonusesDataString)
             putInt(context.getString(R.string.money_key), _money.value!!)
             commit()
         }
@@ -199,6 +198,29 @@ class GameState(private val context: Context)
         _bonuses = Bonuses(bonusesData)
         _virus = Virus(virusData)
 
+    }
+
+    fun loadMoney()
+    {
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        val mon: Int = sharedPreferences.getInt(
+            context.getString(R.string.money_key),
+            0
+        )
+
+        _money.value = mon.plus(1000000)
+
+    }
+
+
+    fun printBonuses()
+    {
+        Timber.i("${_bonuses.savedLivesMultiplier0Value}")
+        Timber.i("${_bonuses.savedLivesMultiplier1Value}")
+        Timber.i("${_bonuses.savedLivesMultiplier2Value}")
+        Timber.i("${_bonuses.savedLivesMultiplier3Value}")
     }
 
 

@@ -19,7 +19,7 @@ class Bonuses(
 
     //region bonuses
 
-    private val pricesSLM = intArrayOf(100, 200, 400, 800, 1600, 3200, 6400, 15000)
+    private val pricesSLM = intArrayOf(100, 200, 400, 800, 1600, 3200, 6400, 128000)
     private val valuesSLM = arrayOf(0, 1, 2, 4, 8, 16, 32, 64, 150)
 
     private val _savedLivesMultiplier0 = MutableLiveData<Byte>()

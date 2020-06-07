@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 
 import com.myniprojects.viruskiller.R
@@ -61,18 +63,25 @@ class GameFragment : Fragment()
     }
 
 
-    override fun onSaveInstanceState(outState: Bundle)
+//    override fun onSaveInstanceState(outState: Bundle)
+//    {
+//        super.onSaveInstanceState(outState)
+//        Timber.i("SaveInstanceState")
+//        viewModel.saveGame() //saving when shutting off app
+//    }
+
+    override fun onPause()
     {
-        super.onSaveInstanceState(outState)
-        Timber.i("SaveInstanceState")
-        viewModel.saveGame() //saving when shutting off app
+        super.onPause()
+        Timber.i("Pause GameFragment")
+        viewModel.saveGame()
     }
 
-    override fun onStop()
+    override fun onResume()
     {
-        super.onStop()
-        Timber.i("Stop GameFragment")
-        viewModel.saveGame()
+        super.onResume()
+        Timber.i("Resume GameFragment")
+        viewModel.loadMoney()
     }
 
 }

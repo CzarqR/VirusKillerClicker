@@ -27,11 +27,20 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
         //saveGame() //saving when closing game fragment
     }
 
+    fun printBonuses()
+    {
+        _gameState.printBonuses()
+    }
+
     fun saveGame()
     {
         gameState.saveGame()
     }
 
+    fun loadMoney()
+    {
+        gameState.loadMoney()
+    }
 
     fun virusClick()
     {

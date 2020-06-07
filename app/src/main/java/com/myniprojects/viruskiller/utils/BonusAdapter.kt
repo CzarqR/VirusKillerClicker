@@ -32,7 +32,7 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             is BonusViewHolder ->
             {
 
-                holder.bind(items[position], position)
+                holder.bind(items[position])
             }
         }
     }
@@ -61,39 +61,55 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         private val nextValue: TextView = itemView.txtNextValue
 
 
-        fun bind(bonus: Bonus, position: Int)
+        fun bind(bonus: Bonus)
         {
-            currLvl.text = bonus.currLvl.toString()
-            maxLvl.text = bonus.prices.size.toString()
-            price.text = bonus.prices[bonus.currLvl.toInt()].toString()
-            currValue.text = bonus.currVal.toString()
-            nextValue.text = bonus.nextVal.toString()
+            maxLvl.text = bonus.maxLvlString
+
+            currLvl.text = bonus.currLvlString
+            price.text = bonus.currPriceString
+            currValue.text = bonus.currValString
+            nextValue.text = bonus.nextValString
 
             upgrade.setOnClickListener {
-                Timber.i("Clicked update pos $position")
-                Timber.i("Current lvl ${bonus.currLvl}")
-                Timber.i("Price current ${bonus.currPrice}")
-                Timber.i("Price next ${bonus.nextPrice}")
-                Timber.i("Value curr ${bonus.currVal}")
-                Timber.i("Value next ${bonus.nextVal}")
+//                Timber.i("Clicked update pos $position")
+//                Timber.i("Current lvl ${bonus.currLvl}")
+//                Timber.i("Price current ${bonus.currPrice}")
+//                Timber.i("Price next ${bonus.nextPrice}")
+//                Timber.i("Value curr ${bonus.currVal}")
+//                Timber.i("Value next ${bonus.nextVal}")
 
-                if (bonus.currPrice <= shopViewModel.mon)
+
+                if (bonus.isMax) //lvl is max cannot update
                 {
-                    Timber.i("Updating")
-                    shopViewModel.saveBonuses(bonus.currPrice)
-                    bonus.currLvl = bonus.currLvl.plus(1).toByte()
-                    currLvl.text = (bonus.currLvl).toString()
-                    price.text = bonus.currPrice.toString()
-                    currValue.text = bonus.currVal.toString()
-                    nextValue.text = bonus.nextVal.toString()
+                    Timber.i("Lvl is max cannot update")
                 }
                 else
                 {
-                    Timber.i("Cannot update")
+                    if (bonus.currPrice <= shopViewModel.mon)
+                    {
+                        Timber.i("Updating")
+                        val cost = bonus.currPrice
+
+                        bonus.currLvl = bonus.currLvl.plus(1).toByte()
+
+                        currLvl.text = bonus.currLvlString
+                        price.text = bonus.currPriceString
+                        currValue.text = bonus.currValString
+                        nextValue.text = bonus.nextValString
+
+                        shopViewModel.saveBonuses(cost)
+                    }
+                    else
+                    {
+                        Timber.i("Cannot update, not enough money")
+                    }
                 }
 
             }
         }
-    }
 
+
+
+
+    }
 }

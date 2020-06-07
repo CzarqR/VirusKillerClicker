@@ -9,6 +9,7 @@
     <string name="game_state_key">game_state_key</string>
     <string name="virus_key">virus_key</string>
     <string name="bonuses_key">bonuses_key</string>
+    <string name="money_key">money_key</string>
     <string name="xp">%1$d / %2$d</string>
     <string name="shop">Shop</string>
     <string name="upgrade">Upgrade</string>

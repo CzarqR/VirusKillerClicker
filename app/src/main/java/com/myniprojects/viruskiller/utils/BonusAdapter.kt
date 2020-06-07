@@ -66,26 +66,26 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             currLvl.text = bonus.currLvl.toString()
             maxLvl.text = bonus.prices.size.toString()
             price.text = bonus.prices[bonus.currLvl.toInt()].toString()
-            currValue.text = bonus.currVal().toString()
-            nextValue.text = bonus.nextVal().toString()
+            currValue.text = bonus.currVal.toString()
+            nextValue.text = bonus.nextVal.toString()
 
             upgrade.setOnClickListener {
                 Timber.i("Clicked update pos $position")
                 Timber.i("Current lvl ${bonus.currLvl}")
-                Timber.i("Price current ${bonus.currPrice()}")
-                Timber.i("Price next ${bonus.nextPrice()}")
-                Timber.i("Value curr ${bonus.currVal()}")
-                Timber.i("Value next ${bonus.nextVal()}")
+                Timber.i("Price current ${bonus.currPrice}")
+                Timber.i("Price next ${bonus.nextPrice}")
+                Timber.i("Value curr ${bonus.currVal}")
+                Timber.i("Value next ${bonus.nextVal}")
 
-                if (bonus.currPrice() < shopViewModel.mon)
+                if (bonus.currPrice <= shopViewModel.mon)
                 {
                     Timber.i("Updating")
-                    shopViewModel.update(bonus.currPrice())
+                    shopViewModel.saveBonuses(bonus.currPrice)
                     bonus.currLvl = bonus.currLvl.plus(1).toByte()
                     currLvl.text = (bonus.currLvl).toString()
-                    price.text = bonus.currPrice().toString()
-                    currValue.text = bonus.currVal().toString()
-                    nextValue.text = bonus.nextVal().toString()
+                    price.text = bonus.currPrice.toString()
+                    currValue.text = bonus.currVal.toString()
+                    nextValue.text = bonus.nextVal.toString()
                 }
                 else
                 {

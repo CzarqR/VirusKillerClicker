@@ -108,12 +108,14 @@ class GameState(private val context: Context)
         val virusDataString = gson.toJson(virusData)
         val bonusesDataString = gson.toJson(bonusesData)
 
+
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
         with(sharedPreferences.edit()) {
 
             putString(context.getString(R.string.game_state_key), gameStateDataString)
             putString(context.getString(R.string.virus_key), virusDataString)
             putString(context.getString(R.string.bonuses_key), bonusesDataString)
+            putInt(context.getString(R.string.money_key), _money.value!!)
             commit()
         }
 
@@ -137,6 +139,12 @@ class GameState(private val context: Context)
             context.getString(R.string.bonuses_key),
             context.getString(R.string.NotLoaded)
         )
+
+        val mon: Int = sharedPreferences.getInt(
+            context.getString(R.string.money_key),
+            0
+        )
+
 
         val gson = Gson()
 
@@ -179,13 +187,15 @@ class GameState(private val context: Context)
                 gson.fromJson(bonusesDataString, BonusesData::class.java)
             }
 
-        _money.value = gameStateData.money
+
+        _money.value = mon
         _killedViruses.value = gameStateData.killedViruses
         _lvl.value = gameStateData.lvl
         _xp.value = gameStateData.xp
         _savedLives.value = gameStateData.savedLives
         _xpToNextLvl.value = xpArray[_lvl.value!!]
 
+        Timber.i("Load instance: $bonusesData")
         _bonuses = Bonuses(bonusesData)
         _virus = Virus(virusData)
 
@@ -195,7 +205,6 @@ class GameState(private val context: Context)
 }
 
 private data class GameStateData(
-    val money: Int,
     val killedViruses: Int,
     val savedLives: Int,
     val lvl: Int,
@@ -203,7 +212,6 @@ private data class GameStateData(
 )
 {
     constructor(g: GameState) : this(
-        g.money.value!!,
         g.killedViruses.value!!,
         g.savedLives.value!!,
         g.lvl.value!!,
@@ -211,7 +219,7 @@ private data class GameStateData(
     )
 
     constructor() : this(
-        0, 0, 0, 0, 0
+        0, 0, 0, 0
     )
 
 }

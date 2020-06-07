@@ -23,7 +23,8 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
     override fun onCleared()
     {
         super.onCleared()
-        saveGame() //saving when closing game fragment
+        Timber.i("Game view model cleared")
+        //saveGame() //saving when closing game fragment
     }
 
     fun saveGame()

@@ -94,12 +94,12 @@ class ShopFragment : Fragment()
         }
     }
 
-    override fun onStop()
-    {
-        super.onStop()
-        Timber.i("Stop and saving")
-        viewModel.saveBonuses()
-    }
+//    override fun onStop()
+//    {
+//        Timber.i("Stop and saving")
+//        viewModel.saveBonuses()
+//        super.onStop()
+//    }
 
 
 }

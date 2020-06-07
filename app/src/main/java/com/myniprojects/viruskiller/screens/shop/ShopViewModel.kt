@@ -1,8 +1,6 @@
 package com.myniprojects.viruskiller.screens.shop
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -43,16 +41,12 @@ class ShopViewModel(money: Int, private var bonuses: Bonuses, private var contex
         Timber.i("Shop VM cleared")
     }
 
-    fun update(money: Int)
-    {
-        Timber.i("Update in SVM")
-        _money.value = mon.minus(money)
-        Timber.i("${_bonusList.value!![0].currLvl} lvl item index 0")
-    }
 
-    fun saveBonuses()
+    fun saveBonuses(cost: Int)
     {
         Timber.i("Save bonuses")
+        _money.value = mon.minus(cost)
+
         val gson = Gson()
         val bonusesData = BonusesData(
             _bonusList.value!![0].currLvl,
@@ -66,15 +60,16 @@ class ShopViewModel(money: Int, private var bonuses: Bonuses, private var contex
             _bonusList.value!![8].currLvl
         )
         val bonusesDataString = gson.toJson(bonusesData)
-
+        Timber.i("Saved instance: $bonusesData")
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
         with(sharedPreferences.edit()) {
 
             putString(context.getString(R.string.bonuses_key), bonusesDataString)
+            putInt(context.getString(R.string.money_key), mon)
             commit()
         }
-
     }
+
 
 
 

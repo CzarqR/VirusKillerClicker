@@ -71,7 +71,7 @@ class GameFragment : Fragment()
     override fun onStop()
     {
         super.onStop()
-        Timber.i("Stop")
+        Timber.i("Stop GameFragment")
         viewModel.saveGame()
     }
 

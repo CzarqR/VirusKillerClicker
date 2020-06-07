@@ -6,9 +6,16 @@ data class Bonus(
     val values: Array<Number>
 )
 {
-    fun currPrice() = prices[currLvl.toInt()]
-    fun nextPrice() = prices[currLvl.toInt() + 1]
-    fun currVal() = values[currLvl.toInt()]
-    fun nextVal() = values[currLvl.toInt() + 1]
+    val maxLvl
+        get() = prices.size
+
+    val currPrice
+        get() = prices[currLvl.toInt()]
+    val nextPrice
+        get() = prices[currLvl.toInt() + 1]
+    val currVal
+        get() = values[currLvl.toInt()]
+    val nextVal
+        get() = values[currLvl.toInt() + 1]
 
 }

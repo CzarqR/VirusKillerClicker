@@ -15,4 +15,14 @@
     <string name="upgrade">Upgrade</string>
     <string name="NotLoaded">NotLoaded</string>
     <string name="max_lvl">Max Lvl</string>
+    <string name="storage_value_key">Max Lvl</string>
+    <string name="masks">Masks</string>
+    <string name="gloves">Gloves</string>
+    <string name="bonus4">Bonus 4</string>
+
+    <string name="critical_attack">Critical attack</string>
+    <string name="attack_numbers_per_click">Attack numbers per click</string>
+    <string name="coins_per_minute">Coins per minute</string>
+    <string name="reward_multiplier">Reward multiplier</string>
+    <string name="storage">Storage</string>
 </resources>

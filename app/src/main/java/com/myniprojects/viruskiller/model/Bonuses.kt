@@ -173,8 +173,9 @@ class Bonuses(
             bonusCriticalAttack,
             bonusNumberAttackPerClick,
             bonusCoinsPerMinutes,
-            bonusStorage,
-            bonusRewardMultiplier
+            bonusRewardMultiplier,
+            bonusStorage
+
         )
     }
 

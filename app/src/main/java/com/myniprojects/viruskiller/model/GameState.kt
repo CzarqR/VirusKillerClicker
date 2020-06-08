@@ -42,6 +42,17 @@ class GameState(private val context: Context)
     val xpToNextLvl: LiveData<Int>
         get() = _xpToNextLvl
 
+    private val _storage = MutableLiveData<String>()
+    val storage: LiveData<String>
+        get() = _storage
+
+    private var currStorage: Int = 0
+        set(value)
+        {
+            field = value
+            _storage.value = "$field / ${_bonuses.storageValue}"
+        }
+
     private val xpArray = arrayOf(10, 20, 40, 80, 160, 320, 640, 1280, 2480)
 
 
@@ -49,7 +60,6 @@ class GameState(private val context: Context)
     {
         Timber.i("Init  GameState")
         loadGame()
-
     }
 
 
@@ -76,8 +86,10 @@ class GameState(private val context: Context)
         if (virus.attackVirus(dmg))//virus dead
         {
             Timber.i("Dead")
+            _money.value = _money.value!!.plus(
+                (virus.reward.value!!.times(_bonuses.rewardMultiplierValue).toInt())
+            )
 
-            _money.value = _money.value!!.plus(virus.reward.value!!)
             _xp.value = _xp.value!!.plus((virus.reward.value!!).div(10))
 
             if (_xp.value!! >= _xpToNextLvl.value!!) //lvl upgrade
@@ -115,6 +127,7 @@ class GameState(private val context: Context)
             putString(context.getString(R.string.game_state_key), gameStateDataString)
             putString(context.getString(R.string.virus_key), virusDataString)
             putInt(context.getString(R.string.money_key), _money.value!!)
+            putInt(context.getString(R.string.storage_value_key), currStorage)
             commit()
         }
 
@@ -144,6 +157,10 @@ class GameState(private val context: Context)
             0
         )
 
+        val sto: Int = sharedPreferences.getInt(
+            context.getString(R.string.storage_value_key),
+            0
+        )
 
         val gson = Gson()
 
@@ -196,6 +213,7 @@ class GameState(private val context: Context)
 
         Timber.i("Load instance: $bonusesData")
         _bonuses = Bonuses(bonusesData)
+        currStorage = sto
         _virus = Virus(virusData)
 
     }
@@ -214,13 +232,24 @@ class GameState(private val context: Context)
 
     }
 
+    fun collectStorage()
+    {
+        _money.value = _money.value!!.plus(currStorage)
+        currStorage = 0;
+    }
 
-    fun printBonuses()
+    fun test()
     {
         Timber.i("${_bonuses.savedLivesMultiplier0Value}")
         Timber.i("${_bonuses.savedLivesMultiplier1Value}")
         Timber.i("${_bonuses.savedLivesMultiplier2Value}")
         Timber.i("${_bonuses.savedLivesMultiplier3Value}")
+        Timber.i("${_bonuses.criticalAttackValue}")
+        Timber.i("${_bonuses.numbersAttackPerClickValue}")
+        Timber.i("${_bonuses.coinsPerMinutesValue}")
+        Timber.i("${_bonuses.rewardMultiplierValue}")
+        Timber.i("${_bonuses.storageValue}")
+        currStorage += 10
     }
 
 

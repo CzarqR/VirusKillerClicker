@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
@@ -17,7 +18,9 @@ import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
 import com.myniprojects.viruskiller.model.Bonuses
 import com.myniprojects.viruskiller.model.BonusesData
 import kotlinx.android.synthetic.main.fragment_game.*
+import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
+import kotlin.math.ceil
 
 
 class GameFragment : Fragment()
@@ -59,8 +62,14 @@ class GameFragment : Fragment()
             Navigation.findNavController(requireView()).navigate(action)
         }
 
+
+
+
+
         return binding.root
     }
+
+
 
 
 //    override fun onSaveInstanceState(outState: Bundle)
@@ -75,13 +84,16 @@ class GameFragment : Fragment()
         super.onPause()
         Timber.i("Pause GameFragment")
         viewModel.saveGame()
+        viewModel.onPause()
     }
 
     override fun onResume()
     {
         super.onResume()
         Timber.i("Resume GameFragment")
-        viewModel.loadMoney()
+        viewModel.loadMoneyAndBonuses()
+        viewModel.gameState.updateAfterBreak()
+        viewModel.onResume()
     }
 
 }

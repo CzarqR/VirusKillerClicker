@@ -43,6 +43,8 @@
             app:argType="integer" />
         <action
             android:id="@+id/shop_to_game"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:popUpTo="@id/gameFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

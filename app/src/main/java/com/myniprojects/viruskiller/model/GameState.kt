@@ -7,9 +7,13 @@ import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.R
 import timber.log.Timber
+import java.util.*
 
 class GameState(private val context: Context)
 {
+
+    //region properties
+
     private val _money = MutableLiveData<Int>()
     val money: LiveData<Int>
         get() = _money
@@ -18,8 +22,8 @@ class GameState(private val context: Context)
     val killedViruses: LiveData<Int>
         get() = _killedViruses
 
-    private val _savedLives = MutableLiveData<Int>()
-    val savedLives: LiveData<Int>
+    private val _savedLives = MutableLiveData<Long>()
+    val savedLives: LiveData<Long>
         get() = _savedLives
 
     private lateinit var _virus: Virus
@@ -49,12 +53,20 @@ class GameState(private val context: Context)
     private var currStorage: Int = 0
         set(value)
         {
-            field = value
+            field = if (value > _bonuses.storageValue)
+            {
+                _bonuses.storageValue
+            }
+            else
+            {
+                value
+            }
             _storage.value = "$field / ${_bonuses.storageValue}"
         }
 
     private val xpArray = arrayOf(10, 20, 40, 80, 160, 320, 640, 1280, 2480)
 
+    //endregion
 
     init
     {
@@ -199,7 +211,6 @@ class GameState(private val context: Context)
             }
             else
             {
-                Timber.i("Bonuses loaded")
                 gson.fromJson(bonusesDataString, BonusesData::class.java)
             }
 
@@ -218,7 +229,27 @@ class GameState(private val context: Context)
 
     }
 
-    fun loadMoney()
+    fun oneMinutePassed()
+    {
+        currStorage += _bonuses.coinsPerMinutesValue
+        _savedLives.value = _savedLives.value!!.plus(_bonuses.savedLivesSum)
+
+        val current = Calendar.getInstance().time
+        Timber.i("Saved ${current.time / 10_000}")
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
+        with(sharedPreferences.edit()) {
+
+            putLong(context.getString(R.string.last_minute_passed_key), current.time / 10_000)
+            commit()
+        }
+
+        Timber.i("${current.time}")
+
+    }
+
+
+    fun loadMoneyAndBonuses()
     {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -228,6 +259,24 @@ class GameState(private val context: Context)
             0
         )
 
+        val bonusesDataString = sharedPreferences.getString(
+            context.getString(R.string.bonuses_key),
+            context.getString(R.string.NotLoaded)
+        )
+
+        val gson = Gson()
+        val bonusesData =
+            if (bonusesDataString!! == context.getString(R.string.NotLoaded)) //first run, no saved game
+            {
+                BonusesData()
+            }
+            else
+            {
+                gson.fromJson(bonusesDataString, BonusesData::class.java)
+            }
+
+
+        _bonuses = Bonuses(bonusesData)
         _money.value = mon.plus(1000000)
 
     }
@@ -236,6 +285,38 @@ class GameState(private val context: Context)
     {
         _money.value = _money.value!!.plus(currStorage)
         currStorage = 0;
+
+    }
+
+    fun updateAfterBreak()
+    {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        val previous: Long = sharedPreferences.getLong(
+            context.getString(R.string.last_minute_passed_key),
+            -1
+        )
+
+
+
+
+        if (previous > 0)
+        {
+            val current = Calendar.getInstance().time
+            Timber.i("Load ${current.time / 10_000}")
+
+            val passed = (current.time / 10_000 - previous)
+            Timber.i("Passed $passed")
+
+            currStorage += (_bonuses.coinsPerMinutesValue * passed).toInt()
+            _savedLives.value = _savedLives.value!!.plus(_bonuses.savedLivesSum.times(passed))
+            with(sharedPreferences.edit()) {
+                putLong(context.getString(R.string.last_minute_passed_key), current.time / 10_000)
+                commit()
+            }
+        }
+
+
     }
 
     fun test()
@@ -257,7 +338,7 @@ class GameState(private val context: Context)
 
 private data class GameStateData(
     val killedViruses: Int,
-    val savedLives: Int,
+    val savedLives: Long,
     val lvl: Int,
     val xp: Int
 )

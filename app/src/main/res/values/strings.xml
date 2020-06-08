@@ -16,6 +16,7 @@
     <string name="NotLoaded">NotLoaded</string>
     <string name="max_lvl">Max Lvl</string>
     <string name="storage_value_key">Max Lvl</string>
+    <string name="last_minute_passed_key">last_minute_passed_key</string>
     <string name="masks">Masks</string>
     <string name="gloves">Gloves</string>
     <string name="bonus4">Bonus 4</string>

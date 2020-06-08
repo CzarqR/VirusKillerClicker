@@ -50,6 +50,9 @@ class Bonuses(
     val savedLivesMultiplier3Value: Int
         get() = valuesSLM[_savedLivesMultiplier3.value!!.toInt()]
 
+    val savedLivesSum: Int
+        get() = savedLivesMultiplier0Value + savedLivesMultiplier1Value + savedLivesMultiplier2Value + savedLivesMultiplier3Value
+
 
     private val pricesCA = intArrayOf(200, 400, 800)
     private val valuesCA = arrayOf(0, 1, 2, 4)
@@ -73,8 +76,8 @@ class Bonuses(
         get() = valuesNAPC[_numbersAttackPerClick.value!!.toInt()]
 
 
-    private val pricesCPM = intArrayOf(200, 400, 800)
-    private val valuesCPM = arrayOf(1, 2, 4, 8)
+    private val pricesCPM = intArrayOf(10, 20, 40)
+    private val valuesCPM = arrayOf(10, 25, 50, 100)
 
     private val _coinsPerMinutes = MutableLiveData<Byte>()
     val coinsPerMinutes: LiveData<Byte>
@@ -180,8 +183,6 @@ class Bonuses(
     }
 
 
-
-
 }
 
 data class BonusesData(
@@ -207,7 +208,6 @@ data class BonusesData(
         b.rewardMultiplier.value!!,
         b.storage.value!!
     )
-
 
 
     constructor() : this(

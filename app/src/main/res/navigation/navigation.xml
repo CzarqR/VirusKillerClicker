@@ -40,7 +40,7 @@
             app:argType="string" />
         <argument
             android:name="money"
-            app:argType="integer" />
+            app:argType="long" />
         <action
             android:id="@+id/shop_to_game"
             app:destination="@id/gameFragment"

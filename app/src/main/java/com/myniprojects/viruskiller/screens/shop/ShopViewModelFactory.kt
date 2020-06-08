@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.myniprojects.viruskiller.model.Bonuses
 
 class ShopViewModelFactory(
-    private val money: Int,
+    private val money: Long,
     private val bonuses: Bonuses,
     private val context: Context
 ) : ViewModelProvider.Factory

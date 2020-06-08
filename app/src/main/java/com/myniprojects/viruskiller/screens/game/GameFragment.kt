@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
+import com.myniprojects.viruskiller.MainActivity
 
 import com.myniprojects.viruskiller.R
 import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
@@ -58,7 +59,7 @@ class GameFragment : Fragment()
                 bonusesDataString,
                 viewModel.gameState.money.value!!
             )
-
+            MainActivity.showAd()
             Navigation.findNavController(requireView()).navigate(action)
         }
 

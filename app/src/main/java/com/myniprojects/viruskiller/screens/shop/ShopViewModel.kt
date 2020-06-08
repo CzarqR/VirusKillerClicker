@@ -12,19 +12,19 @@ import com.myniprojects.viruskiller.model.Bonuses
 import com.myniprojects.viruskiller.model.BonusesData
 import timber.log.Timber
 
-class ShopViewModel(money: Int, private var bonuses: Bonuses, private var context: Context) :
+class ShopViewModel(money: Long, private var bonuses: Bonuses, private var context: Context) :
     ViewModel()
 {
 
-    private val _money = MutableLiveData<Int>()
-    val money: LiveData<Int>
+    private val _money = MutableLiveData<Long>()
+    val money: LiveData<Long>
         get() = _money
 
     private var _bonusList = MutableLiveData<MutableList<Bonus>>()
     val bonusList: LiveData<MutableList<Bonus>>
         get() = _bonusList
 
-    val mon: Int
+    val mon: Long
         get() = _money.value!!
 
 
@@ -65,7 +65,7 @@ class ShopViewModel(money: Int, private var bonuses: Bonuses, private var contex
         with(sharedPreferences.edit()) {
 
             putString(context.getString(R.string.bonuses_key), bonusesDataString)
-            putInt(context.getString(R.string.money_key), mon)
+            putLong(context.getString(R.string.money_key), mon)
             commit()
         }
     }

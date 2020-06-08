@@ -2,6 +2,8 @@ package com.myniprojects.viruskiller.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.utils.App
 import timber.log.Timber
 
 class Bonuses(
@@ -141,32 +143,72 @@ class Bonuses(
     @Suppress("UNCHECKED_CAST")
     fun getBonusList(): MutableList<Bonus>
     {
-
         val bonusSavedLivesMultiplier0 =
-            Bonus(_savedLivesMultiplier0.value!!, pricesSLM, valuesSLM as Array<Number>)
+            Bonus(
+                _savedLivesMultiplier0.value!!,
+                pricesSLM,
+                valuesSLM as Array<Number>,
+                App.context!!.getString(R.string.masks),
+                App.context!!.getString(R.string.masks_desc)
+
+            )
 
         val bonusSavedLivesMultiplier1 =
-            Bonus(_savedLivesMultiplier1.value!!, pricesSLM, valuesSLM as Array<Number>)
+            Bonus(
+                _savedLivesMultiplier1.value!!, pricesSLM, valuesSLM as Array<Number>,
+                App.context!!.getString(R.string.gloves),
+                App.context!!.getString(R.string.gloves_desc)
+            )
 
         val bonusSavedLivesMultiplier2 =
-            Bonus(_savedLivesMultiplier2.value!!, pricesSLM, valuesSLM as Array<Number>)
+            Bonus(
+                _savedLivesMultiplier2.value!!, pricesSLM, valuesSLM as Array<Number>,
+                App.context!!.getString(R.string.hand_washing_preparations),
+                App.context!!.getString(R.string.hand_washing_preparations_desc)
+            )
 
         val bonusSavedLivesMultiplier3 =
-            Bonus(_savedLivesMultiplier3.value!!, pricesSLM, valuesSLM as Array<Number>)
+            Bonus(
+                _savedLivesMultiplier3.value!!, pricesSLM, valuesSLM as Array<Number>,
+                App.context!!.getString(R.string.vaccine),
+                App.context!!.getString(R.string.vaccine_desc)
+            )
 
         val bonusCriticalAttack =
-            Bonus(_criticalAttack.value!!, pricesCA, valuesCA as Array<Number>)
+            Bonus(
+                _criticalAttack.value!!, pricesCA, valuesCA as Array<Number>,
+                App.context!!.getString(R.string.critical_attack),
+                App.context!!.getString(R.string.critical_attack_desc)
+            )
 
         val bonusNumberAttackPerClick =
-            Bonus(_numbersAttackPerClick.value!!, pricesNAPC, valuesNAPC as Array<Number>)
+            Bonus(
+                _numbersAttackPerClick.value!!, pricesNAPC, valuesNAPC as Array<Number>,
+                App.context!!.getString(R.string.attack_numbers_per_click),
+                App.context!!.getString(R.string.attack_numbers_per_click_desc)
+            )
 
         val bonusCoinsPerMinutes =
-            Bonus(_coinsPerMinutes.value!!, pricesCPM, valuesCPM as Array<Number>)
+            Bonus(
+                _coinsPerMinutes.value!!, pricesCPM, valuesCPM as Array<Number>,
+                App.context!!.getString(R.string.coins_per_minute),
+                App.context!!.getString(R.string.coins_per_minute_desc)
+            )
 
-        val bonusStorage = Bonus(_storage.value!!, pricesS, valuesS as Array<Number>)
+        val bonusStorage = Bonus(
+            _storage.value!!, pricesS, valuesS as Array<Number>,
+            App.context!!.getString(R.string.storage),
+            App.context!!.getString(R.string.storage_desc)
+        )
 
         val bonusRewardMultiplier =
-            Bonus(_rewardMultiplier.value!!, pricesRM, valuesRM as Array<Number>)
+            Bonus(
+                _rewardMultiplier.value!!,
+                pricesRM,
+                valuesRM as Array<Number>,
+                App.context!!.getString(R.string.reward_multiplier),
+                App.context!!.getString(R.string.reward_multiplier_desc)
+            )
 
         return mutableListOf(
             bonusSavedLivesMultiplier0,

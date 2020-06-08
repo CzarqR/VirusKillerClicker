@@ -17,13 +17,29 @@
     <string name="max_lvl">Max Lvl</string>
     <string name="storage_value_key">Max Lvl</string>
     <string name="last_minute_passed_key">last_minute_passed_key</string>
+    <string name="ad_mob_id">ca-app-pub-8557833758890885~4541898244</string>
+    <string name="banner_bottom_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="fullscreen_ad">ca-app-pub-3940256099942544/1033173712</string>
+
+
+
     <string name="masks">Masks</string>
     <string name="gloves">Gloves</string>
-    <string name="bonus4">Bonus 4</string>
-
+    <string name="vaccine">Vaccine</string>
+    <string name="hand_washing_preparations">Hand washing preparations</string>
     <string name="critical_attack">Critical attack</string>
     <string name="attack_numbers_per_click">Attack numbers per click</string>
     <string name="coins_per_minute">Coins per minute</string>
     <string name="reward_multiplier">Reward multiplier</string>
     <string name="storage">Storage</string>
+
+    <string name="masks_desc">Masks d</string>
+    <string name="gloves_desc">Gloves d</string>
+    <string name="vaccine_desc">Vaccine d</string>
+    <string name="hand_washing_preparations_desc">Hand washing preparations d</string>
+    <string name="critical_attack_desc">Critical attack d</string>
+    <string name="attack_numbers_per_click_desc">Attack numbers per click d</string>
+    <string name="coins_per_minute_desc">Coins per minute d</string>
+    <string name="reward_multiplier_desc">Reward multiplier d</string>
+    <string name="storage_desc">Storage d</string>
 </resources>

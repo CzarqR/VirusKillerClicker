@@ -59,11 +59,15 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         private val upgrade: TextView = itemView.butUpgrade
         private val currValue: TextView = itemView.txtCurrentValue
         private val nextValue: TextView = itemView.txtNextValue
+        private val name: TextView = itemView.txtName
+        private val desc: TextView = itemView.txtDesc
 
 
         fun bind(bonus: Bonus)
         {
             maxLvl.text = bonus.maxLvlString
+            name.text = bonus.name
+            desc.text = bonus.desc
 
             currLvl.text = bonus.currLvlString
             price.text = bonus.currPriceString

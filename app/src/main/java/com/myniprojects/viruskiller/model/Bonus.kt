@@ -8,7 +8,9 @@ import timber.log.Timber
 data class Bonus(
     var currLvl: Byte,
     val prices: IntArray,
-    val values: Array<Number>
+    val values: Array<Number>,
+    val name: String,
+    val desc: String
 )
 {
     val isMax: Boolean

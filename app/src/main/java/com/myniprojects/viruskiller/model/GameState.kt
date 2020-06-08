@@ -14,8 +14,8 @@ class GameState(private val context: Context)
 
     //region properties
 
-    private val _money = MutableLiveData<Int>()
-    val money: LiveData<Int>
+    private val _money = MutableLiveData<Long>()
+    val money: LiveData<Long>
         get() = _money
 
     private val _killedViruses = MutableLiveData<Int>()
@@ -138,7 +138,7 @@ class GameState(private val context: Context)
 
             putString(context.getString(R.string.game_state_key), gameStateDataString)
             putString(context.getString(R.string.virus_key), virusDataString)
-            putInt(context.getString(R.string.money_key), _money.value!!)
+            putLong(context.getString(R.string.money_key), _money.value!!)
             putInt(context.getString(R.string.storage_value_key), currStorage)
             commit()
         }
@@ -164,7 +164,7 @@ class GameState(private val context: Context)
             context.getString(R.string.NotLoaded)
         )
 
-        val mon: Int = sharedPreferences.getInt(
+        val mon: Long = sharedPreferences.getLong(
             context.getString(R.string.money_key),
             0
         )
@@ -254,7 +254,7 @@ class GameState(private val context: Context)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-        val mon: Int = sharedPreferences.getInt(
+        val mon: Long = sharedPreferences.getLong(
             context.getString(R.string.money_key),
             0
         )
@@ -277,8 +277,7 @@ class GameState(private val context: Context)
 
 
         _bonuses = Bonuses(bonusesData)
-        _money.value = mon.plus(1000000)
-
+        _money.value = mon
     }
 
     fun collectStorage()

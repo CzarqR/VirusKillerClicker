@@ -1,21 +1,24 @@
 package com.myniprojects.viruskiller
 
 import android.os.Bundle
-import android.util.DisplayMetrics
+import android.view.Gravity
 import android.view.View
+import android.widget.Button
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.*
-import com.google.android.gms.ads.reward.RewardItem
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
-import com.myniprojects.viruskiller.utils.App
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
+import com.google.android.material.snackbar.Snackbar
+import com.myniprojects.viruskiller.generated.callback.OnClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
-import java.util.*
 
 
 class MainActivity : AppCompatActivity()
 {
+
 
     companion object
     {
@@ -62,13 +65,65 @@ class MainActivity : AppCompatActivity()
         Timber.i("onCreate Called")
 
 
-
 //        but_test.setOnClickListener {
 //            mRewardedVideoAd.show()
 //        }
 
+
+        //RxJava bus test
+        button2.setOnClickListener {
+            Timber.i("Publish")
+            //            RxBus.publish(RxEvent.EventAdWatched("Attack"))
+
+            val onClickListener = View.OnClickListener {  _->
+                Timber.i("Clicked !!!")
+            }
+            makeSnackbar(button2, "Text", "Action", onClickListener)
+
+        }
+
     }
 
+
+    private fun makeSnackbar(
+        v: View,
+        content: String,
+        buttonText: String = "",
+        onClickListener: View.OnClickListener? = null
+    )
+    {
+//        val snackbar = Snackbar.make(
+//            view, "Replace with your own action",
+//            Snackbar.LENGTH_LONG
+//        ).setAction("Action", View.OnClickListener {
+//            Timber.i("Clicked")
+//        })
+//
+//        snackbar.setActionTextColor(Color.YELLOW)
+//
+//
+//        val snackbarView = snackbar.view
+//        snackbarView.setBackgroundColor(Color.LTGRAY)
+////
+////        val textView =
+////            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+////        textView.setTextColor(Color.BLUE)
+////        textView.textSize = 28f
+//
+//        snackbar.show()
+
+        val snack: Snackbar = Snackbar.make(v, content, Snackbar.LENGTH_LONG)
+        if (onClickListener != null)
+        {
+            snack.setAction(buttonText, onClickListener)
+        }
+        val view = snack.view
+        val params = view.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        view.layoutParams = params
+        snack.show()
+
+    }
 
     //Hide navigation bar permanently
     private fun fullScreenCall()
@@ -122,7 +177,6 @@ class MainActivity : AppCompatActivity()
     }
 
     // endregion
-
 
 
 }

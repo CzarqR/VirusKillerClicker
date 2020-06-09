@@ -5,6 +5,10 @@ import android.util.DisplayMetrics
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.*
+import com.google.android.gms.ads.reward.RewardItem
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.myniprojects.viruskiller.utils.App
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.util.*
@@ -16,7 +20,7 @@ class MainActivity : AppCompatActivity()
     companion object
     {
         private lateinit var mInterstitialAd: InterstitialAd
-        fun showAd()
+        fun showInterstitialAd()
         {
             if (mInterstitialAd.isLoaded)
             {
@@ -27,12 +31,14 @@ class MainActivity : AppCompatActivity()
                 Timber.d("The interstitial wasn't loaded yet.")
             }
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         MobileAds.initialize(this) {}
 
         // banner
@@ -43,8 +49,10 @@ class MainActivity : AppCompatActivity()
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = getString(R.string.fullscreen_ad)
         mInterstitialAd.loadAd(AdRequest.Builder().build())
-        mInterstitialAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
+        mInterstitialAd.adListener = object : AdListener()
+        {
+            override fun onAdClosed()
+            {
                 mInterstitialAd.loadAd(AdRequest.Builder().build())
             }
         }
@@ -52,6 +60,13 @@ class MainActivity : AppCompatActivity()
 
         Timber.plant(Timber.DebugTree())
         Timber.i("onCreate Called")
+
+
+
+//        but_test.setOnClickListener {
+//            mRewardedVideoAd.show()
+//        }
+
     }
 
 
@@ -62,7 +77,7 @@ class MainActivity : AppCompatActivity()
             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
     }
 
-    /** Lifecycle Methods **/
+    // region Lifecycle Methods
     override fun onStart()
     {
         super.onStart()
@@ -105,4 +120,9 @@ class MainActivity : AppCompatActivity()
         super.onSaveInstanceState(outState)
         Timber.i("onSavedInstance Called")
     }
+
+    // endregion
+
+
+
 }

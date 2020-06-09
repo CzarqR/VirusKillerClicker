@@ -9,6 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.ceil
+import com.google.android.gms.ads.reward.RewardItem
 
 class GameViewModel(application: Application) : AndroidViewModel(application)
 {
@@ -28,7 +29,8 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
         parentJob = viewModelScope.launch {
             // suspend till first minute comes after some seconds
             delay((ceil(System.currentTimeMillis() / 10_000.0).toLong() * 10_000) - System.currentTimeMillis())
-            while (true) {
+            while (true)
+            {
                 launch {
                     oneMinutePassed()
                 }
@@ -43,8 +45,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
     }
 
 
-
-
     private fun oneMinutePassed()
     {
         Timber.i("Execute")
@@ -57,7 +57,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
         Timber.i("Game view model cleared")
         //saveGame() //saving when closing game fragment
     }
-
 
 
     fun printBonuses()
@@ -78,6 +77,12 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
     fun virusClick()
     {
         gameState.attackViruses()
+    }
+
+    fun rewardAttack(r: RewardItem)
+    {
+        Timber.i("${r.amount} ${r.type}")
+        _gameState.bonusAttack(10_000)
     }
 
 }

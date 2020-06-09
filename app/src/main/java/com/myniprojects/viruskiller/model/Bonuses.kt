@@ -112,6 +112,7 @@ class Bonuses(
         get() = valuesS[_storage.value!!.toInt()]
 
 
+
     //endregion
 
     init

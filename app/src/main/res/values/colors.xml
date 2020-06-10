@@ -3,4 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+
+    //menu
+    <color name="color_head">#6A1B9A</color>
+    <color name="color_desc">#D84315</color>
+
 </resources>

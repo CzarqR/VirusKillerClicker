@@ -46,4 +46,9 @@
     <string name="reward_multiplier_desc">Reward multiplier d</string>
     <string name="storage_desc">Storage d</string>
 
+
+    <string name="snackbar_attack">You get the %1$d more bonus attack for %2$d minutes</string>
+    <string name="cool">Cool</string>
+
+
 </resources>

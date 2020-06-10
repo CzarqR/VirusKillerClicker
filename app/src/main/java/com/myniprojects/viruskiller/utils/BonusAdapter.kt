@@ -75,23 +75,23 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             nextValue.text = bonus.nextValString
 
             upgrade.setOnClickListener {
-//                Timber.i("Clicked update pos $position")
-//                Timber.i("Current lvl ${bonus.currLvl}")
-//                Timber.i("Price current ${bonus.currPrice}")
-//                Timber.i("Price next ${bonus.nextPrice}")
-//                Timber.i("Value curr ${bonus.currVal}")
-//                Timber.i("Value next ${bonus.nextVal}")
+//                Log.i("Clicked update pos $position")
+//                Log.i("Current lvl ${bonus.currLvl}")
+//                Log.i("Price current ${bonus.currPrice}")
+//                Log.i("Price next ${bonus.nextPrice}")
+//                Log.i("Value curr ${bonus.currVal}")
+//                Log.i("Value next ${bonus.nextVal}")
 
 
                 if (bonus.isMax) //lvl is max cannot update
                 {
-                    Timber.i("Lvl is max cannot update")
+                    Log.i("Lvl is max cannot update")
                 }
                 else
                 {
                     if (bonus.currPrice <= shopViewModel.mon)
                     {
-                        Timber.i("Updating")
+                        Log.i("Updating")
                         val cost = bonus.currPrice
 
                         bonus.currLvl = bonus.currLvl.plus(1).toByte()
@@ -105,7 +105,7 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
                     }
                     else
                     {
-                        Timber.i("Cannot update, not enough money")
+                        Log.i("Cannot update, not enough money")
                     }
                 }
 

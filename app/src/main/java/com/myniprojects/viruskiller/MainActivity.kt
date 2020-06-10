@@ -3,7 +3,6 @@ package com.myniprojects.viruskiller
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.widget.Button
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdListener
@@ -11,14 +10,15 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
-import com.myniprojects.viruskiller.generated.callback.OnClickListener
+import com.myniprojects.viruskiller.utils.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity()
 {
-
+    private var loadAdBannerRequests = 0
+    private var loadAdInterstitialRequests = 0
 
     companion object
     {
@@ -31,8 +31,34 @@ class MainActivity : AppCompatActivity()
             }
             else
             {
-                Timber.d("The interstitial wasn't loaded yet.")
+                Log.i("The interstitial wasn't loaded yet.")
             }
+        }
+
+        fun showSnackbar(
+            v: View,
+            content: String,
+            buttonText: String? = null,
+            onClickListener: View.OnClickListener? = null,
+            isTop: Boolean = true,
+            duration: Int = Snackbar.LENGTH_SHORT
+        )
+        {
+
+            val snack: Snackbar = Snackbar.make(v, content, duration)
+            if (buttonText != null)
+            {
+                snack.setAction(buttonText, onClickListener)
+            }
+
+            if (isTop)
+            {
+                val view = snack.view
+                val params = view.layoutParams as FrameLayout.LayoutParams
+                params.gravity = Gravity.TOP
+                view.layoutParams = params
+            }
+            snack.show()
         }
 
     }
@@ -47,6 +73,25 @@ class MainActivity : AppCompatActivity()
         // banner
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
+        adView.adListener = object : AdListener()
+        {
+            override fun onAdFailedToLoad(p0: Int)
+            {
+                Timber.d("Ad banner failed to load")
+                super.onAdFailedToLoad(p0)
+                if (loadAdBannerRequests++ < 5)
+                {
+                    adView.loadAd(adRequest)
+                }
+            }
+
+            override fun onAdLoaded()
+            {
+                Timber.d("Ad banner loaded")
+                super.onAdLoaded()
+                loadAdBannerRequests = 0
+            }
+        }
 
         // interstitial
         mInterstitialAd = InterstitialAd(this)
@@ -58,11 +103,30 @@ class MainActivity : AppCompatActivity()
             {
                 mInterstitialAd.loadAd(AdRequest.Builder().build())
             }
+
+            override fun onAdFailedToLoad(p0: Int)
+            {
+                Timber.wtf("Ad interstitial failed to load")
+                super.onAdFailedToLoad(p0)
+                if (loadAdInterstitialRequests++ < 5)
+                {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                }
+            }
+
+            override fun onAdLoaded()
+            {
+                Timber.wtf("Ad interstitial loaded")
+                super.onAdLoaded()
+                loadAdInterstitialRequests = 0
+            }
         }
 
 
         Timber.plant(Timber.DebugTree())
-        Timber.i("onCreate Called")
+        Log.d("onCreate Called d")
+        Log.i("onCreate Called i")
+        //Log.i("onCreate Called")
 
 
 //        but_test.setOnClickListener {
@@ -71,59 +135,10 @@ class MainActivity : AppCompatActivity()
 
 
         //RxJava bus test
-        button2.setOnClickListener {
-            Timber.i("Publish")
-            //            RxBus.publish(RxEvent.EventAdWatched("Attack"))
-
-            val onClickListener = View.OnClickListener {  _->
-                Timber.i("Clicked !!!")
-            }
-            makeSnackbar(button2, "Text", "Action", onClickListener)
-
-        }
+        //RxBus.publish(RxEvent.EventAdWatched("Attack"))
 
     }
 
-
-    private fun makeSnackbar(
-        v: View,
-        content: String,
-        buttonText: String = "",
-        onClickListener: View.OnClickListener? = null
-    )
-    {
-//        val snackbar = Snackbar.make(
-//            view, "Replace with your own action",
-//            Snackbar.LENGTH_LONG
-//        ).setAction("Action", View.OnClickListener {
-//            Timber.i("Clicked")
-//        })
-//
-//        snackbar.setActionTextColor(Color.YELLOW)
-//
-//
-//        val snackbarView = snackbar.view
-//        snackbarView.setBackgroundColor(Color.LTGRAY)
-////
-////        val textView =
-////            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-////        textView.setTextColor(Color.BLUE)
-////        textView.textSize = 28f
-//
-//        snackbar.show()
-
-        val snack: Snackbar = Snackbar.make(v, content, Snackbar.LENGTH_LONG)
-        if (onClickListener != null)
-        {
-            snack.setAction(buttonText, onClickListener)
-        }
-        val view = snack.view
-        val params = view.layoutParams as FrameLayout.LayoutParams
-        params.gravity = Gravity.TOP
-        view.layoutParams = params
-        snack.show()
-
-    }
 
     //Hide navigation bar permanently
     private fun fullScreenCall()
@@ -136,47 +151,48 @@ class MainActivity : AppCompatActivity()
     override fun onStart()
     {
         super.onStart()
-        Timber.i("onStart Called")
+        Log.i("onStart Called")
     }
 
     override fun onResume()
     {
         super.onResume()
-        Timber.i("onResume Called")
+        Log.i("onResume Called")
         //fullScreenCall()
     }
 
     override fun onPause()
     {
         super.onPause()
-        Timber.i("onPause Called")
+        Log.i("onPause Called")
     }
 
     override fun onStop()
     {
         super.onStop()
-        Timber.i("onStop Called")
+        Log.i("onStop Called")
     }
 
     override fun onDestroy()
     {
         super.onDestroy()
-        Timber.i("onDestroy Called")
+        Log.i("onDestroy Called")
     }
 
     override fun onRestart()
     {
         super.onRestart()
-        Timber.i("onRestart Called")
+        Log.i("onRestart Called")
     }
 
     override fun onSaveInstanceState(outState: Bundle)
     {
         super.onSaveInstanceState(outState)
-        Timber.i("onSavedInstance Called")
+        Log.i("onSavedInstance Called")
     }
 
     // endregion
 
 
 }
+

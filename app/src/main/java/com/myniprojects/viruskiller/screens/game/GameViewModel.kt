@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.ceil
 import com.google.android.gms.ads.reward.RewardItem
+import com.myniprojects.viruskiller.utils.Log
 
 class GameViewModel(application: Application) : AndroidViewModel(application)
 {
@@ -21,7 +22,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
 
     init
     {
-        Timber.i("Init GameViewModel")
+        Log.i("Init GameViewModel")
     }
 
     fun onResume()
@@ -47,14 +48,14 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
 
     private fun oneMinutePassed()
     {
-        Timber.i("Execute")
+        Log.i("Execute")
         _gameState.oneMinutePassed()
     }
 
     override fun onCleared()
     {
         super.onCleared()
-        Timber.i("Game view model cleared")
+        Log.i("Game view model cleared")
         //saveGame() //saving when closing game fragment
     }
 
@@ -81,7 +82,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
 
     fun rewardAttack(r: RewardItem)
     {
-        Timber.i("${r.amount} ${r.type}")
+        Log.i("${r.amount} ${r.type}")
         _gameState.bonusAttack(10_000)
     }
 

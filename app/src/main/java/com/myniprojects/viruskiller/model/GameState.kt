@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.utils.Log
 import timber.log.Timber
 import java.util.*
 import java.util.Timer
@@ -13,6 +14,11 @@ import kotlin.concurrent.schedule
 
 class GameState(private val context: Context)
 {
+
+    companion object
+    {
+        val xpArray = arrayOf(10, 20, 40, 80, 160, 320, 640, 1280, 2480)
+    }
 
     //region properties
 
@@ -66,15 +72,43 @@ class GameState(private val context: Context)
             _storage.value = "$field / ${_bonuses.storageValue}"
         }
 
-    private var bonusAttack: Int = 0
+    private val _crit = MutableLiveData<String>()
+    val crit: LiveData<String>
+        get() = _crit
 
-    private val xpArray = arrayOf(10, 20, 40, 80, 160, 320, 640, 1280, 2480)
+    private var bonusAttack: Int = 0
+        set(value)
+        {
+            field = value
+            currAttacksPerClick = (_bonuses.numbersAttackPerClickValue + bonusAttack)
+        }
+
+
+    private var currCrit: Float = 0F
+        set(value)
+        {
+            field = value
+            _crit.value = value.toString()
+        }
+
+
+    private val _attackPerClick = MutableLiveData<String>()
+    val attackPerClick: LiveData<String>
+        get() = _attackPerClick
+
+
+    private var currAttacksPerClick: Int = 1
+        set(value)
+        {
+            field = value
+            _attackPerClick.postValue(value.toString())
+        }
 
     //endregion
 
     init
     {
-        Timber.i("Init  GameState")
+        Log.i("Init  GameState")
         loadGame()
 //        MainActivity.mRewardedVideoAd
     }
@@ -82,27 +116,27 @@ class GameState(private val context: Context)
 
     fun attackViruses()
     {
-        Timber.i("Number attack per click: ${bonuses.numbersAttackPerClickValue}. Critical Attack: ${bonuses.criticalAttackValue}")
+        Log.i("Number attack per click: ${bonuses.numbersAttackPerClickValue}. Critical Attack: ${bonuses.criticalAttackValue}")
         var dmg = 0
         for (i in 1..(bonuses.numbersAttackPerClickValue + bonusAttack))
         {
             dmg += if ((1..100).random() < bonuses.criticalAttackValue) // crit
             {
-                Timber.i("Crit")
+                Log.i("Crit")
                 2
             }
             else
             {
-                Timber.i("Normal")
+                Log.i("Normal")
                 1
             }
         }
 
-        Timber.i("%s dmg total", dmg.toString())
+        Log.i("$dmg dmg total")
 
         if (virus.attackVirus(dmg))//virus dead
         {
-            Timber.i("Dead")
+            Log.i("Dead")
             _money.value = _money.value!!.plus(
                 (virus.reward.value!!.times(_bonuses.rewardMultiplierValue).toInt())
             )
@@ -111,7 +145,7 @@ class GameState(private val context: Context)
 
             if (_xp.value!! >= _xpToNextLvl.value!!) //lvl upgrade
             {
-                Timber.i("New Lvl")
+                Log.i("New Lvl")
                 _lvl.value = _lvl.value!!.plus(1)
                 _xpToNextLvl.value = xpArray[_lvl.value!!]
             }
@@ -121,13 +155,13 @@ class GameState(private val context: Context)
         }
         else
         {
-            Timber.i("Is alive")
+            Log.i("Is alive")
         }
     }
 
     fun saveGame()
     {
-        Timber.i("Save game in GameState")
+        Log.i("Save game in GameState")
         val gameStateData = GameStateData(this)
         val virusData = VirusData(_virus)
 
@@ -227,9 +261,11 @@ class GameState(private val context: Context)
         _savedLives.value = gameStateData.savedLives
         _xpToNextLvl.value = xpArray[_lvl.value!!]
 
-        Timber.i("Load instance: $bonusesData")
+        Log.i("Load instance: $bonusesData")
         _bonuses = Bonuses(bonusesData)
         currStorage = sto
+        currCrit = (_bonuses.criticalAttackValue + 100).toFloat() / 100
+        currAttacksPerClick = (_bonuses.numbersAttackPerClickValue + bonusAttack)
         _virus = Virus(virusData)
 
     }
@@ -240,7 +276,7 @@ class GameState(private val context: Context)
         _savedLives.value = _savedLives.value!!.plus(_bonuses.savedLivesSum)
 
         val current = Calendar.getInstance().time
-        Timber.i("Saved ${current.time / 10_000}")
+        Log.i("Saved ${current.time / 10_000}")
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
         with(sharedPreferences.edit()) {
@@ -249,7 +285,7 @@ class GameState(private val context: Context)
             commit()
         }
 
-        Timber.i("${current.time}")
+        Log.i("${current.time}")
 
     }
 
@@ -282,6 +318,9 @@ class GameState(private val context: Context)
 
 
         _bonuses = Bonuses(bonusesData)
+        currCrit = (_bonuses.criticalAttackValue + 100).toFloat() / 100
+        currAttacksPerClick = (_bonuses.numbersAttackPerClickValue + bonusAttack)
+
         _money.value = mon
     }
 
@@ -307,10 +346,10 @@ class GameState(private val context: Context)
         if (previous > 0)
         {
             val current = Calendar.getInstance().time
-            Timber.i("Load ${current.time / 10_000}")
+            Log.i("Load ${current.time / 10_000}")
 
             val passed = (current.time / 10_000 - previous)
-            Timber.i("Passed $passed")
+            Log.i("Passed $passed")
 
             currStorage += (_bonuses.coinsPerMinutesValue * passed).toInt()
             _savedLives.value = _savedLives.value!!.plus(_bonuses.savedLivesSum.times(passed))
@@ -325,15 +364,15 @@ class GameState(private val context: Context)
 
     fun test()
     {
-//        Timber.i("${_bonuses.savedLivesMultiplier0Value}")
-//        Timber.i("${_bonuses.savedLivesMultiplier1Value}")
-//        Timber.i("${_bonuses.savedLivesMultiplier2Value}")
-//        Timber.i("${_bonuses.savedLivesMultiplier3Value}")
-//        Timber.i("${_bonuses.criticalAttackValue}")
-//        Timber.i("${_bonuses.numbersAttackPerClickValue}")
-//        Timber.i("${_bonuses.coinsPerMinutesValue}")
-//        Timber.i("${_bonuses.rewardMultiplierValue}")
-//        Timber.i("${_bonuses.storageValue}")
+//        Log.i("${_bonuses.savedLivesMultiplier0Value}")
+//        Log.i("${_bonuses.savedLivesMultiplier1Value}")
+//        Log.i("${_bonuses.savedLivesMultiplier2Value}")
+//        Log.i("${_bonuses.savedLivesMultiplier3Value}")
+//        Log.i("${_bonuses.criticalAttackValue}")
+//        Log.i("${_bonuses.numbersAttackPerClickValue}")
+//        Log.i("${_bonuses.coinsPerMinutesValue}")
+//        Log.i("${_bonuses.rewardMultiplierValue}")
+//        Log.i("${_bonuses.storageValue}")
 //        currStorage += 10
     }
 

@@ -13,13 +13,14 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.MainActivity
 
 import com.myniprojects.viruskiller.R
 import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
 import com.myniprojects.viruskiller.model.BonusesData
-import kotlinx.android.synthetic.main.activity_main.*
+import com.myniprojects.viruskiller.utils.Log
 import kotlinx.android.synthetic.main.fragment_game.*
 import timber.log.Timber
 
@@ -29,7 +30,8 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var viewModel: GameViewModel
     private lateinit var binding: FragmentGameBinding
-
+    private var wasRewarded: Boolean = false
+    private var adLoadRequests = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +39,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         savedInstanceState: Bundle?
     ): View?
     {
-        Timber.i("Game ViewModel OnCreate")
+        Log.i("Game ViewModel OnCreate")
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_game,
@@ -86,14 +88,14 @@ class GameFragment : Fragment(), RewardedVideoAdListener
 //    override fun onSaveInstanceState(outState: Bundle)
 //    {
 //        super.onSaveInstanceState(outState)
-//        Timber.i("SaveInstanceState")
+//        Log.i("SaveInstanceState")
 //        viewModel.saveGame() //saving when shutting off app
 //    }
 
     override fun onPause()
     {
         super.onPause()
-        Timber.i("Pause GameFragment")
+        Log.i("Pause GameFragment")
         viewModel.saveGame()
         viewModel.onPause()
     }
@@ -101,7 +103,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     override fun onResume()
     {
         super.onResume()
-        Timber.i("Resume GameFragment")
+        Log.i("Resume GameFragment")
         viewModel.loadMoneyAndBonuses()
         viewModel.gameState.updateAfterBreak()
         viewModel.onResume()
@@ -115,51 +117,73 @@ class GameFragment : Fragment(), RewardedVideoAdListener
             getString(R.string.reward_ad),
             AdRequest.Builder().build()
         )
+        adLoadRequests = 0
     }
 
     override fun onRewardedVideoAdClosed()
     {
-        Timber.i("onRewardedVideoAdClosed")
+        Log.i("onRewardedVideoAdClosed")
         loadRewardedVideoAd()
+        if (wasRewarded)
+        {
+            MainActivity.showSnackbar(
+                butShop,
+                getString(R.string.snackbar_attack, 1, 3),
+                getString(R.string.cool),
+                View.OnClickListener {
+                    Log.i("Snackbar cool clicked")
+                },
+                duration = Snackbar.LENGTH_LONG
+            )
+            wasRewarded = false
+        }
+
     }
 
     override fun onRewardedVideoAdLeftApplication()
     {
-        Timber.i("onRewardedVideoAdLeftApplication")
+        Log.i("onRewardedVideoAdLeftApplication")
     }
 
     override fun onRewardedVideoAdLoaded()
     {
-        Timber.i("onRewardedVideoAdLoaded")
+        Log.i("onRewardedVideoAdLoaded")
         button.isEnabled = true
     }
 
     override fun onRewardedVideoAdOpened()
     {
-        Timber.i("onRewardedVideoAdOpened")
+        Log.i("onRewardedVideoAdOpened")
     }
 
     override fun onRewardedVideoCompleted()
     {
-        Timber.i("onRewardedVideoCompleted")
+        Log.i("onRewardedVideoCompleted")
     }
 
     override fun onRewarded(p0: RewardItem?)
     {
-        Timber.i("onRewarded")
+        Log.i("onRewarded")
+        wasRewarded = true
         viewModel.rewardAttack(p0!!)
     }
 
     override fun onRewardedVideoStarted()
     {
-        Timber.i("onRewardedVideoStarted")
+        Log.i("onRewardedVideoStarted")
     }
 
     override fun onRewardedVideoAdFailedToLoad(p0: Int)
     {
-        Timber.i("onRewardedVideoAdFailedToLoad")
+        Log.i("onRewardedVideoAdFailedToLoad")
+        adLoadRequests++
+        if (adLoadRequests < 5)
+        {
+            loadRewardedVideoAd()
+        }
     }
 
     //endregion
 
 }
+

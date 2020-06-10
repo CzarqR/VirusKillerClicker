@@ -19,10 +19,29 @@ class Bonuses(
 )
 {
 
+    companion object
+    {
+        val pricesSLM = intArrayOf(100, 200, 400, 800, 1600, 3200, 6400, 128000)
+        val valuesSLM = arrayOf(0, 1, 2, 4, 8, 16, 32, 64, 150)
+
+        val pricesCA = intArrayOf(200, 400, 800)
+        val valuesCA = arrayOf(0, 1, 2, 4)
+
+        val pricesNAPC = intArrayOf(200, 300, 800, 2000)
+        val valuesNAPC = arrayOf(1, 2, 3, 4, 5)
+
+        val pricesCPM = intArrayOf(10, 20, 40)
+        val valuesCPM = arrayOf(10, 25, 50, 100)
+
+        val pricesRM = intArrayOf(20000, 45000, 90000)
+        val valuesRM = arrayOf(1F, 1.05F, 1.1F, 1.15F)
+
+        val pricesS = intArrayOf(200, 400, 800)
+        val valuesS = arrayOf(200, 500, 900, 1200)
+    }
+
     //region bonuses
 
-    private val pricesSLM = intArrayOf(100, 200, 400, 800, 1600, 3200, 6400, 128000)
-    private val valuesSLM = arrayOf(0, 1, 2, 4, 8, 16, 32, 64, 150)
 
     private val _savedLivesMultiplier0 = MutableLiveData<Byte>()
     val savedLivesMultiplier0: LiveData<Byte>
@@ -56,9 +75,6 @@ class Bonuses(
         get() = savedLivesMultiplier0Value + savedLivesMultiplier1Value + savedLivesMultiplier2Value + savedLivesMultiplier3Value
 
 
-    private val pricesCA = intArrayOf(200, 400, 800)
-    private val valuesCA = arrayOf(0, 1, 2, 4)
-
     private val _criticalAttack = MutableLiveData<Byte>() //percentage value to give critical attack
     val criticalAttack: LiveData<Byte>
         get() = _criticalAttack
@@ -66,9 +82,6 @@ class Bonuses(
     val criticalAttackValue: Int
         get() = valuesCA[_criticalAttack.value!!.toInt()]
 
-
-    private val pricesNAPC = intArrayOf(200, 300, 800, 2000)
-    private val valuesNAPC = arrayOf(1, 2, 3, 4, 5)
 
     private val _numbersAttackPerClick = MutableLiveData<Byte>()
     val numbersAttackPerClick: LiveData<Byte>
@@ -78,9 +91,6 @@ class Bonuses(
         get() = valuesNAPC[_numbersAttackPerClick.value!!.toInt()]
 
 
-    private val pricesCPM = intArrayOf(10, 20, 40)
-    private val valuesCPM = arrayOf(10, 25, 50, 100)
-
     private val _coinsPerMinutes = MutableLiveData<Byte>()
     val coinsPerMinutes: LiveData<Byte>
         get() = _coinsPerMinutes
@@ -88,9 +98,6 @@ class Bonuses(
     val coinsPerMinutesValue: Int
         get() = valuesCPM[_coinsPerMinutes.value!!.toInt()]
 
-
-    private val pricesRM = intArrayOf(20000, 45000, 90000)
-    private val valuesRM = arrayOf(1F, 1.05F, 1.1F, 1.15F)
 
     private val _rewardMultiplier =
         MutableLiveData<Byte>()//multiplier the reward after killing virus
@@ -101,16 +108,12 @@ class Bonuses(
         get() = valuesRM[_rewardMultiplier.value!!.toInt()]
 
 
-    private val pricesS = intArrayOf(200, 400, 800)
-    private val valuesS = arrayOf(200, 500, 900, 1200)
-
     private val _storage = MutableLiveData<Byte>()
     val storage: LiveData<Byte>
         get() = _storage
 
     val storageValue: Int
         get() = valuesS[_storage.value!!.toInt()]
-
 
 
     //endregion

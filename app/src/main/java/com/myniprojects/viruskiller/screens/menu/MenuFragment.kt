@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.utils.Log
 import com.myniprojects.viruskiller.utils.RxBus
 import com.myniprojects.viruskiller.utils.RxEvent
 import io.reactivex.disposables.Disposable
@@ -40,16 +41,16 @@ class MenuFragment : Fragment()
             Navigation.createNavigateOnClickListener(R.id.menu_to_help)
         )
 
-//        butPlay.setOnClickListener(
-//            Navigation.createNavigateOnClickListener(R.id.menu_to_game)
-//        )
-        butPlay.setOnClickListener {
-            makeSnackbar(it)
-        }
+        butPlay.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.menu_to_game)
+        )
+//        butPlay.setOnClickListener {
+//            makeSnackbar(it)
+//        }
 
         adDisposable = RxBus.listen(RxEvent.EventAdWatched::class.java).subscribe() {
-            Timber.i("Listen")
-            Timber.i(it.adName)
+            Log.i("Listen")
+            Log.i(it.adName)
         }
 
     }
@@ -63,27 +64,27 @@ class MenuFragment : Fragment()
         }
     }
 
-    private fun makeSnackbar(view: View)
-    {
-        val snackbar = Snackbar.make(
-            view, "Replace with your own action",
-            Snackbar.LENGTH_LONG
-        ).setAction("Action", View.OnClickListener {
-            Timber.i("Clicked")
-        })
-
-        snackbar.setActionTextColor(Color.YELLOW)
-
-
-        val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(Color.LTGRAY)
+//    private fun makeSnackbar(view: View)
+//    {
+//        val snackbar = Snackbar.make(
+//            view, "Replace with your own action",
+//            Snackbar.LENGTH_LONG
+//        ).setAction("Action", View.OnClickListener {
+//            Log.i("Clicked")
+//        })
 //
-//        val textView =
-//            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-//        textView.setTextColor(Color.BLUE)
-//        textView.textSize = 28f
-
-        snackbar.show()
-    }
+//        snackbar.setActionTextColor(Color.YELLOW)
+//
+//
+//        val snackbarView = snackbar.view
+//        snackbarView.setBackgroundColor(Color.LTGRAY)
+////
+////        val textView =
+////            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+////        textView.setTextColor(Color.BLUE)
+////        textView.textSize = 28f
+//
+//        snackbar.show()
+//    }
 
 }

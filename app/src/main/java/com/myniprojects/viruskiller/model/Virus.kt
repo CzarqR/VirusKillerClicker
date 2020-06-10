@@ -3,6 +3,7 @@ package com.myniprojects.viruskiller.model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.utils.Log
 import timber.log.Timber
 
 
@@ -59,7 +60,7 @@ class Virus()
         _hp.value = vD.hp
         _reward.value = viruses[vD.lvl.toInt()][1]
         _img.value = viruses[vD.lvl.toInt()][2]
-        Timber.i("Load new virus from VirusData:  $this")
+        Log.i("Load new virus from VirusData:  $this")
     }
 
     fun setNewVirus(virusLvl: Byte)
@@ -72,7 +73,7 @@ class Virus()
         _hp.value = viruses[virusLvl.toInt()][0]
         _reward.value = viruses[virusLvl.toInt()][1]
         _img.value = viruses[virusLvl.toInt()][2]
-        Timber.i("Set new virus:  $this")
+        Log.i("Set new virus:  $this")
     }
 
     fun loadOldVirus(virusLvl: Byte, virusHP: Int)
@@ -85,7 +86,7 @@ class Virus()
         _hp.value = virusHP
         _reward.value = viruses[virusLvl.toInt()][1]
         _img.value = viruses[virusLvl.toInt()][2]
-        Timber.i("Load new virus:  $this")
+        Log.i("Load new virus:  $this")
     }
 
 

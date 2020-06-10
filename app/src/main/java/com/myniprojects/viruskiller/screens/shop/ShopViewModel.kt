@@ -10,6 +10,7 @@ import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.model.Bonus
 import com.myniprojects.viruskiller.model.Bonuses
 import com.myniprojects.viruskiller.model.BonusesData
+import com.myniprojects.viruskiller.utils.Log
 import timber.log.Timber
 
 class ShopViewModel(money: Long, private var bonuses: Bonuses, private var context: Context) :
@@ -30,7 +31,7 @@ class ShopViewModel(money: Long, private var bonuses: Bonuses, private var conte
 
     init
     {
-        Timber.i("Shop VM init $money")
+        Log.i("Shop VM init $money")
         _money.value = money
         _bonusList.value = bonuses.getBonusList()
     }
@@ -38,13 +39,13 @@ class ShopViewModel(money: Long, private var bonuses: Bonuses, private var conte
     override fun onCleared()
     {
         super.onCleared()
-        Timber.i("Shop VM cleared")
+        Log.i("Shop VM cleared")
     }
 
 
     fun saveBonuses(cost: Int)
     {
-        Timber.i("Save bonuses")
+        Log.i("Save bonuses")
         _money.value = mon.minus(cost)
 
         val gson = Gson()
@@ -60,7 +61,7 @@ class ShopViewModel(money: Long, private var bonuses: Bonuses, private var conte
             _bonusList.value!![8].currLvl
         )
         val bonusesDataString = gson.toJson(bonusesData)
-        Timber.i("Saved instance: $bonusesData")
+        Log.i("Saved instance: $bonusesData")
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
         with(sharedPreferences.edit()) {
 

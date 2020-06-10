@@ -4,51 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_list"
     android:gravity="center"
     android:orientation="vertical"
-    android:id="@+id/back"
     tools:context=".screens.menu.MenuFragment">
 
 
     <TextView
-
+android:autoSizeTextType="uniform"
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:autoSizeTextType="uniform"
-        android:fontFamily="@font/audiowide"
         android:gravity="center"
-        android:padding="5dp"
         android:text="@string/anteroom"
-        android:textSize="60sp" />
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:contentDescription="@string/laboratory"
-        android:padding="5dp"
         android:src="@drawable/laboratory" />
 
     <Button
-
         android:id="@+id/butPlay"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/audiowide"
-        android:text="@string/laboratory" />
+        android:text="@string/start_game" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:contentDescription="@string/help"
-        android:padding="5dp"
         android:src="@drawable/information" />
 
     <Button
@@ -56,8 +45,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/audiowide"
-        android:padding="5dp"
         android:text="@string/help" />
 
 

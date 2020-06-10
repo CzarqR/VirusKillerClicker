@@ -1,5 +1,6 @@
 package com.myniprojects.viruskiller.screens.game
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
 import com.myniprojects.viruskiller.model.BonusesData
 import com.myniprojects.viruskiller.utils.Log
 import kotlinx.android.synthetic.main.fragment_game.*
+import kotlinx.android.synthetic.main.fragment_menu.*
 import timber.log.Timber
 
 
@@ -70,6 +72,11 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         mRewardedVideoAd.rewardedVideoAdListener = this
         loadRewardedVideoAd()
 
+        val animationDrawable =
+            binding.conLay.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2000)
+        animationDrawable.setExitFadeDuration(4000)
+        animationDrawable.start()
 
         return binding.root
     }

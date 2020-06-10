@@ -1,6 +1,6 @@
 package com.myniprojects.viruskiller.screens.menu
 
-import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.google.android.material.snackbar.Snackbar
 import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.utils.Log
 import com.myniprojects.viruskiller.utils.RxBus
 import com.myniprojects.viruskiller.utils.RxEvent
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_menu.*
-import timber.log.Timber
 
 class MenuFragment : Fragment()
 {
@@ -30,6 +28,8 @@ class MenuFragment : Fragment()
     {
 
         viewModel = ViewModelProvider(this).get(MenuViewModel::class.java)
+
+
 
         return inflater.inflate(R.layout.fragment_menu, container, false)
     }
@@ -52,6 +52,12 @@ class MenuFragment : Fragment()
             Log.i("Listen")
             Log.i(it.adName)
         }
+
+//        val animationDrawable =
+//            back.getBackground() as AnimationDrawable
+//        animationDrawable.setEnterFadeDuration(2000)
+//        animationDrawable.setExitFadeDuration(4000)
+//        animationDrawable.start()
 
     }
 

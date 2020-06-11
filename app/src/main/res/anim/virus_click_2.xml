@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <scale
+        android:duration="@integer/virus_anim_time"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="0.95"
+        android:toYScale="0.95" />
+
+    <rotate
+        android:duration="@integer/virus_anim_time"
+        android:fromDegrees="0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toDegrees="21"
+        android:toYScale="0.0" />
+
+    <translate
+        android:duration="@integer/virus_anim_time"
+        android:fromXDelta="0"
+        android:fromYDelta="0"
+        android:toXDelta="-18"
+        android:toYDelta="-18" />
+
+    <scale
+        android:duration="@integer/virus_anim_time"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:startOffset="@integer/virus_anim_time"
+        android:toXScale="1.052"
+        android:toYScale="1.052" />
+
+    <rotate
+        android:duration="@integer/virus_anim_time"
+        android:fromDegrees="0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:startOffset="@integer/virus_anim_time"
+        android:toDegrees="-18"
+        android:toYScale="0.0" />
+
+    <translate
+        android:duration="@integer/virus_anim_time"
+        android:fromXDelta="0"
+        android:fromYDelta="0"
+        android:startOffset="@integer/virus_anim_time"
+        android:toXDelta="18"
+        android:toYDelta="18" />
+
+</set>

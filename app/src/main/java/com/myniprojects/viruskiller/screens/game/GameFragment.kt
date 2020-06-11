@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -21,14 +23,31 @@ import com.myniprojects.viruskiller.MainActivity
 import com.myniprojects.viruskiller.R
 import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
 import com.myniprojects.viruskiller.model.BonusesData
+import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.Log
 import kotlinx.android.synthetic.main.fragment_game.*
-import kotlinx.android.synthetic.main.fragment_menu.*
-import timber.log.Timber
 
 
 class GameFragment : Fragment(), RewardedVideoAdListener
 {
+
+    private val anim0: Animation by lazy {
+        AnimationUtils.loadAnimation(App.context, R.anim.virus_click_0)
+    }
+
+    private val anim1: Animation by lazy {
+        AnimationUtils.loadAnimation(App.context, R.anim.virus_click_1)
+    }
+
+    private val anim2: Animation by lazy {
+        AnimationUtils.loadAnimation(App.context, R.anim.virus_click_2)
+    }
+    private val anim3: Animation by lazy {
+        AnimationUtils.loadAnimation(App.context, R.anim.virus_click_3)
+    }
+
+    private val virusArray = arrayOf(anim0, anim1, anim2, anim3)
+
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var viewModel: GameViewModel
     private lateinit var binding: FragmentGameBinding
@@ -77,6 +96,13 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         animationDrawable.setEnterFadeDuration(2000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
+
+        binding.imgVirus.setOnClickListener {
+            viewModel.gameState.attackViruses()
+
+            it.startAnimation(virusArray.random())
+        }
+
 
         return binding.root
     }

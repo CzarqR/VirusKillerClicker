@@ -1,15 +1,17 @@
 package com.myniprojects.viruskiller
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
 import com.google.android.material.snackbar.Snackbar
+import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -17,8 +19,35 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity()
 {
+    private var isAdBannerLoaded = false
     private var loadAdBannerRequests = 0
     private var loadAdInterstitialRequests = 0
+    private val animAd: Animation by lazy {
+        AnimationUtils.loadAnimation(App.context, R.anim.zoom_ad)
+    }
+    lateinit var mainHandler: Handler
+    private val updateTextTask = object : Runnable
+    {
+        override fun run()
+        {
+            animateAd()
+            mainHandler.postDelayed(
+                this,
+                resources.getInteger(R.integer.ad_animation_time).toLong()
+            )
+        }
+    }
+
+    private fun animateAd()
+    {
+        Log.i("In")
+
+        if (isAdBannerLoaded) //ad loaded, animate it
+        {
+            Log.i("Animate")
+            adView.startAnimation(animAd)
+        }
+    }
 
     companion object
     {
@@ -85,11 +114,13 @@ class MainActivity : AppCompatActivity()
                 }
             }
 
+
             override fun onAdLoaded()
             {
                 Timber.d("Ad banner loaded")
                 super.onAdLoaded()
                 loadAdBannerRequests = 0
+                isAdBannerLoaded = true
             }
         }
 
@@ -103,7 +134,7 @@ class MainActivity : AppCompatActivity()
             {
                 mInterstitialAd.loadAd(AdRequest.Builder().build())
             }
-
+            
             override fun onAdFailedToLoad(p0: Int)
             {
                 Timber.wtf("Ad interstitial failed to load")
@@ -113,6 +144,7 @@ class MainActivity : AppCompatActivity()
                     mInterstitialAd.loadAd(AdRequest.Builder().build())
                 }
             }
+
 
             override fun onAdLoaded()
             {
@@ -124,19 +156,12 @@ class MainActivity : AppCompatActivity()
 
 
         Timber.plant(Timber.DebugTree())
-        Log.d("onCreate Called d")
         Log.i("onCreate Called i")
-        //Log.i("onCreate Called")
-
-
-//        but_test.setOnClickListener {
-//            mRewardedVideoAd.show()
-//        }
+        mainHandler = Handler(Looper.getMainLooper())
 
 
         //RxJava bus test
         //RxBus.publish(RxEvent.EventAdWatched("Attack"))
-
     }
 
 
@@ -158,6 +183,7 @@ class MainActivity : AppCompatActivity()
     {
         super.onResume()
         Log.i("onResume Called")
+        mainHandler.post(updateTextTask)
         //fullScreenCall()
     }
 
@@ -165,6 +191,7 @@ class MainActivity : AppCompatActivity()
     {
         super.onPause()
         Log.i("onPause Called")
+        mainHandler.removeCallbacks(updateTextTask)
     }
 
     override fun onStop()

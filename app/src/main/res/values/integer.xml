@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="virus_anim_time">45</integer>
+    <integer name="ad_animation_time">4000</integer>
+    <integer name="ad_animation_time_half">2000</integer>
+
+</resources>

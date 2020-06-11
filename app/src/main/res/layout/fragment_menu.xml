@@ -22,6 +22,7 @@
         android:orientation="vertical">
 
         <TextView
+            app:autoSizeTextType="uniform"
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -31,7 +32,7 @@
             android:padding="10dp"
             android:text="@string/anteroom"
             android:textColor="@color/color_head"
-            android:textSize="60sp" />
+ />
 
         <ImageView
             android:id="@+id/imgLaboratory"
@@ -50,11 +51,13 @@
             android:background="#0000838F"
             android:fontFamily="@font/audiowide"
             android:gravity="center"
-            android:padding="10dp"
+            android:paddingBottom="12dp"
             android:text="@string/laboratory"
-            android:textColor="@color/color_desc" />
+            android:textColor="@color/color_desc"
+            app:autoSizeTextType="uniform" />
 
         <ImageView
+
             android:id="@+id/imgHelp"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -71,9 +74,10 @@
             android:background="#0000838F"
             android:fontFamily="@font/audiowide"
             android:gravity="center"
-            android:padding="10dp"
+            android:paddingBottom="12dp"
             android:text="@string/help"
-            android:textColor="@color/color_desc" />
+            android:textColor="@color/color_desc"
+            app:autoSizeTextType="uniform" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

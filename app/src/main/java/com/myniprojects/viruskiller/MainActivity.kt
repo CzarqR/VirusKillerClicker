@@ -40,11 +40,8 @@ class MainActivity : AppCompatActivity()
 
     private fun animateAd()
     {
-        Log.i("In")
-
         if (isAdBannerLoaded) //ad loaded, animate it
         {
-            Log.i("Animate")
             adView.startAnimation(animAd)
         }
     }
@@ -100,63 +97,58 @@ class MainActivity : AppCompatActivity()
         MobileAds.initialize(this) {}
 
         // banner
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
-        adView.adListener = object : AdListener()
-        {
-            override fun onAdFailedToLoad(p0: Int)
-            {
-                Timber.d("Ad banner failed to load")
-                super.onAdFailedToLoad(p0)
-                if (loadAdBannerRequests++ < 5)
-                {
-                    adView.loadAd(adRequest)
-                }
-            }
-
-
-            override fun onAdLoaded()
-            {
-                Timber.d("Ad banner loaded")
-                super.onAdLoaded()
-                loadAdBannerRequests = 0
-                isAdBannerLoaded = true
-            }
-        }
+//        val adRequest = AdRequest.Builder().build()
+//        adView.loadAd(adRequest)
+//        adView.adListener = object : AdListener()
+//        {
+//            override fun onAdFailedToLoad(p0: Int)
+//            {
+//                super.onAdFailedToLoad(p0)
+//                if (loadAdBannerRequests++ < 5)
+//                {
+//                    adView.loadAd(adRequest)
+//                }
+//            }
+//
+//
+//            override fun onAdLoaded()
+//            {
+//                super.onAdLoaded()
+//                loadAdBannerRequests = 0
+//                isAdBannerLoaded = true
+//            }
+//        }
 
         // interstitial
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = getString(R.string.fullscreen_ad)
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
-        mInterstitialAd.adListener = object : AdListener()
-        {
-            override fun onAdClosed()
-            {
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
-            }
-            
-            override fun onAdFailedToLoad(p0: Int)
-            {
-                Timber.wtf("Ad interstitial failed to load")
-                super.onAdFailedToLoad(p0)
-                if (loadAdInterstitialRequests++ < 5)
-                {
-                    mInterstitialAd.loadAd(AdRequest.Builder().build())
-                }
-            }
-
-
-            override fun onAdLoaded()
-            {
-                Timber.wtf("Ad interstitial loaded")
-                super.onAdLoaded()
-                loadAdInterstitialRequests = 0
-            }
-        }
+//        mInterstitialAd = InterstitialAd(this)
+//        mInterstitialAd.adUnitId = getString(R.string.fullscreen_ad)
+//        mInterstitialAd.loadAd(AdRequest.Builder().build())
+//        mInterstitialAd.adListener = object : AdListener()
+//        {
+//            override fun onAdClosed()
+//            {
+//                mInterstitialAd.loadAd(AdRequest.Builder().build())
+//            }
+//
+//            override fun onAdFailedToLoad(p0: Int)
+//            {
+//                super.onAdFailedToLoad(p0)
+//                if (loadAdInterstitialRequests++ < 5)
+//                {
+//                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+//                }
+//            }
+//
+//
+//            override fun onAdLoaded()
+//            {
+//                super.onAdLoaded()
+//                loadAdInterstitialRequests = 0
+//            }
+//        }
 
 
         Timber.plant(Timber.DebugTree())
-        Log.i("onCreate Called i")
         mainHandler = Handler(Looper.getMainLooper())
 
 

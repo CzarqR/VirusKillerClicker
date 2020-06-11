@@ -95,24 +95,24 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{gameViewModel.gameState.virus.hp.toString()}" />
+                android:text="@{gameViewModel.gameState.virus.hpString}" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{gameViewModel.gameState.virus.lvl.toString()}" />
+                android:text="@{gameViewModel.gameState.virus.lvlString.toString()}" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{gameViewModel.gameState.virus.reward.toString()}" />
+                android:text="@{gameViewModel.gameState.virus.rewardString.toString()}" />
 
 
         </LinearLayout>

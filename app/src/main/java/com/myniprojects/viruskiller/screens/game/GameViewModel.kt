@@ -48,7 +48,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
 
     private fun oneMinutePassed()
     {
-        Log.i("Execute")
         _gameState.oneMinutePassed()
     }
 
@@ -56,7 +55,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
     {
         super.onCleared()
         Log.i("Game view model cleared")
-        //saveGame() //saving when closing game fragment
     }
 
 

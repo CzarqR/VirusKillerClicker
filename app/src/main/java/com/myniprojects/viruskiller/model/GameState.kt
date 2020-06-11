@@ -7,7 +7,6 @@ import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.utils.Log
-import timber.log.Timber
 import java.util.*
 import java.util.Timer
 import kotlin.concurrent.schedule
@@ -17,7 +16,9 @@ class GameState(private val context: Context)
 
     companion object
     {
-        val xpArray = arrayOf(10, 20, 40, 80, 160, 320, 640, 1280, 2480)
+        val xpArray =
+            arrayOf(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300)
+        val maxLvl = xpArray.size
     }
 
     //region properties
@@ -114,11 +115,12 @@ class GameState(private val context: Context)
     }
 
 
-    fun attackViruses()
+    fun attackViruses(longClick: Int = 1)
     {
         Log.i("Number attack per click: ${bonuses.numbersAttackPerClickValue}. Critical Attack: ${bonuses.criticalAttackValue}")
+        Log.i("${(bonuses.numbersAttackPerClickValue + bonusAttack) * longClick}")
         var dmg = 0
-        for (i in 1..(bonuses.numbersAttackPerClickValue + bonusAttack))
+        for (i in 1..((bonuses.numbersAttackPerClickValue + bonusAttack) * longClick))
         {
             dmg += if ((1..100).random() < bonuses.criticalAttackValue) // crit
             {
@@ -138,16 +140,24 @@ class GameState(private val context: Context)
         {
             Log.i("Dead")
             _money.value = _money.value!!.plus(
-                (virus.reward.value!!.times(_bonuses.rewardMultiplierValue).toInt())
+                (virus.reward.times(_bonuses.rewardMultiplierValue).toInt())
             )
 
-            _xp.value = _xp.value!!.plus((virus.reward.value!!).div(10))
+            _xp.value = _xp.value!!.plus((virus.reward).div(10))
 
-            if (_xp.value!! >= _xpToNextLvl.value!!) //lvl upgrade
+            //Todo check for max lvl out of range
+            if (_lvl.value!! < maxLvl && _xp.value!! >= _xpToNextLvl.value!!) //lvl upgrade
             {
                 Log.i("New Lvl")
                 _lvl.value = _lvl.value!!.plus(1)
-                _xpToNextLvl.value = xpArray[_lvl.value!!]
+                _xpToNextLvl.value = if (_lvl.value!! != maxLvl)
+                {
+                    xpArray[_lvl.value!!]
+                }
+                else
+                {
+                    99999999
+                }
             }
             _killedViruses.value = _killedViruses.value!!.plus(1)
 
@@ -259,7 +269,14 @@ class GameState(private val context: Context)
         _lvl.value = gameStateData.lvl
         _xp.value = gameStateData.xp
         _savedLives.value = gameStateData.savedLives
-        _xpToNextLvl.value = xpArray[_lvl.value!!]
+        _xpToNextLvl.value = if (_lvl.value!! != maxLvl)
+        {
+            xpArray[_lvl.value!!]
+        }
+        else
+        {
+            99999999
+        }
 
         Log.i("Load instance: $bonusesData")
         _bonuses = Bonuses(bonusesData)
@@ -276,7 +293,6 @@ class GameState(private val context: Context)
         _savedLives.value = _savedLives.value!!.plus(_bonuses.savedLivesSum)
 
         val current = Calendar.getInstance().time
-        Log.i("Saved ${current.time / 10_000}")
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
         with(sharedPreferences.edit()) {
@@ -284,8 +300,6 @@ class GameState(private val context: Context)
             putLong(context.getString(R.string.last_minute_passed_key), current.time / 10_000)
             commit()
         }
-
-        Log.i("${current.time}")
 
     }
 
@@ -346,10 +360,8 @@ class GameState(private val context: Context)
         if (previous > 0)
         {
             val current = Calendar.getInstance().time
-            Log.i("Load ${current.time / 10_000}")
 
             val passed = (current.time / 10_000 - previous)
-            Log.i("Passed $passed")
 
             currStorage += (_bonuses.coinsPerMinutesValue * passed).toInt()
             _savedLives.value = _savedLives.value!!.plus(_bonuses.savedLivesSum.times(passed))
@@ -364,16 +376,7 @@ class GameState(private val context: Context)
 
     fun test()
     {
-//        Log.i("${_bonuses.savedLivesMultiplier0Value}")
-//        Log.i("${_bonuses.savedLivesMultiplier1Value}")
-//        Log.i("${_bonuses.savedLivesMultiplier2Value}")
-//        Log.i("${_bonuses.savedLivesMultiplier3Value}")
-//        Log.i("${_bonuses.criticalAttackValue}")
-//        Log.i("${_bonuses.numbersAttackPerClickValue}")
-//        Log.i("${_bonuses.coinsPerMinutesValue}")
-//        Log.i("${_bonuses.rewardMultiplierValue}")
-//        Log.i("${_bonuses.storageValue}")
-//        currStorage += 10
+
     }
 
 

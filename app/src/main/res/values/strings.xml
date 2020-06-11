@@ -52,5 +52,9 @@
     <string name="anteroom">Anteroom</string>
     <string name="laboratory">Laboratory</string>
 
+    <string name="virus_hp">Virus hp: %1$d</string>
+    <string name="virus_reward">Reward: %1$d</string>
+    <string name="virus_lvl">Virus lvl: %1$d</string>
+
 
 </resources>

@@ -46,7 +46,20 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         AnimationUtils.loadAnimation(App.context, R.anim.virus_click_3)
     }
 
-    private val virusArray = arrayOf(anim0, anim1, anim2, anim3)
+    private val virusAnimArray by lazy {
+        arrayOf(anim0, anim1, anim2, anim3)
+    }
+    private val animLong0: Animation by lazy {
+        AnimationUtils.loadAnimation(App.context, R.anim.virus_longclick_0)
+    }
+
+    private val animLong1: Animation by lazy {
+        AnimationUtils.loadAnimation(App.context, R.anim.virus_longclick_1)
+    }
+
+    private val virusAnimArrayLong by lazy {
+        arrayOf(animLong0, animLong1)
+    }
 
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var viewModel: GameViewModel
@@ -82,7 +95,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
                 bonusesDataString,
                 viewModel.gameState.money.value!!
             )
-            MainActivity.showInterstitialAd()
+            //MainActivity.showInterstitialAd()
             Navigation.findNavController(requireView()).navigate(action)
         }
 
@@ -100,7 +113,13 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         binding.imgVirus.setOnClickListener {
             viewModel.gameState.attackViruses()
 
-            it.startAnimation(virusArray.random())
+            it.startAnimation(virusAnimArray.random())
+        }
+
+        binding.imgVirus.setOnLongClickListener {
+            it.startAnimation(virusAnimArrayLong.random())
+            viewModel.gameState.attackViruses(7)
+            true
         }
 
 

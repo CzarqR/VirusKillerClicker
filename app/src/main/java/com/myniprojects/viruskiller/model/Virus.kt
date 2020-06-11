@@ -3,8 +3,8 @@ package com.myniprojects.viruskiller.model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.Log
-import timber.log.Timber
 
 
 class Virus()
@@ -14,51 +14,86 @@ class Virus()
     {
 
         private val viruses = arrayOf(
-            arrayOf(3, 50, R.drawable.virus_0),
-            arrayOf(5, 100, R.drawable.virus_1),
-            arrayOf(8, 200, R.drawable.virus_2),
-            arrayOf(10, 400, R.drawable.virus_3),
-            arrayOf(12, 100, R.drawable.virus_4),
-            arrayOf(25, 100, R.drawable.virus_5),
-            arrayOf(25, 100, R.drawable.virus_6),
-            arrayOf(25, 100, R.drawable.virus_7),
-            arrayOf(25, 100, R.drawable.virus_8),
-            arrayOf(25, 100, R.drawable.virus_9),
-            arrayOf(25, 100, R.drawable.virus_10),
-            arrayOf(25, 100, R.drawable.virus_11),
-            arrayOf(25, 100, R.drawable.virus_12),
-            arrayOf(25, 100, R.drawable.virus_13)
+            arrayOf(3, 500, R.drawable.virus_0),
+            arrayOf(5, 500, R.drawable.virus_1),
+            arrayOf(8, 500, R.drawable.virus_2),
+            arrayOf(10, 500, R.drawable.virus_3),
+            arrayOf(12, 500, R.drawable.virus_4),
+            arrayOf(25, 500, R.drawable.virus_5),
+            arrayOf(25, 500, R.drawable.virus_6),
+            arrayOf(25, 500, R.drawable.virus_7),
+            arrayOf(25, 500, R.drawable.virus_8),
+            arrayOf(25, 500, R.drawable.virus_9),
+            arrayOf(25, 500, R.drawable.virus_10),
+            arrayOf(25, 500, R.drawable.virus_11),
+            arrayOf(25, 500, R.drawable.virus_12),
+            arrayOf(25, 500, R.drawable.virus_13)
         )
 
         val maxLvl = viruses.size
     }
 
 
-    private val _hp = MutableLiveData<Int>()
-    val hp: LiveData<Int>
+    private val _hpString = MutableLiveData<String>()
+    val hpString: LiveData<String>
+        get() = _hpString
+
+    private val _rewardString = MutableLiveData<String>()
+    val rewardString: LiveData<String>
+        get() = _rewardString
+
+    private val _lvlString = MutableLiveData<String>()
+    val lvlString: LiveData<String>
+        get() = _lvlString
+
+    private var _lvl: Byte = 0
+        set(value)
+        {
+            field = value
+            _lvlString.value= App.context?.getString(R.string.virus_lvl, _lvl)
+        }
+
+    val lvl: Byte
+        get() = _lvl
+
+
+    private var _hp: Int = 0
+        set(value)
+        {
+            field = value
+            _hpString.value= App.context?.getString(R.string.virus_hp, _hp)
+        }
+
+    val hp: Int
         get() = _hp
 
-    private val _reward = MutableLiveData<Int>()
-    val reward: LiveData<Int>
+
+    private var _reward: Int = 0
+        set(value)
+        {
+            field = value
+            _rewardString.value = App.context?.getString(R.string.virus_reward, _reward)
+        }
+
+    val reward: Int
         get() = _reward
 
-    private val _lvl = MutableLiveData<Byte>()
-    val lvl: LiveData<Byte>
-        get() = _lvl
+
+
 
     private val _img = MutableLiveData<Int>()
     val img: LiveData<Int>
         get() = _img
 
-    constructor(vD: VirusData):this()
+    constructor(vD: VirusData) : this()
     {
         if (vD.lvl >= maxLvl)
         {
             throw Exception("Virus lvl is too big")
         }
-        _lvl.value = vD.lvl
-        _hp.value = vD.hp
-        _reward.value = viruses[vD.lvl.toInt()][1]
+        _lvl = vD.lvl
+        _hp = vD.hp
+        _reward = viruses[vD.lvl.toInt()][1]
         _img.value = viruses[vD.lvl.toInt()][2]
         Log.i("Load new virus from VirusData:  $this")
     }
@@ -69,9 +104,9 @@ class Virus()
         {
             throw Exception("Virus lvl is too big")
         }
-        _lvl.value = virusLvl
-        _hp.value = viruses[virusLvl.toInt()][0]
-        _reward.value = viruses[virusLvl.toInt()][1]
+        _lvl = virusLvl
+        _hp = viruses[virusLvl.toInt()][0]
+        _reward = viruses[virusLvl.toInt()][1]
         _img.value = viruses[virusLvl.toInt()][2]
         Log.i("Set new virus:  $this")
     }
@@ -82,9 +117,9 @@ class Virus()
         {
             throw Exception("Virus lvl is too big")
         }
-        _lvl.value = virusLvl
-        _hp.value = virusHP
-        _reward.value = viruses[virusLvl.toInt()][1]
+        _lvl = virusLvl
+        _hp = virusHP
+        _reward = viruses[virusLvl.toInt()][1]
         _img.value = viruses[virusLvl.toInt()][2]
         Log.i("Load new virus:  $this")
     }
@@ -94,21 +129,21 @@ class Virus()
     {
         return when
         {
-            _hp.value == 0//already dead
+            _hp == 0//already dead
             ->
             {
                 true
             }
-            hp.value!! - dmg <= 0 //ll be dead after this attack
+            _hp - dmg <= 0 //ll be dead after this attack
             ->
             {
-                _hp.value = 0
+                _hp = 0
                 true
             }
             else //alive
             ->
             {
-                _hp.value = _hp.value!!.minus(dmg)
+                _hp = _hp.minus(dmg)
                 false
             }
         }
@@ -116,7 +151,7 @@ class Virus()
 
     override fun toString(): String
     {
-        return "Virus ${_lvl.value} lvl. ${_hp.value} HP. ${_reward.value} reward"
+        return "Virus ${_lvlString.value} lvl. $_hp HP. ${_rewardString.value} reward"
     }
 
 }
@@ -127,8 +162,8 @@ data class VirusData(
 )
 {
     constructor(v: Virus) : this(
-        v.hp.value!!,
-        v.lvl.value!!
+        v.hp,
+        v.lvl
     )
 
     //todo set default as first virus

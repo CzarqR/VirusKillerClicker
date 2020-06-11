@@ -1,22 +1,14 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <scale
-        android:duration="@integer/ad_animation_time_half"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:duration="@integer/ad_animation_time"
         android:fromXScale="1"
         android:fromYScale="1"
         android:pivotX="50%"
         android:pivotY="50%"
         android:toXScale="0.8"
         android:toYScale="0.8" />
-
-    <scale
-        android:duration="@integer/ad_animation_time_half"
-        android:fromXScale="1"
-        android:fromYScale="1"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:startOffset="@integer/ad_animation_time_half"
-        android:toXScale="1.25"
-        android:toYScale="1.25" />
 
 </set>

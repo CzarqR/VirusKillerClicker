@@ -13,7 +13,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/conLay"
+        android:id="@+id/conLayBack"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_list"
@@ -21,69 +21,158 @@
 
 
         <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+            android:id="@+id/linLayImgStats"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:orientation="horizontal"
-
-            android:weightSum="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
+            <ImageView
+                android:id="@+id/imgKilled"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="@{gameViewModel.gameState.killedViruses.toString()}" />
+                android:adjustViewBounds="true"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/killed" />
+
+            <ImageView
+                android:id="@+id/imgSaved"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/saved" />
+
+            <ImageView
+                android:id="@+id/imgMoney"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/money" />
+
+            <ImageView
+                android:id="@+id/imgLvl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/level" />
+
+            <ImageView
+                android:id="@+id/imgXp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/xp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linLayTxtStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="left"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linLayImgStats">
 
             <TextView
+
+                android:id="@+id/txtVirusKilled"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
-                android:text="@{gameViewModel.gameState.savedLives.toString()}" />
+                android:text="@{gameViewModel.gameState.killedViruses.toString()}"
+                android:textColor="#000000"
+                app:autoSizeTextType="uniform" />
 
             <TextView
+                android:id="@+id/txtSavedLives"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
-                android:text="@{gameViewModel.gameState.money.toString()}" />
+                android:text="@{gameViewModel.gameState.savedLives.toString()}"
+                android:textColor="#000000"
+                app:autoSizeTextType="uniform" />
 
             <TextView
+                android:id="@+id/txtMoney"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
-                android:text="@{gameViewModel.gameState.lvl.toString()}" />
+                android:text="@{gameViewModel.gameState.money.toString()}"
+                android:textColor="#000000"
+                app:autoSizeTextType="uniform" />
 
             <TextView
+                android:id="@+id/txtLvl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
-                android:text="@{@string/xp(gameViewModel.gameState.xp,gameViewModel.gameState.xpToNextLvl)}" />
+                android:text="@{gameViewModel.gameState.lvl.toString()}"
+                android:textColor="#000000"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/txtXp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alegreya_sans"
+                android:gravity="center"
+                android:text="@{@string/xp(gameViewModel.gameState.xp,gameViewModel.gameState.xpToNextLvl)}"
+                android:textColor="#000000"
+                app:autoSizeTextType="uniform" />
 
 
         </LinearLayout>
 
 
         <ImageView
+            android:adjustViewBounds="true"
             android:id="@+id/imgVirus"
-            android:layout_width="203dp"
-            android:layout_height="222dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="32dp"
             android:contentDescription="@string/virus_image"
             app:imageResource="@{gameViewModel.gameState.virus.img}"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintBottom_toTopOf="@+id/linLayVirusStats"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gdlVirusUp" />
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/linLayVirusStats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -94,6 +183,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
+                android:id="@+id/txtVirusHp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -101,6 +191,7 @@
                 android:text="@{gameViewModel.gameState.virus.hpString}" />
 
             <TextView
+                android:id="@+id/txtVirusLvl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -108,6 +199,7 @@
                 android:text="@{gameViewModel.gameState.virus.lvlString.toString()}" />
 
             <TextView
+                android:id="@+id/TxtVirusReward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -121,25 +213,14 @@
             android:id="@+id/butShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="124dp"
+            android:layout_marginEnd="48dp"
             android:text="@string/shop"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="304dp"
-            android:layout_marginTop="76dp"
-            android:enabled="false"
-            android:text="Test"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/linLayTxtStats" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txtStorage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -147,26 +228,36 @@
             android:onClick="@{() -> gameViewModel.gameState.collectStorage()}"
             android:text="@{gameViewModel.gameState.storage}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/linLayTxtStats" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtClicks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@{gameViewModel.gameState.crit}"
             app:layout_constraintEnd_toStartOf="@+id/imgVirus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imgVirus" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txtDmg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="@{gameViewModel.gameState.attackPerClick}"
             app:layout_constraintEnd_toStartOf="@+id/imgVirus"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/txtClicks" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdlVirusUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.58" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

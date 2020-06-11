@@ -34,29 +34,25 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     private val anim0: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.virus_click_0)
     }
-
     private val anim1: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.virus_click_1)
     }
-
     private val anim2: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.virus_click_2)
     }
     private val anim3: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.virus_click_3)
     }
-
     private val virusAnimArray by lazy {
         arrayOf(anim0, anim1, anim2, anim3)
     }
+
     private val animLong0: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.virus_longclick_0)
     }
-
     private val animLong1: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.virus_longclick_1)
     }
-
     private val virusAnimArrayLong by lazy {
         arrayOf(animLong0, animLong1)
     }
@@ -105,7 +101,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         loadRewardedVideoAd()
 
         val animationDrawable =
-            binding.conLay.background as AnimationDrawable
+            binding.conLayBack.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(2000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
@@ -130,10 +126,10 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        button.setOnClickListener {
-            it.isEnabled = false
-            mRewardedVideoAd.show()
-        }
+//        button.setOnClickListener {
+//            it.isEnabled = false
+//            mRewardedVideoAd.show()
+//        }
     }
 
 
@@ -200,7 +196,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     override fun onRewardedVideoAdLoaded()
     {
         Log.i("onRewardedVideoAdLoaded")
-        button.isEnabled = true
+//        button.isEnabled = true
     }
 
     override fun onRewardedVideoAdOpened()

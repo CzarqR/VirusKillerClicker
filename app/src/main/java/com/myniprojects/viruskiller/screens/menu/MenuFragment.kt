@@ -39,26 +39,17 @@ class MenuFragment : Fragment()
         binding.menuViewModel = viewModel
         binding.lifecycleOwner = this
 
-//        binding.txtHelp.setOnClickListener(
-//            Navigation.createNavigateOnClickListener(R.id.menu_to_help)
-//        )
-//        binding.imgHelp.setOnClickListener(
-//            Navigation.createNavigateOnClickListener(R.id.menu_to_help)
-//        )
+        binding.txtHelp.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.menu_to_help)
+        )
 
-//        binding.txtHelp.setOnClickListener {
-////            Navigation.createNavigateOnClickListener(R.id.menu_to_game)
-//            val animation = AnimationUtils.loadAnimation(App.context, R.anim.zoom_ad)
-////            animation.repeatCount = Animation.INFINITE
-//            it.startAnimation(animation)
-//        }
+        binding.imgHelp.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.menu_to_help)
+        )
 
-        binding.txtHelp.setOnClickListener {
-            val animation = AnimationUtils.loadAnimation(App.context, R.anim.zoom_ad)
-//            animation.repeatCount = Animation.INFINITE
-            it.startAnimation(animation)
-        }
-
+        binding.txtLaboratory.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.menu_to_game)
+        )
 
         binding.imgLaboratory.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.menu_to_game)

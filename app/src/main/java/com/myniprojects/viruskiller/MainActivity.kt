@@ -25,26 +25,7 @@ class MainActivity : AppCompatActivity()
     private val animAd: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.zoom_ad)
     }
-    lateinit var mainHandler: Handler
-    private val updateTextTask = object : Runnable
-    {
-        override fun run()
-        {
-            animateAd()
-            mainHandler.postDelayed(
-                this,
-                resources.getInteger(R.integer.ad_animation_time).toLong()
-            )
-        }
-    }
 
-    private fun animateAd()
-    {
-        if (isAdBannerLoaded) //ad loaded, animate it
-        {
-            adView.startAnimation(animAd)
-        }
-    }
 
     companion object
     {
@@ -149,8 +130,8 @@ class MainActivity : AppCompatActivity()
 
 
         Timber.plant(Timber.DebugTree())
-        mainHandler = Handler(Looper.getMainLooper())
 
+        adView.startAnimation(animAd)
 
         //RxJava bus test
         //RxBus.publish(RxEvent.EventAdWatched("Attack"))
@@ -175,7 +156,7 @@ class MainActivity : AppCompatActivity()
     {
         super.onResume()
         Log.i("onResume Called")
-        mainHandler.post(updateTextTask)
+
         //fullScreenCall()
     }
 
@@ -183,7 +164,6 @@ class MainActivity : AppCompatActivity()
     {
         super.onPause()
         Log.i("onPause Called")
-        mainHandler.removeCallbacks(updateTextTask)
     }
 
     override fun onStop()

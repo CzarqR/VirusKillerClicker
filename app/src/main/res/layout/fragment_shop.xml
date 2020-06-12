@@ -23,6 +23,7 @@
 
 
             <TextView
+                android:gravity="center"
                 android:id="@+id/txtMoney"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -42,9 +43,11 @@
                 android:layout_alignParentEnd="true"
                 android:background="#00FFFFFF"
                 android:fontFamily="@font/audiowide"
+                android:lines="1"
                 android:padding="5dp"
-                android:text="@string/laboratory"
-                android:textColor="@color/color_desc" />
+                android:text="@string/back_to_lab"
+                android:textColor="@color/color_desc"
+                android:textSize="18sp" />
 
 
         </RelativeLayout>

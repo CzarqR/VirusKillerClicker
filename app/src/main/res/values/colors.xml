@@ -12,5 +12,9 @@
     //shop
     <color name="color_money">#00796B</color>
 
+    //toast
+    <color name="toast_1">#880E4F</color>
+    <color name="toast_2">#F57F17</color>
+
 
 </resources>

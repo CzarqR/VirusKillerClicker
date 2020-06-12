@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -25,6 +26,7 @@ import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
 import com.myniprojects.viruskiller.model.BonusesData
 import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.Log
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_game.*
 
 
@@ -56,6 +58,8 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     private val virusAnimArrayLong by lazy {
         arrayOf(animLong0, animLong1)
     }
+
+    private lateinit var toast: Toast
 
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var viewModel: GameViewModel
@@ -127,11 +131,84 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     {
         super.onViewCreated(view, savedInstanceState)
         binding.imgAdReward.setOnClickListener {
-            mRewardedVideoAd.show()
-            binding.imgAdReward.setImageResource(R.drawable.ad_loading)
+            if (mRewardedVideoAd.isLoaded)
+            {
+                mRewardedVideoAd.show()
+                binding.imgAdReward.setImageResource(R.drawable.ad_loading)
+            }
+            else
+            {
+                infoToast(R.string.ad_not_loaded)
+            }
         }
+
+        //region long click info
+
+        binding.imgKilled.setOnLongClickListener {
+            infoToast(R.string.killed_viruses)
+            true
+        }
+
+        binding.imgSaved.setOnLongClickListener {
+            infoToast(R.string.saved_lives)
+            true
+        }
+
+        binding.imgMoney.setOnLongClickListener {
+            infoToast(R.string.money)
+            true
+        }
+
+        binding.imgLvl.setOnLongClickListener {
+            infoToast(R.string.level)
+            true
+        }
+
+        binding.imgXp.setOnLongClickListener {
+            infoToast(R.string.xp)
+            true
+        }
+
+        binding.imgStorage.setOnLongClickListener {
+            infoToast(R.string.storage)
+            true
+        }
+
+        binding.imgAdReward.setOnLongClickListener {
+            infoToast(R.string.ad_reward_info)
+            true
+        }
+
+        binding.imgShop.setOnLongClickListener {
+            infoToast(R.string.shop)
+            true
+        }
+
+        //endregion
+
+
     }
 
+    private fun infoToast(textId: Int)
+    {
+
+        if (this::toast.isInitialized)
+        {
+            toast.cancel()
+        }
+
+        toast = Toasty.custom(
+            requireContext(),
+            requireContext().getString(textId),
+            R.drawable.ic_baseline_info_24,
+            R.color.toast_1,
+            R.color.toast_2,
+            true,
+            true
+        )
+        toast.show()
+
+    }
 
 //    override fun onSaveInstanceState(outState: Bundle)
 //    {

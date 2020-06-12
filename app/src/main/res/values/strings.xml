@@ -55,6 +55,11 @@
     <string name="virus_hp">Virus hp: %1$d</string>
     <string name="virus_reward">Reward: %1$d</string>
     <string name="virus_lvl">Virus lvl: %1$d</string>
+    <string name="killed_viruses">Killed viruses</string>
+    <string name="saved_lives">Saved Lives</string>
+    <string name="money">Money</string>
+    <string name="level">Level</string>
+    <string name="ad_reward">Ad Reward</string>
 
 
 </resources>

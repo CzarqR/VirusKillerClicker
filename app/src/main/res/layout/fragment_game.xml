@@ -36,6 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/killed_viruses"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
@@ -47,6 +48,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/saved_lives"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
@@ -58,6 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/money"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
@@ -69,6 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/level"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
@@ -80,6 +84,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/xp"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
@@ -99,13 +104,14 @@
             app:layout_constraintTop_toBottomOf="@+id/linLayImgStats">
 
             <TextView
-
                 android:id="@+id/txtVirusKilled"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.killedViruses.toString()}"
                 android:textColor="#000000"
                 app:autoSizeTextType="uniform" />
@@ -117,6 +123,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.savedLives.toString()}"
                 android:textColor="#000000"
                 app:autoSizeTextType="uniform" />
@@ -128,6 +136,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.money.toString()}"
                 android:textColor="#000000"
                 app:autoSizeTextType="uniform" />
@@ -139,6 +149,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.lvl.toString()}"
                 android:textColor="#000000"
                 app:autoSizeTextType="uniform" />
@@ -150,6 +162,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
                 android:text="@{@string/xp(gameViewModel.gameState.xp,gameViewModel.gameState.xpToNextLvl)}"
                 android:textColor="#000000"
                 app:autoSizeTextType="uniform" />
@@ -159,11 +173,11 @@
 
 
         <ImageView
-            android:adjustViewBounds="true"
             android:id="@+id/imgVirus"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginBottom="32dp"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/virus_image"
             app:imageResource="@{gameViewModel.gameState.virus.img}"
             app:layout_constraintBottom_toTopOf="@+id/linLayVirusStats"
@@ -209,27 +223,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/butShop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="124dp"
-            android:layout_marginEnd="48dp"
-            android:text="@string/shop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linLayTxtStats" />
-
-        <TextView
-            android:id="@+id/txtStorage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:onClick="@{() -> gameViewModel.gameState.collectStorage()}"
-            android:text="@{gameViewModel.gameState.storage}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linLayTxtStats" />
-
         <TextView
             android:id="@+id/txtClicks"
             android:layout_width="wrap_content"
@@ -257,6 +250,91 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.58" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/gdlVirusUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gdlShopLeft"
+            app:layout_constraintTop_toBottomOf="@+id/linLayTxtStats">
+
+
+            <ImageView
+                android:id="@+id/imgAdReward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/ad_reward"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ad" />
+
+            <ImageView
+                android:id="@+id/imgShop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/shop"
+                android:padding="5dp"
+                app:srcCompat="@drawable/shop" />
+
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdlShopLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+
+        <RelativeLayout
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/gdlVirusUp"
+            app:layout_constraintEnd_toStartOf="@+id/gdlChestRight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linLayTxtStats">
+
+
+            <ImageView
+                android:id="@+id/imgStorage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/shop"
+                android:onClick="@{() -> gameViewModel.gameState.collectStorage()}"
+                android:padding="5dp"
+                app:srcCompat="@drawable/storage" />
+
+            <TextView
+                android:id="@+id/txtStorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/imgStorage"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:onClick="@{() -> gameViewModel.gameState.collectStorage()}"
+                android:text="@{gameViewModel.gameState.storage}"
+                android:textColor="#000000"
+                app:autoSizeTextType="uniform" />
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdlChestRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

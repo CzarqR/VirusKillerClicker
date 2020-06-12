@@ -78,27 +78,27 @@ class MainActivity : AppCompatActivity()
         MobileAds.initialize(this) {}
 
         // banner
-//        val adRequest = AdRequest.Builder().build()
-//        adView.loadAd(adRequest)
-//        adView.adListener = object : AdListener()
-//        {
-//            override fun onAdFailedToLoad(p0: Int)
-//            {
-//                super.onAdFailedToLoad(p0)
-//                if (loadAdBannerRequests++ < 5)
-//                {
-//                    adView.loadAd(adRequest)
-//                }
-//            }
-//
-//
-//            override fun onAdLoaded()
-//            {
-//                super.onAdLoaded()
-//                loadAdBannerRequests = 0
-//                isAdBannerLoaded = true
-//            }
-//        }
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+        adView.adListener = object : AdListener()
+        {
+            override fun onAdFailedToLoad(p0: Int)
+            {
+                super.onAdFailedToLoad(p0)
+                if (loadAdBannerRequests++ < 5)
+                {
+                    adView.loadAd(adRequest)
+                }
+            }
+
+
+            override fun onAdLoaded()
+            {
+                super.onAdLoaded()
+                loadAdBannerRequests = 0
+                isAdBannerLoaded = true
+            }
+        }
 
         // interstitial
 //        mInterstitialAd = InterstitialAd(this)

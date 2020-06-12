@@ -117,7 +117,9 @@ class GameState(private val context: Context)
 
     fun attackViruses(longClick: Int = 1)
     {
+        _savedLives.value=99999999999
         _money.value=999_999_999_999
+        _storage.value="15600 / 13000"
         Log.i("Number attack per click: ${bonuses.numbersAttackPerClickValue}. Critical Attack: ${bonuses.criticalAttackValue}")
         Log.i("${(bonuses.numbersAttackPerClickValue + bonusAttack) * longClick}")
         var dmg = 0

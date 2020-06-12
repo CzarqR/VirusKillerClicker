@@ -82,7 +82,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.butShop.setOnClickListener {
+        binding.imgShop.setOnClickListener {
 
             val gson = Gson()
             val bonusesDataString = gson.toJson(BonusesData(viewModel.gameState.bonuses))
@@ -175,7 +175,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         if (wasRewarded)
         {
             MainActivity.showSnackbar(
-                butShop,
+                imgShop,
                 getString(R.string.snackbar_attack, 1, 3),
                 getString(R.string.cool),
                 View.OnClickListener {

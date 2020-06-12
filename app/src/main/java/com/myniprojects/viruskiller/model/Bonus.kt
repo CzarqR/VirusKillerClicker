@@ -1,8 +1,11 @@
 package com.myniprojects.viruskiller.model
 
 import android.content.res.Resources
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.Drawable
 import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.utils.App
+import com.myniprojects.viruskiller.utils.Log
 import timber.log.Timber
 
 data class Bonus(
@@ -10,7 +13,8 @@ data class Bonus(
     val prices: IntArray,
     val values: Array<Number>,
     val name: String,
-    val desc: String
+    val desc: String,
+    val image: Int
 )
 {
     val isMax: Boolean
@@ -82,9 +86,26 @@ data class Bonus(
             }
             else
             {
-                currPrice.toString()
+                "$currPrice $"
             }
         }
+
+    val updateString: String?
+        get()
+        {
+            return if (isMax)
+            {
+                App.context?.getString(R.string.max_lvl_format, currValString )
+            }
+            else
+            {
+                App.context?.getString(R.string.update_format, currValString, nextValString)
+            }
+
+        }
+
+
+
 }
 
 

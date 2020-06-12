@@ -3,13 +3,13 @@ package com.myniprojects.viruskiller.utils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.model.Bonus
 import com.myniprojects.viruskiller.screens.shop.ShopViewModel
 import kotlinx.android.synthetic.main.layout_bonus_list_item.view.*
-import timber.log.Timber
 
 class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
@@ -50,38 +50,23 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     }
 
     class BonusViewHolder constructor(
-        itemView: View, var shopViewModel: ShopViewModel
+        itemView: View, private var shopViewModel: ShopViewModel
     ) : RecyclerView.ViewHolder(itemView)
     {
-        private val currLvl: TextView = itemView.txtCurrent
-        private val maxLvl: TextView = itemView.txtMax
         private val price: TextView = itemView.txtPrice
-        private val upgrade: TextView = itemView.butUpgrade
-        private val currValue: TextView = itemView.txtCurrentValue
-        private val nextValue: TextView = itemView.txtNextValue
+        private val img: ImageView = itemView.imgBonus
+        private val upgrade: TextView = itemView.txtUpdate
         private val name: TextView = itemView.txtName
-        private val desc: TextView = itemView.txtDesc
-
 
         fun bind(bonus: Bonus)
         {
-            maxLvl.text = bonus.maxLvlString
-            name.text = bonus.name
-            desc.text = bonus.desc
 
-            currLvl.text = bonus.currLvlString
+            img.setImageResource(bonus.image)
             price.text = bonus.currPriceString
-            currValue.text = bonus.currValString
-            nextValue.text = bonus.nextValString
+            upgrade.text = bonus.updateString
+            name.text = bonus.name
 
-            upgrade.setOnClickListener {
-//                Log.i("Clicked update pos $position")
-//                Log.i("Current lvl ${bonus.currLvl}")
-//                Log.i("Price current ${bonus.currPrice}")
-//                Log.i("Price next ${bonus.nextPrice}")
-//                Log.i("Value curr ${bonus.currVal}")
-//                Log.i("Value next ${bonus.nextVal}")
-
+            price.setOnClickListener {
 
                 if (bonus.isMax) //lvl is max cannot update
                 {
@@ -93,13 +78,11 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
                     {
                         Log.i("Updating")
                         val cost = bonus.currPrice
-
                         bonus.currLvl = bonus.currLvl.plus(1).toByte()
 
-                        currLvl.text = bonus.currLvlString
                         price.text = bonus.currPriceString
-                        currValue.text = bonus.currValString
-                        nextValue.text = bonus.nextValString
+                        upgrade.text = bonus.updateString
+
 
                         shopViewModel.saveBonuses(cost)
                     }

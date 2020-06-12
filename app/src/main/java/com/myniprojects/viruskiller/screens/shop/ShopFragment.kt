@@ -1,6 +1,7 @@
 package com.myniprojects.viruskiller.screens.shop
 
 import android.app.Application
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.R
@@ -61,11 +63,16 @@ class ShopFragment : Fragment()
         binding.shopViewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.butGame.setOnClickListener {
+        binding.butLaboratory.setOnClickListener {
             val action = ShopFragmentDirections.shopToGame()
             Navigation.findNavController(requireView()).navigate(action)
         }
 
+        val animationDrawable =
+            binding.back.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2000)
+        animationDrawable.setExitFadeDuration(4000)
+        animationDrawable.start()
 
         return binding.root
     }
@@ -91,6 +98,12 @@ class ShopFragment : Fragment()
             bonusAdapter = BonusAdapter()
             bonusAdapter.shopViewModel = viewModel
             adapter = bonusAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
         }
     }
 

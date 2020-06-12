@@ -9,4 +9,8 @@
     <color name="color_head">#6A1B9A</color>
     <color name="color_desc">#D84315</color>
 
+    //shop
+    <color name="color_money">#00796B</color>
+
+
 </resources>

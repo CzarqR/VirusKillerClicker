@@ -85,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:contentDescription="@string/xp"
+                android:contentDescription="@string/xp_format"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
@@ -170,7 +170,7 @@
                 android:lines="1"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
-                android:text="@{@string/xp(gameViewModel.gameState.xp,gameViewModel.gameState.xpToNextLvl)}"
+                android:text="@{gameViewModel.gameState.xpString}"
                 android:textColor="#000000"
                 app:autoSizeTextType="uniform" />
 
@@ -182,11 +182,12 @@
             android:id="@+id/imgVirus"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/virus_image"
             app:imageResource="@{gameViewModel.gameState.virus.img}"
-            app:layout_constraintBottom_toTopOf="@+id/linLayVirusStats"
+            app:layout_constraintBottom_toTopOf="@+id/linLayAttack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/gdlVirusUp" />
@@ -240,7 +241,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.58" />
+            app:layout_constraintGuide_percent="0.55" />
 
 
         <RelativeLayout
@@ -333,13 +334,12 @@
 
         <LinearLayout
             android:id="@+id/linLayAttack"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/imgVirus"
-            app:layout_constraintEnd_toStartOf="@+id/gdlShopLeft"
-            app:layout_constraintStart_toEndOf="@+id/relativeLayout">
+            app:layout_constraintBottom_toTopOf="@+id/linLayVirusStats"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/txtDmg"
@@ -349,9 +349,10 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans"
-                android:gravity="start"
+                android:gravity="center"
                 android:lines="1"
                 android:text="@{gameViewModel.gameState.attackPerClick}"
+                android:textColor="#B71C1C"
                 app:autoSizeTextType="uniform" />
 
             <TextView
@@ -362,9 +363,10 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans"
-                android:gravity="end"
+                android:gravity="center"
                 android:lines="1"
                 android:text="@{gameViewModel.gameState.crit}"
+                android:textColor="#B71C1C"
                 app:autoSizeTextType="uniform" />
         </LinearLayout>
 

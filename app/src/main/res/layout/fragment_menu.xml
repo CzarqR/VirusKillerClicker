@@ -22,7 +22,6 @@
         android:orientation="vertical">
 
         <TextView
-            app:autoSizeTextType="uniform"
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -32,7 +31,7 @@
             android:padding="10dp"
             android:text="@string/anteroom"
             android:textColor="@color/color_head"
- />
+            app:autoSizeTextType="uniform" />
 
         <ImageView
             android:id="@+id/imgLaboratory"

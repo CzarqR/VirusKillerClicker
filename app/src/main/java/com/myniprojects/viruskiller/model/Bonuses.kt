@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.utils.App
-import timber.log.Timber
 
 class Bonuses(
     multiplier0: Byte,
@@ -153,7 +152,8 @@ class Bonuses(
                 pricesSLM,
                 valuesSLM as Array<Number>,
                 App.context!!.getString(R.string.masks),
-                App.context!!.getString(R.string.masks_desc)
+                App.context!!.getString(R.string.masks_desc),
+                R.drawable.mask
 
             )
 
@@ -161,48 +161,55 @@ class Bonuses(
             Bonus(
                 _savedLivesMultiplier1.value!!, pricesSLM, valuesSLM as Array<Number>,
                 App.context!!.getString(R.string.gloves),
-                App.context!!.getString(R.string.gloves_desc)
+                App.context!!.getString(R.string.gloves_desc),
+                R.drawable.gloves
             )
 
         val bonusSavedLivesMultiplier2 =
             Bonus(
                 _savedLivesMultiplier2.value!!, pricesSLM, valuesSLM as Array<Number>,
                 App.context!!.getString(R.string.hand_washing_preparations),
-                App.context!!.getString(R.string.hand_washing_preparations_desc)
+                App.context!!.getString(R.string.hand_washing_preparations_desc),
+                R.drawable.hend_wash
             )
 
         val bonusSavedLivesMultiplier3 =
             Bonus(
                 _savedLivesMultiplier3.value!!, pricesSLM, valuesSLM as Array<Number>,
                 App.context!!.getString(R.string.vaccine),
-                App.context!!.getString(R.string.vaccine_desc)
+                App.context!!.getString(R.string.vaccine_desc),
+                R.drawable.vaccine
             )
 
         val bonusCriticalAttack =
             Bonus(
                 _criticalAttack.value!!, pricesCA, valuesCA as Array<Number>,
                 App.context!!.getString(R.string.critical_attack),
-                App.context!!.getString(R.string.critical_attack_desc)
+                App.context!!.getString(R.string.critical_attack_desc),
+                R.drawable.attack
             )
 
         val bonusNumberAttackPerClick =
             Bonus(
                 _numbersAttackPerClick.value!!, pricesNAPC, valuesNAPC as Array<Number>,
                 App.context!!.getString(R.string.attack_numbers_per_click),
-                App.context!!.getString(R.string.attack_numbers_per_click_desc)
+                App.context!!.getString(R.string.attack_numbers_per_click_desc),
+                R.drawable.click
             )
 
         val bonusCoinsPerMinutes =
             Bonus(
                 _coinsPerMinutes.value!!, pricesCPM, valuesCPM as Array<Number>,
                 App.context!!.getString(R.string.coins_per_minute),
-                App.context!!.getString(R.string.coins_per_minute_desc)
+                App.context!!.getString(R.string.coins_per_minute_desc),
+                R.drawable.coin
             )
 
         val bonusStorage = Bonus(
             _storage.value!!, pricesS, valuesS as Array<Number>,
             App.context!!.getString(R.string.storage),
-            App.context!!.getString(R.string.storage_desc)
+            App.context!!.getString(R.string.storage_desc),
+            R.drawable.chest
         )
 
         val bonusRewardMultiplier =
@@ -211,7 +218,8 @@ class Bonuses(
                 pricesRM,
                 valuesRM as Array<Number>,
                 App.context!!.getString(R.string.reward_multiplier),
-                App.context!!.getString(R.string.reward_multiplier_desc)
+                App.context!!.getString(R.string.reward_multiplier_desc),
+                R.drawable.multiplier
             )
 
         return mutableListOf(

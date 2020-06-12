@@ -48,14 +48,48 @@ class GameState(private val context: Context)
     val lvl: LiveData<Int>
         get() = _lvl
 
-    private val _xp = MutableLiveData<Int>()
-    val xp: LiveData<Int>
+    private val _xpString = MutableLiveData<String>()
+    val xpString: LiveData<String>
+        get() = _xpString
+
+
+    private var _xp: Int = 0
+        set(value)
+        {
+            field = value
+            Log.i(_xpToNextLvl)
+            val nextLvl: String? = if (_lvl.value == maxLvl)
+            {
+                App.context?.getString(R.string.infinite_sign)
+            }
+            else
+            {
+                _xpToNextLvl.toString()
+            }
+            _xpString.postValue(App.context?.getString(R.string.xp_format, _xp.toString(), nextLvl))
+        }
+
+    val xp: Int
         get() = _xp
 
-    private val _xpToNextLvl = MutableLiveData<Int>()
-    val xpToNextLvl: LiveData<Int>
-        get() = _xpToNextLvl
 
+    private var _xpToNextLvl: Int = 0
+        set(value)
+        {
+            field = value
+            val nextLvl: String? = if (_lvl.value == maxLvl)
+            {
+                App.context?.getString(R.string.infinite_sign)
+            }
+            else
+            {
+                _xpToNextLvl.toString()
+            }
+            _xpString.postValue(App.context?.getString(R.string.xp_format, _xp.toString(), nextLvl))
+        }
+
+    val xpToNextLvl: Int
+        get() = _xpToNextLvl
 
 
     private val _storage = MutableLiveData<String>()
@@ -92,7 +126,8 @@ class GameState(private val context: Context)
         set(value)
         {
             field = value
-            Log.i(((field) / 100).toString())
+            Log.i(((field - 1.0)).format(2))
+            Log.i(field)
             _crit.postValue(
                 App.context?.getString(
                     R.string.crit_desc,
@@ -152,19 +187,19 @@ class GameState(private val context: Context)
                 (virus.reward.times(_bonuses.rewardMultiplierValue).toInt())
             )
 
-            _xp.value = _xp.value!!.plus((virus.reward).div(10))
+            _xp = _xp.plus((virus.reward).div(10))
 
-            if (_lvl.value!! < maxLvl && _xp.value!! >= _xpToNextLvl.value!!) //lvl upgrade
+            if (_lvl.value!! < maxLvl && _xp >= _xpToNextLvl) //lvl upgrade
             {
                 Log.i("New Lvl")
                 _lvl.value = _lvl.value!!.plus(1)
-                _xpToNextLvl.value = if (_lvl.value!! != maxLvl)
+                _xpToNextLvl = if (_lvl.value!! != maxLvl)
                 {
                     xpArray[_lvl.value!!]
                 }
                 else
                 {
-                    99999999
+                    Int.MAX_VALUE
                 }
             }
             _killedViruses.value = _killedViruses.value!!.plus(1)
@@ -275,15 +310,15 @@ class GameState(private val context: Context)
         _money.value = mon
         _killedViruses.value = gameStateData.killedViruses
         _lvl.value = gameStateData.lvl
-        _xp.value = gameStateData.xp
+        _xp = gameStateData.xp
         _savedLives.value = gameStateData.savedLives
-        _xpToNextLvl.value = if (_lvl.value!! != maxLvl)
+        _xpToNextLvl = if (_lvl.value!! != maxLvl)
         {
             xpArray[_lvl.value!!]
         }
         else
         {
-            99999999
+            Int.MAX_VALUE
         }
 
         Log.i("Load instance: $bonusesData")
@@ -413,7 +448,7 @@ private data class GameStateData(
         g.killedViruses.value!!,
         g.savedLives.value!!,
         g.lvl.value!!,
-        g.xp.value!!
+        g.xp
     )
 
     constructor() : this(

@@ -10,7 +10,7 @@
     <string name="virus_key">virus_key</string>
     <string name="bonuses_key">bonuses_key</string>
     <string name="money_key">money_key</string>
-    <string name="xp">%1$d / %2$d</string>
+    <string name="xp_format">%1$s / %2$s</string>
     <string name="shop">Shop</string>
     <string name="upgrade">Upgrade</string>
     <string name="NotLoaded">NotLoaded</string>
@@ -62,6 +62,13 @@
     <string name="ad_reward">Ad Reward</string>
     <string name="crit_desc">Chance for crit: %1$s</string>
     <string name="attack_per_click">Attacks: %1$d</string>
+
+    <string name="infinite_sign">∞</string>
+    <string name="money_format">Money: %1$d $</string>
+    <string name="bonus_image">Bonus image</string>
+    <string name="update_format">Update from %1$s to %2$s</string>
+    <string name="max_lvl_format">Current value: %1$s</string>
+
 
 
 </resources>

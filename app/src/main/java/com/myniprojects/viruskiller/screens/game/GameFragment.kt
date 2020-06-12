@@ -126,10 +126,10 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-//        button.setOnClickListener {
-//            it.isEnabled = false
-//            mRewardedVideoAd.show()
-//        }
+        binding.imgAdReward.setOnClickListener {
+            mRewardedVideoAd.show()
+            binding.imgAdReward.setImageResource(R.drawable.ad_loading)
+        }
     }
 
 
@@ -196,7 +196,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     override fun onRewardedVideoAdLoaded()
     {
         Log.i("onRewardedVideoAdLoaded")
-//        button.isEnabled = true
+        binding.imgAdReward.setImageResource(R.drawable.ad_loaded)
     }
 
     override fun onRewardedVideoAdOpened()

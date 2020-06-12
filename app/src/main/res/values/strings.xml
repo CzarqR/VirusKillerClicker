@@ -60,6 +60,8 @@
     <string name="money">Money</string>
     <string name="level">Level</string>
     <string name="ad_reward">Ad Reward</string>
+    <string name="crit_desc">Chance for crit: %1$s</string>
+    <string name="attack_per_click">Attacks: %1$d</string>
 
 
 </resources>

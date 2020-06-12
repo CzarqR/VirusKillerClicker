@@ -8,12 +8,12 @@ class Log
     companion object
     {
         private const val prefix = "My debug:"
-        fun d(text: String)
+        fun d(text: Any)
         {
             Timber.d("$prefix $text")
         }
 
-        fun i(text: String)
+        fun i(text: Any)
         {
             Timber.i("$prefix $text")
         }

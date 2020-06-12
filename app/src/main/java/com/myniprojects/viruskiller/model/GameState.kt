@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.Log
 import java.util.*
 import java.util.Timer
@@ -55,6 +56,8 @@ class GameState(private val context: Context)
     val xpToNextLvl: LiveData<Int>
         get() = _xpToNextLvl
 
+
+
     private val _storage = MutableLiveData<String>()
     val storage: LiveData<String>
         get() = _storage
@@ -89,7 +92,13 @@ class GameState(private val context: Context)
         set(value)
         {
             field = value
-            _crit.value = value.toString()
+            Log.i(((field) / 100).toString())
+            _crit.postValue(
+                App.context?.getString(
+                    R.string.crit_desc,
+                    ((field - 1.0)).format(2)
+                )
+            )
         }
 
 
@@ -102,7 +111,7 @@ class GameState(private val context: Context)
         set(value)
         {
             field = value
-            _attackPerClick.postValue(value.toString())
+            _attackPerClick.postValue(App.context?.getString(R.string.attack_per_click, value))
         }
 
     //endregion
@@ -117,9 +126,6 @@ class GameState(private val context: Context)
 
     fun attackViruses(longClick: Int = 1)
     {
-        _savedLives.value=99999999999
-        _money.value=999_999_999_999
-        _storage.value="15600 / 13000"
         Log.i("Number attack per click: ${bonuses.numbersAttackPerClickValue}. Critical Attack: ${bonuses.criticalAttackValue}")
         Log.i("${(bonuses.numbersAttackPerClickValue + bonusAttack) * longClick}")
         var dmg = 0
@@ -148,7 +154,6 @@ class GameState(private val context: Context)
 
             _xp.value = _xp.value!!.plus((virus.reward).div(10))
 
-            //Todo check for max lvl out of range
             if (_lvl.value!! < maxLvl && _xp.value!! >= _xpToNextLvl.value!!) //lvl upgrade
             {
                 Log.i("New Lvl")
@@ -344,7 +349,7 @@ class GameState(private val context: Context)
     fun collectStorage()
     {
         _money.value = _money.value!!.plus(currStorage)
-        currStorage = 0;
+        currStorage = 0
 
     }
 
@@ -417,3 +422,4 @@ private data class GameStateData(
 
 }
 
+fun Double.format(digits: Int) = "%.${digits}f".format(this)

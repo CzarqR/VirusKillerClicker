@@ -141,7 +141,7 @@
                 android:lines="1"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
-                android:text="@{gameViewModel.gameState.money.toString()}"
+                android:text="@{@string/money_game_format(gameViewModel.gameState.money)}"
                 android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
@@ -155,7 +155,7 @@
                 android:lines="1"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
-                android:text="@{gameViewModel.gameState.lvl.toString()}"
+                android:text="@{@string/lvl_game_format(gameViewModel.gameState.lvl)}"
                 android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 

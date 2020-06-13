@@ -73,5 +73,24 @@
     <string name="back_to_lab">Back To Lab</string>
     <string name="ad_not_loaded">Ad hasn\'t been loaded yet. Wait a moment</string>
 
+    <string name="money_game_format">%1$d $</string>
+    <string name="lvl_game_format">Lvl: %1$d</string>
+
+    <!--Help -->
+    <string name="base_info">Base Info</string>
+    <string name="attacks">Attacks</string>
+    <string name="credits">Credits</string>
+    <string name="ads">Ads</string>
+    <string name="killing_virus">Killing Virus</string>
+    <string name="ok">OK</string>
+
+    <string name="base_info_desc"> </string>
+    <string name="attacks_desc" > </string>
+    <string name="killing_virus_desc" > </string>
+    <string name="saved_lives_desc" > </string>
+    <string name="storage_desc_help" > </string>
+    <string name="ads_desc" > </string>
+    <string name="credits_desc" > </string>
+
 
 </resources>

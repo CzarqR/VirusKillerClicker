@@ -37,7 +37,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:padding="8dp"
-                android:textColor="#FFAB00"
+                android:textColor="@color/shop_item_name"
                 app:autoSizeTextType="uniform" />
 
             <RelativeLayout

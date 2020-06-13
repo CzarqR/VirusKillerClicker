@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".screens.help.HelpFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+
+    <ScrollView
+        android:background="@drawable/gradient_list_s"
+        android:id="@+id/back"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Help" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/butBaseInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/base_info"
+                android:textColor="@color/but_help_fore"
+                app:backgroundTint="@color/but_help_back" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/butAttacs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/attacks"
+                android:textColor="@color/but_help_fore"
+                app:backgroundTint="@color/but_help_back"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/butKillingVirus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/killing_virus"
+                android:textColor="@color/but_help_fore"
+                app:backgroundTint="@color/but_help_back"/>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/butSavedLives"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/saved_lives"
+                android:textColor="@color/but_help_fore"
+                app:backgroundTint="@color/but_help_back"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/butStorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/storage"
+                android:textColor="@color/but_help_fore"
+                app:backgroundTint="@color/but_help_back"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/butAd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/ads"
+                android:textColor="@color/but_help_fore"
+                app:backgroundTint="@color/but_help_back"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/butCredits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/credits"
+                android:textColor="@color/but_help_fore"
+                app:backgroundTint="@color/but_help_back"/>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </ScrollView>
+
+
+
+
+
+
+
+</layout>

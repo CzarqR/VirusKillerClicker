@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -16,7 +15,7 @@
         android:id="@+id/conLayBack"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_list"
+        android:background="@drawable/gradient_list_g"
         tools:context=".screens.game.GameFragment">
 
 
@@ -115,7 +114,7 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.killedViruses.toString()}"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
             <TextView
@@ -129,7 +128,7 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.savedLives.toString()}"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
             <TextView
@@ -143,7 +142,7 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.money.toString()}"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
             <TextView
@@ -157,7 +156,7 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.lvl.toString()}"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
             <TextView
@@ -171,7 +170,7 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:text="@{gameViewModel.gameState.xpString}"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
 
@@ -212,6 +211,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:text="@{gameViewModel.gameState.virus.hpString}"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
             <TextView
@@ -223,6 +223,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:text="@{gameViewModel.gameState.virus.lvlString.toString()}"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
             <TextView
@@ -234,6 +235,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:text="@{gameViewModel.gameState.virus.rewardString.toString()}"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
 
@@ -323,7 +325,7 @@
                 android:lines="1"
                 android:onClick="@{() -> gameViewModel.gameState.collectStorage()}"
                 android:text="@{gameViewModel.gameState.storage}"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 app:autoSizeTextType="uniform" />
 
         </RelativeLayout>
@@ -355,7 +357,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:text="@{gameViewModel.gameState.attackPerClick}"
-                android:textColor="#B71C1C"
+                android:textColor="#9E0000"
                 app:autoSizeTextType="uniform" />
 
             <TextView
@@ -369,7 +371,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:text="@{gameViewModel.gameState.crit}"
-                android:textColor="#B71C1C"
+                android:textColor="#9E0000"
                 app:autoSizeTextType="uniform" />
         </LinearLayout>
 

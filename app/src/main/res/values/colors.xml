@@ -13,8 +13,15 @@
     <color name="color_money">#00796B</color>
 
     //toast
-    <color name="toast_1">#880E4F</color>
-    <color name="toast_2">#F57F17</color>
+    <color name="toast_1">#FBC02D</color>
+    <color name="toast_2">#1B5E20</color>
+
+
+    <color name="gradient_start_0s">#c33764 </color>
+    <color name="gradient_end_0s">#1d2671</color>
+
+    <color name="gradient_start_0">#141e30</color>
+    <color name="gradient_end_0">#243b55</color>
 
 
 </resources>

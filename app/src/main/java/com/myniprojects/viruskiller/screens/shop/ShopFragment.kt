@@ -73,8 +73,8 @@ class ShopFragment : Fragment()
 
         val animationDrawable =
             binding.back.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(2000)
-        animationDrawable.setExitFadeDuration(4000)
+        animationDrawable.setEnterFadeDuration(0)
+        animationDrawable.setExitFadeDuration(resources.getInteger(R.integer.background_animation_frame))
         animationDrawable.start()
 
         return binding.root

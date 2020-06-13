@@ -106,8 +106,8 @@ class GameFragment : Fragment(), RewardedVideoAdListener
 
         val animationDrawable =
             binding.conLayBack.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(2000)
-        animationDrawable.setExitFadeDuration(4000)
+        animationDrawable.setEnterFadeDuration(0)
+        animationDrawable.setExitFadeDuration(resources.getInteger(R.integer.background_animation_frame))
         animationDrawable.start()
 
         binding.imgVirus.setOnClickListener {

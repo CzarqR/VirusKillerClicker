@@ -30,40 +30,40 @@ class HelpFragment : Fragment()
     {
         Log.i("Created")
 
-        val animationDrawable = back.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(0)
-        animationDrawable.setExitFadeDuration(resources.getInteger(R.integer.background_animation_frame))
-        animationDrawable.start()
+//        val animationDrawable = back.background as AnimationDrawable
+//        animationDrawable.setEnterFadeDuration(0)
+//        animationDrawable.setExitFadeDuration(resources.getInteger(R.integer.background_animation_frame))
+//        animationDrawable.start()
 
         //region info click help
 
-        butBaseInfo.setOnClickListener {
-            showDialog(R.string.base_info, R.string.base_info_desc)
-        }
-
-        butAttacs.setOnClickListener {
-            showDialog(R.string.attacks, R.string.attacks_desc)
-        }
-
-        butKillingVirus.setOnClickListener {
-            showDialog(R.string.killing_virus, R.string.killing_virus_desc)
-        }
-
-        butSavedLives.setOnClickListener {
-            showDialog(R.string.saved_lives, R.string.saved_lives_desc)
-        }
-
-        butStorage.setOnClickListener {
-            showDialog(R.string.storage, R.string.storage_desc_help)
-        }
-
-        butAd.setOnClickListener {
-            showDialog(R.string.ads, R.string.ads_desc)
-        }
-
-        butCredits.setOnClickListener {
-            showDialog(R.string.credits, R.string.credits_desc)
-        }
+//        butBaseInfo.setOnClickListener {
+//            showDialog(R.string.base_info, R.string.base_info_desc)
+//        }
+//
+//        butAttacs.setOnClickListener {
+//            showDialog(R.string.attacks, R.string.attacks_desc)
+//        }
+//
+//        butKillingVirus.setOnClickListener {
+//            showDialog(R.string.killing_virus, R.string.killing_virus_desc)
+//        }
+//
+//        butSavedLives.setOnClickListener {
+//            showDialog(R.string.saved_lives, R.string.saved_lives_desc)
+//        }
+//
+//        butStorage.setOnClickListener {
+//            showDialog(R.string.storage, R.string.storage_desc_help)
+//        }
+//
+//        butAd.setOnClickListener {
+//            showDialog(R.string.ads, R.string.ads_desc)
+//        }
+//
+//        butCredits.setOnClickListener {
+//            showDialog(R.string.credits, R.string.credits_desc)
+//        }
 
         //endregion
 

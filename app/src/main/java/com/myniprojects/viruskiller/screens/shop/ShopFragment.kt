@@ -66,8 +66,7 @@ class ShopFragment : Fragment()
         binding.lifecycleOwner = this
 
         binding.butLaboratory.setOnClickListener {
-            val action = ShopFragmentDirections.shopToGame()
-            Navigation.findNavController(requireView()).navigate(action)
+            activity?.onBackPressed()
         }
 
 

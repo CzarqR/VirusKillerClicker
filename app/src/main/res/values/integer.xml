@@ -10,4 +10,7 @@
     <integer name="background_animation_frame">1250</integer>
 
 
+    <integer name="fragment_anim_time">400</integer>
+
+
 </resources>

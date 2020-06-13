@@ -8,13 +8,21 @@
         android:id="@+id/menuFragment"
         android:name="com.myniprojects.viruskiller.screens.menu.MenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" >
+        tools:layout="@layout/fragment_menu">
         <action
             android:id="@+id/menu_to_help"
-            app:destination="@id/helpFragment" />
+            app:destination="@id/helpFragment"
+            app:enterAnim="@anim/enter_left_to_right"
+            app:exitAnim="@anim/exit_right_to_left"
+            app:popEnterAnim="@anim/popenter_right_to_left"
+            app:popExitAnim="@anim/popexit_left_to_right" />
         <action
             android:id="@+id/menu_to_game"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/enter_right_to_left"
+            app:exitAnim="@anim/exit_left_to_right"
+            app:popEnterAnim="@anim/popenter_left_to_right"
+            app:popExitAnim="@anim/popexit_right_to_left" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -25,26 +33,25 @@
         android:id="@+id/gameFragment"
         android:name="com.myniprojects.viruskiller.screens.game.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" >
+        tools:layout="@layout/fragment_game">
         <action
             android:id="@+id/game_to_shop"
-            app:destination="@id/shopFragment" />
+            app:destination="@id/shopFragment"
+            app:enterAnim="@anim/enter_right_to_left"
+            app:exitAnim="@anim/exit_left_to_right"
+            app:popEnterAnim="@anim/popenter_left_to_right"
+            app:popExitAnim="@anim/popexit_right_to_left"  />
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
         android:name="com.myniprojects.viruskiller.screens.shop.ShopFragment"
         android:label="fragment_shop"
-        tools:layout="@layout/fragment_shop" >
+        tools:layout="@layout/fragment_shop">
         <argument
             android:name="bonuses"
             app:argType="string" />
         <argument
             android:name="money"
             app:argType="long" />
-        <action
-            android:id="@+id/shop_to_game"
-            app:destination="@id/gameFragment"
-            app:popUpTo="@id/gameFragment"
-            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -1,17 +1,13 @@
 package com.myniprojects.viruskiller.screens.shop
 
-import android.app.Application
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -19,11 +15,8 @@ import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.databinding.FragmentShopBinding
 import com.myniprojects.viruskiller.model.Bonuses
 import com.myniprojects.viruskiller.model.BonusesData
-import com.myniprojects.viruskiller.screens.game.GameFragmentDirections
-import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.BonusAdapter
 import kotlinx.android.synthetic.main.fragment_shop.*
-import timber.log.Timber
 
 
 class ShopFragment : Fragment()

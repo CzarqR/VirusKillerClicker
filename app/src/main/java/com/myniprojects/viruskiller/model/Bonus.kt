@@ -1,12 +1,9 @@
+@file:Suppress("ArrayInDataClass")
+
 package com.myniprojects.viruskiller.model
 
-import android.content.res.Resources
-import android.graphics.drawable.AnimationDrawable
-import android.graphics.drawable.Drawable
 import com.myniprojects.viruskiller.R
 import com.myniprojects.viruskiller.utils.App
-import com.myniprojects.viruskiller.utils.Log
-import timber.log.Timber
 
 data class Bonus(
     var currLvl: Byte,
@@ -36,9 +33,6 @@ data class Bonus(
             }
         }
 
-    val currVal
-        get() = values[currLvl.toInt()]
-
     private val nextVal: Number
         get()
         {
@@ -53,10 +47,10 @@ data class Bonus(
 
         }
 
-    val currValString
+    private val currValString
         get() = values[currLvl.toInt()].toString()
 
-    val nextValString: String
+    private val nextValString: String
         get()
         {
             return if (nextVal.toDouble() < 0)
@@ -69,13 +63,6 @@ data class Bonus(
             }
         }
 
-
-    val currLvlString: String
-        get() = currLvl.toString()
-
-
-    val maxLvlString
-        get() = maxLvl.toString()
 
     val currPriceString: String
         get()
@@ -103,8 +90,6 @@ data class Bonus(
             }
 
         }
-
-
 
 }
 

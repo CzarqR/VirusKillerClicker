@@ -11,9 +11,8 @@ import com.myniprojects.viruskiller.model.Bonus
 import com.myniprojects.viruskiller.model.Bonuses
 import com.myniprojects.viruskiller.model.BonusesData
 import com.myniprojects.viruskiller.utils.Log
-import timber.log.Timber
 
-class ShopViewModel(money: Long, private var bonuses: Bonuses, private var context: Context) :
+class ShopViewModel(money: Long, bonuses: Bonuses, private var context: Context) :
     ViewModel()
 {
 
@@ -70,9 +69,6 @@ class ShopViewModel(money: Long, private var bonuses: Bonuses, private var conte
             commit()
         }
     }
-
-
-
 
 
 }

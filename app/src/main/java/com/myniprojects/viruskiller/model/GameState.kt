@@ -18,7 +18,21 @@ class GameState(private val context: Context)
     companion object
     {
         val xpArray =
-            arrayOf(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300)
+            arrayOf(
+                50,
+                200,
+                500,
+                1150,
+                2650,
+                4000,
+                10_000,
+                20_000,
+                42_000,
+                85_000,
+                174_000,
+                356_000,
+                720_000
+            )
         val maxLvl = xpArray.size
     }
 
@@ -88,9 +102,6 @@ class GameState(private val context: Context)
             _xpString.postValue(App.context?.getString(R.string.xp_format, _xp.toString(), nextLvl))
         }
 
-    val xpToNextLvl: Int
-        get() = _xpToNextLvl
-
 
     private val _storage = MutableLiveData<String>()
     val storage: LiveData<String>
@@ -114,11 +125,11 @@ class GameState(private val context: Context)
     val crit: LiveData<String>
         get() = _crit
 
-    private var bonusAttack: Int = 0
+    private var bonusAttackMultiplier: Int = 1
         set(value)
         {
             field = value
-            currAttacksPerClick = (_bonuses.numbersAttackPerClickValue + bonusAttack)
+            currAttacksPerClick = (_bonuses.numbersAttackPerClickValue * bonusAttackMultiplier)
         }
 
 
@@ -155,16 +166,17 @@ class GameState(private val context: Context)
     {
         Log.i("Init  GameState")
         loadGame()
+        //todo load ad
 //        MainActivity.mRewardedVideoAd
     }
 
 
     fun attackViruses(longClick: Int = 1)
     {
-        Log.i("Number attack per click: ${bonuses.numbersAttackPerClickValue}. Critical Attack: ${bonuses.criticalAttackValue}")
-        Log.i("${(bonuses.numbersAttackPerClickValue + bonusAttack) * longClick}")
+        Log.i("Base attack per click: ${bonuses.numbersAttackPerClickValue}. Critical Attack: ${bonuses.criticalAttackValue}. Bonus attack multiplier: $bonusAttackMultiplier")
+
         var dmg = 0
-        for (i in 1..((bonuses.numbersAttackPerClickValue + bonusAttack) * longClick))
+        for (i in 1..((bonuses.numbersAttackPerClickValue * bonusAttackMultiplier) * longClick))
         {
             dmg += if ((1..100).random() < bonuses.criticalAttackValue) // crit
             {
@@ -325,7 +337,6 @@ class GameState(private val context: Context)
         _bonuses = Bonuses(bonusesData)
         currStorage = sto
         currCrit = (_bonuses.criticalAttackValue + 100).toFloat() / 100
-        currAttacksPerClick = (_bonuses.numbersAttackPerClickValue + bonusAttack)
         _virus = Virus(virusData)
 
     }
@@ -340,7 +351,7 @@ class GameState(private val context: Context)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context) ?: return
         with(sharedPreferences.edit()) {
 
-            putLong(context.getString(R.string.last_minute_passed_key), current.time / 10_000)
+            putLong(context.getString(R.string.last_minute_passed_key), current.time / 60_000)
             commit()
         }
 
@@ -376,7 +387,7 @@ class GameState(private val context: Context)
 
         _bonuses = Bonuses(bonusesData)
         currCrit = (_bonuses.criticalAttackValue + 100).toFloat() / 100
-        currAttacksPerClick = (_bonuses.numbersAttackPerClickValue + bonusAttack)
+        currAttacksPerClick = (_bonuses.numbersAttackPerClickValue * bonusAttackMultiplier)
 
         _money.value = mon
     }
@@ -397,43 +408,30 @@ class GameState(private val context: Context)
             -1
         )
 
-
-
-
         if (previous > 0)
         {
             val current = Calendar.getInstance().time
-
-            val passed = (current.time / 10_000 - previous)
+            val passed = (current.time / 60_000 - previous)
 
             currStorage += (_bonuses.coinsPerMinutesValue * passed).toInt()
             _savedLives.value = _savedLives.value!!.plus(_bonuses.savedLivesSum.times(passed))
             with(sharedPreferences.edit()) {
-                putLong(context.getString(R.string.last_minute_passed_key), current.time / 10_000)
+                putLong(context.getString(R.string.last_minute_passed_key), current.time / 60_000)
                 commit()
             }
         }
-
-
     }
-
-    fun test()
-    {
-
-    }
-
 
     fun bonusAttack(millis: Long)
     {
-        bonusAttack += 1
+        bonusAttackMultiplier += 1
 
         Timer("SettingUp", false).schedule(millis) {
-            bonusAttack -= 1
+            Log.i("Ad bonus ends")
+            bonusAttackMultiplier -= 1
         }
 
     }
-
-
 }
 
 

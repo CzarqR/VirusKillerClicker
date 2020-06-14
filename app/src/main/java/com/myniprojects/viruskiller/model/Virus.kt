@@ -14,20 +14,20 @@ class Virus()
     {
 
         private val viruses = arrayOf(
-            arrayOf(3, 500, R.drawable.virus_0),
-            arrayOf(5, 500, R.drawable.virus_1),
-            arrayOf(8, 500, R.drawable.virus_2),
-            arrayOf(10, 500, R.drawable.virus_3),
-            arrayOf(12, 500, R.drawable.virus_4),
-            arrayOf(25, 500, R.drawable.virus_5),
-            arrayOf(25, 500, R.drawable.virus_6),
-            arrayOf(25, 500, R.drawable.virus_7),
-            arrayOf(25, 500, R.drawable.virus_8),
-            arrayOf(25, 500, R.drawable.virus_9),
-            arrayOf(25, 500, R.drawable.virus_10),
-            arrayOf(25, 500, R.drawable.virus_11),
-            arrayOf(25, 500, R.drawable.virus_12),
-            arrayOf(25, 500, R.drawable.virus_13)
+            arrayOf(25, 50, R.drawable.virus_0),
+            arrayOf(50, 110, R.drawable.virus_1),
+            arrayOf(100, 220, R.drawable.virus_2),
+            arrayOf(170, 390, R.drawable.virus_3),
+            arrayOf(270, 650, R.drawable.virus_4),
+            arrayOf(400, 1000, R.drawable.virus_5),
+            arrayOf(460, 1200, R.drawable.virus_6),
+            arrayOf(620, 1670, R.drawable.virus_7),
+            arrayOf(820, 2300, R.drawable.virus_8),
+            arrayOf(1040, 3010, R.drawable.virus_9),
+            arrayOf(1300, 3900, R.drawable.virus_10),
+            arrayOf(1600, 4960, R.drawable.virus_11),
+            arrayOf(1940, 6210, R.drawable.virus_12),
+            arrayOf(2320, 7650, R.drawable.virus_13)
         )
 
         val maxLvl = viruses.size
@@ -111,18 +111,6 @@ class Virus()
         Log.i("Set new virus:  $this")
     }
 
-    fun loadOldVirus(virusLvl: Byte, virusHP: Int)
-    {
-        if (virusLvl >= maxLvl)
-        {
-            throw Exception("Virus lvl is too big")
-        }
-        _lvl = virusLvl
-        _hp = virusHP
-        _reward = viruses[virusLvl.toInt()][1]
-        _img.value = viruses[virusLvl.toInt()][2]
-        Log.i("Load new virus:  $this")
-    }
 
 
     fun attackVirus(dmg: Int): Boolean //true virus killed,
@@ -166,8 +154,7 @@ data class VirusData(
         v.lvl
     )
 
-    //todo set default as first virus
     constructor() : this(
-        3, 0
+        50, 0
     )
 }

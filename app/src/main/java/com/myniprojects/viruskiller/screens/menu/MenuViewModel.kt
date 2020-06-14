@@ -2,7 +2,6 @@ package com.myniprojects.viruskiller.screens.menu
 
 import androidx.lifecycle.ViewModel
 import com.myniprojects.viruskiller.utils.Log
-import timber.log.Timber
 
 class MenuViewModel: ViewModel() {
     init {

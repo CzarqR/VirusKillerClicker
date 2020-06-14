@@ -95,7 +95,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
                 bonusesDataString,
                 viewModel.gameState.money.value!!
             )
-            //MainActivity.showInterstitialAd()
+            MainActivity.showInterstitialAd()
             Navigation.findNavController(requireView()).navigate(action)
         }
 
@@ -210,12 +210,6 @@ class GameFragment : Fragment(), RewardedVideoAdListener
 
     }
 
-//    override fun onSaveInstanceState(outState: Bundle)
-//    {
-//        super.onSaveInstanceState(outState)
-//        Log.i("SaveInstanceState")
-//        viewModel.saveGame() //saving when shutting off app
-//    }
 
     override fun onPause()
     {
@@ -253,7 +247,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         {
             MainActivity.showSnackbar(
                 imgShop,
-                getString(R.string.snackbar_attack, 1, 3),
+                getString(R.string.snackbar_attack, 2),
                 getString(R.string.cool),
                 View.OnClickListener {
                     Log.i("Snackbar cool clicked")

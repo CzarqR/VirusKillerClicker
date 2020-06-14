@@ -1,8 +1,6 @@
 package com.myniprojects.viruskiller
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
@@ -101,32 +99,32 @@ class MainActivity : AppCompatActivity()
         }
 
         // interstitial
-//        mInterstitialAd = InterstitialAd(this)
-//        mInterstitialAd.adUnitId = getString(R.string.fullscreen_ad)
-//        mInterstitialAd.loadAd(AdRequest.Builder().build())
-//        mInterstitialAd.adListener = object : AdListener()
-//        {
-//            override fun onAdClosed()
-//            {
-//                mInterstitialAd.loadAd(AdRequest.Builder().build())
-//            }
-//
-//            override fun onAdFailedToLoad(p0: Int)
-//            {
-//                super.onAdFailedToLoad(p0)
-//                if (loadAdInterstitialRequests++ < 5)
-//                {
-//                    mInterstitialAd.loadAd(AdRequest.Builder().build())
-//                }
-//            }
-//
-//
-//            override fun onAdLoaded()
-//            {
-//                super.onAdLoaded()
-//                loadAdInterstitialRequests = 0
-//            }
-//        }
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = getString(R.string.fullscreen_ad)
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        mInterstitialAd.adListener = object : AdListener()
+        {
+            override fun onAdClosed()
+            {
+                mInterstitialAd.loadAd(AdRequest.Builder().build())
+            }
+
+            override fun onAdFailedToLoad(p0: Int)
+            {
+                super.onAdFailedToLoad(p0)
+                if (loadAdInterstitialRequests++ < 5)
+                {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                }
+            }
+
+
+            override fun onAdLoaded()
+            {
+                super.onAdLoaded()
+                loadAdInterstitialRequests = 0
+            }
+        }
 
 
         Timber.plant(Timber.DebugTree())
@@ -139,58 +137,11 @@ class MainActivity : AppCompatActivity()
 
 
     //Hide navigation bar permanently
-    private fun fullScreenCall()
-    {
-        window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-    }
-
-    // region Lifecycle Methods
-    override fun onStart()
-    {
-        super.onStart()
-        Log.i("onStart Called")
-    }
-
-    override fun onResume()
-    {
-        super.onResume()
-        Log.i("onResume Called")
-
-        //fullScreenCall()
-    }
-
-    override fun onPause()
-    {
-        super.onPause()
-        Log.i("onPause Called")
-    }
-
-    override fun onStop()
-    {
-        super.onStop()
-        Log.i("onStop Called")
-    }
-
-    override fun onDestroy()
-    {
-        super.onDestroy()
-        Log.i("onDestroy Called")
-    }
-
-    override fun onRestart()
-    {
-        super.onRestart()
-        Log.i("onRestart Called")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle)
-    {
-        super.onSaveInstanceState(outState)
-        Log.i("onSavedInstance Called")
-    }
-
-    // endregion
+//    private fun fullScreenCall()
+//    {
+//        window.decorView.systemUiVisibility =
+//            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//    }
 
 
 }

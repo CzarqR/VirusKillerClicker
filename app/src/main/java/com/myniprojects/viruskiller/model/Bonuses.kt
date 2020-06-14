@@ -20,23 +20,24 @@ class Bonuses(
 
     companion object
     {
-        val pricesSLM = intArrayOf(100, 200, 400, 800, 1600, 3200, 6400, 128000)
-        val valuesSLM = arrayOf(0, 1, 2, 4, 8, 16, 32, 64, 150)
+        val pricesSLM =
+            intArrayOf(100, 200, 400, 800, 1600, 3200, 6400, 12_800, 25_600, 51_200, 102_400)
+        val valuesSLM = arrayOf(0, 1, 2, 4, 8, 16, 32, 64, 128, 252, 512, 1024)
 
-        val pricesCA = intArrayOf(200, 400, 800)
-        val valuesCA = arrayOf(0, 1, 2, 4)
+        val pricesCA = intArrayOf(500, 2000, 5000, 12000, 28000, 56000)
+        val valuesCA = arrayOf(1, 5, 10, 25, 50, 75, 100)
 
-        val pricesNAPC = intArrayOf(200, 300, 800, 2000)
+        val pricesNAPC = intArrayOf(10_000, 25_000, 35_000, 50_000)
         val valuesNAPC = arrayOf(1, 2, 3, 4, 5)
 
-        val pricesCPM = intArrayOf(10, 20, 40)
-        val valuesCPM = arrayOf(10, 25, 50, 100)
+        val pricesCPM = intArrayOf(1200, 3600, 6000, 18_000, 30_000)
+        val valuesCPM = arrayOf(1, 2, 5, 10, 25, 50)
 
-        val pricesRM = intArrayOf(20000, 45000, 90000)
-        val valuesRM = arrayOf(1F, 1.05F, 1.1F, 1.15F)
+        val pricesRM = intArrayOf(2_000, 5_000, 12_000, 30_000)
+        val valuesRM = arrayOf(1F, 1.05F, 1.1F, 1.2F, 1.5F)
 
-        val pricesS = intArrayOf(200, 400, 800)
-        val valuesS = arrayOf(200, 500, 900, 1200)
+        val pricesS = intArrayOf(600, 1200, 3000, 15000, 60000, 120000, 240000)
+        val valuesS = arrayOf(60, 120, 300, 1500, 3000, 6000, 12000, 24000)
     }
 
     //region bonuses
@@ -46,28 +47,28 @@ class Bonuses(
     val savedLivesMultiplier0: LiveData<Byte>
         get() = _savedLivesMultiplier0
 
-    val savedLivesMultiplier0Value: Int
+    private val savedLivesMultiplier0Value: Int
         get() = valuesSLM[_savedLivesMultiplier0.value!!.toInt()]
 
     private val _savedLivesMultiplier1 = MutableLiveData<Byte>()
     val savedLivesMultiplier1: LiveData<Byte>
         get() = _savedLivesMultiplier1
 
-    val savedLivesMultiplier1Value: Int
+    private val savedLivesMultiplier1Value: Int
         get() = valuesSLM[_savedLivesMultiplier1.value!!.toInt()]
 
     private val _savedLivesMultiplier2 = MutableLiveData<Byte>()
     val savedLivesMultiplier2: LiveData<Byte>
         get() = _savedLivesMultiplier2
 
-    val savedLivesMultiplier2Value: Int
+    private val savedLivesMultiplier2Value: Int
         get() = valuesSLM[_savedLivesMultiplier2.value!!.toInt()]
 
     private val _savedLivesMultiplier3 = MutableLiveData<Byte>()
     val savedLivesMultiplier3: LiveData<Byte>
         get() = _savedLivesMultiplier3
 
-    val savedLivesMultiplier3Value: Int
+    private val savedLivesMultiplier3Value: Int
         get() = valuesSLM[_savedLivesMultiplier3.value!!.toInt()]
 
     val savedLivesSum: Int

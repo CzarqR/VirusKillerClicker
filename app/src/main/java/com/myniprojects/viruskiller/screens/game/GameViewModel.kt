@@ -19,10 +19,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
         get() = _gameState
     private lateinit var parentJob: Job
 
-    init
-    {
-        Log.i("Init GameViewModel")
-    }
 
     fun onResume()
     {

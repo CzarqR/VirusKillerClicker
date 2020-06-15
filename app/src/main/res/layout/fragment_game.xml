@@ -21,9 +21,10 @@
 
         <LinearLayout
             android:id="@+id/linLayImgStats"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/linLayTxtStats"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -347,20 +348,6 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/txtDmg"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/audiowide"
-                android:gravity="center"
-                android:lines="1"
-                android:text="@{gameViewModel.gameState.attackPerClick}"
-                android:textColor="#9E0000"
-                app:autoSizeTextType="uniform" />
-
-            <TextView
                 android:id="@+id/txtClicks"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -370,9 +357,49 @@
                 android:fontFamily="@font/audiowide"
                 android:gravity="center"
                 android:lines="1"
-                android:text="@{gameViewModel.gameState.crit}"
-                android:textColor="#9E0000"
+                android:text="@{gameViewModel.gameState.attackPerClick}"
+                android:textColor="#FF0000"
                 app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/txtCrit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/audiowide"
+                android:gravity="center"
+                android:lines="1"
+                android:text="@{gameViewModel.gameState.crit}"
+                android:textColor="#FF0000"
+                app:autoSizeTextType="uniform" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layDynamic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/gdlVirusUp"
+            app:layout_constraintEnd_toStartOf="@+id/relativeLayout2"
+            app:layout_constraintStart_toEndOf="@+id/relativeLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linLayTxtStats">
+
+
+            <TextView
+
+                android:id="@+id/txtDmg"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:fontFamily="@font/audiowide"
+                android:gravity="center"
+                android:textColor="#FF0000"
+                android:textSize="100sp"
+                app:autoSizeTextType="uniform" />
+
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

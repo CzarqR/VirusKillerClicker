@@ -160,6 +160,10 @@ class GameState(private val context: Context)
             _attackPerClick.postValue(App.context?.getString(R.string.attack_per_click, value))
         }
 
+    private val _dmg = MutableLiveData<String>()
+    val dmg: LiveData<String>
+        get() = _dmg
+
     //endregion
 
     init
@@ -191,6 +195,7 @@ class GameState(private val context: Context)
         }
 
         Log.i("$dmg dmg total")
+        _dmg.value = dmg.toString()
 
         if (virus.attackVirus(dmg))//virus dead
         {

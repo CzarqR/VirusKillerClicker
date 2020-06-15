@@ -2,7 +2,6 @@ package com.myniprojects.viruskiller.screens.game
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.gms.ads.AdRequest
@@ -20,9 +21,8 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.MainActivity
-
 import com.myniprojects.viruskiller.R
-import  com.myniprojects.viruskiller.databinding.FragmentGameBinding
+import com.myniprojects.viruskiller.databinding.FragmentGameBinding
 import com.myniprojects.viruskiller.model.BonusesData
 import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.Log
@@ -59,8 +59,8 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         arrayOf(animLong0, animLong1)
     }
 
-    private lateinit var toast: Toast
 
+    private lateinit var toast: Toast
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     private lateinit var viewModel: GameViewModel
     private lateinit var binding: FragmentGameBinding
@@ -183,6 +183,23 @@ class GameFragment : Fragment(), RewardedVideoAdListener
             infoToast(R.string.shop)
             true
         }
+
+
+        viewModel.gameState.dmg.observe(viewLifecycleOwner, Observer {
+
+            with(binding.txtDmg)
+            {
+                text = it
+                alpha = 1F
+                scaleY = 1F
+                scaleX = 1F
+                translationY = 0F
+
+                animate().alpha(0.4F).scaleX(1.5F).scaleY(1.5F).translationY(-110F).setDuration(100)
+                    .withEndAction { binding.txtDmg.text = "" }
+            }
+        })
+
 
         //endregion
 

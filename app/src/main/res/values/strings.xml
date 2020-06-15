@@ -20,9 +20,14 @@
 
 
     <string name="ad_mob_id">ca-app-pub-8557833758890885~4541898244</string>
-    <string name="banner_bottom_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="fullscreen_ad">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="reward_ad">ca-app-pub-3940256099942544/5224354917</string>
+
+<!--        <string name="banner_bottom_id">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--        <string name="fullscreen_ad">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--        <string name="reward_ad">ca-app-pub-3940256099942544/5224354917</string>-->
+
+    <string name="banner_bottom_id">ca-app-pub-8557833758890885/7631096012</string>
+    <string name="fullscreen_ad">ca-app-pub-8557833758890885/9366795612</string>
+    <string name="reward_ad">ca-app-pub-8557833758890885/9758565907</string>
 
 
     <string name="masks">Masks</string>
@@ -85,12 +90,12 @@
     <string name="ok">OK</string>
 
     <string name="base_info_desc">The main objective in this game to save as many human lives as possible and to kill as many viruses as You can. To attack viruses just click on it.</string>
-    <string name="attacks_desc" >There are two possible attack types. First one, normal attack, to execute just click on virus. And a strong attack, to do it You have to hold a virus for a moment.  Strong attack deals 7 times more damage than a normal one.</string>
-    <string name="killing_virus_desc" >After killing a virus You\'ll get XP and a money. XP reward is equal to 10% of the money reward.</string>
-    <string name="saved_lives_desc" >To save human lives You have to buy masks, gloves, vaccines, and hand washing preparations. On every minute You\'ll save some lives equivalent to Your upgrades.</string>
-    <string name="storage_desc_help" >Every minute You\'ll be getting money to storage. You have to collect them before storage is full, otherwise you can lose money. To collect money from storage just click on the chest in a laboratory.</string>
-    <string name="ads_desc" >You can watch an ad in Laboratory to get 2 times more attacks per click. Bonus will last 2 minutes. You can watch ads even when bonus from previous ad lasts. Just remember not to leave the laboratory because You can lose the bonus!</string>
-    <string name="credits_desc" >Image resources come from flaticon.com. Thanks!</string>
+    <string name="attacks_desc">There are two possible attack types. First one, normal attack, to execute just click on virus. And a strong attack, to do it You have to hold a virus for a moment.  Strong attack deals 7 times more damage than a normal one.</string>
+    <string name="killing_virus_desc">After killing a virus You\'ll get XP and a money. XP reward is equal to 10% of the money reward.</string>
+    <string name="saved_lives_desc">To save human lives You have to buy masks, gloves, vaccines, and hand washing preparations. On every minute You\'ll save some lives equivalent to Your upgrades.</string>
+    <string name="storage_desc_help">Every minute You\'ll be getting money to storage. You have to collect them before storage is full, otherwise you can lose money. To collect money from storage just click on the chest in a laboratory.</string>
+    <string name="ads_desc">You can watch an ad in Laboratory to get 2 times more attacks per click. Bonus will last 2 minutes. You can watch ads even when bonus from previous ad lasts. Just remember not to leave the laboratory because You can lose the bonus!</string>
+    <string name="credits_desc">Image resources come from flaticon.com. Thanks!</string>
 
 
 </resources>

@@ -1,5 +1,6 @@
 package com.myniprojects.viruskiller
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -9,8 +10,11 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.snackbar.Snackbar
 import com.myniprojects.viruskiller.databinding.ActivityMainBinding
 import com.myniprojects.viruskiller.utils.App
@@ -30,15 +34,10 @@ class MainActivity : AppCompatActivity()
 
     companion object
     {
-        private lateinit var mInterstitialAd: InterstitialAd
-        fun showInterstitialAd()
+        private var mInterstitialAd: InterstitialAd? = null
+        fun showInterstitialAd(activity: Activity)
         {
-            if (mInterstitialAd.isLoaded)
-            {
-                mInterstitialAd.show()
-            }
-            else
-            {
+            mInterstitialAd?.show(activity) ?: run {
                 Log.i("The interstitial wasn't loaded yet.")
             }
         }
@@ -81,9 +80,10 @@ class MainActivity : AppCompatActivity()
         // banner
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
+
         binding.adView.adListener = object : AdListener()
         {
-            override fun onAdFailedToLoad(p0: Int)
+            override fun onAdFailedToLoad(p0: LoadAdError)
             {
                 super.onAdFailedToLoad(p0)
                 if (loadAdBannerRequests++ < 5)
@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity()
                     binding.adView.loadAd(adRequest)
                 }
             }
-
 
             override fun onAdLoaded()
             {
@@ -102,40 +101,50 @@ class MainActivity : AppCompatActivity()
         }
 
         // interstitial
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = getString(R.string.fullscreen_ad)
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
-        mInterstitialAd.adListener = object : AdListener()
-        {
-            override fun onAdClosed()
-            {
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
-            }
-
-            override fun onAdFailedToLoad(p0: Int)
-            {
-                super.onAdFailedToLoad(p0)
-                if (loadAdInterstitialRequests++ < 5)
-                {
-                    mInterstitialAd.loadAd(AdRequest.Builder().build())
-                }
-            }
-
-
-            override fun onAdLoaded()
-            {
-                super.onAdLoaded()
-                loadAdInterstitialRequests = 0
-            }
-        }
+        loadFullScreenAd()
 
 
         Timber.plant(Timber.DebugTree())
-
         binding.adView.startAnimation(animAd)
 
         //RxJava bus test
         //RxBus.publish(RxEvent.EventAdWatched("Attack"))
+    }
+
+    private fun loadFullScreenAd()
+    {
+        val adRequestFullScreen = AdRequest.Builder().build()
+        InterstitialAd.load(
+            this,
+            getString(R.string.fullscreen_ad),
+            adRequestFullScreen,
+            object : InterstitialAdLoadCallback()
+            {
+                override fun onAdLoaded(interstitialAd: InterstitialAd)
+                {
+                    loadAdInterstitialRequests = 0
+                    mInterstitialAd = interstitialAd
+                    mInterstitialAd!!.fullScreenContentCallback =
+                        object : FullScreenContentCallback()
+                        {
+                            override fun onAdDismissedFullScreenContent()
+                            {
+                                loadFullScreenAd()
+                            }
+                        }
+                }
+
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError)
+                {
+                    mInterstitialAd = null
+                    if (loadAdInterstitialRequests++ < 5)
+                    {
+                        loadFullScreenAd()
+                    }
+                }
+            }
+        )
     }
 
     //Hide navigation bar permanently

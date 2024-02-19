@@ -21,7 +21,7 @@ class MenuFragment : Fragment()
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
+    ): View
     {
 
         binding = DataBindingUtil.inflate(
@@ -31,7 +31,7 @@ class MenuFragment : Fragment()
             false
         )
 
-        viewModel = ViewModelProvider(this).get(MenuViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MenuViewModel::class.java]
         binding.menuViewModel = viewModel
         binding.lifecycleOwner = this
 

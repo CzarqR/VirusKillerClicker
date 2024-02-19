@@ -8,8 +8,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.ceil
-import com.google.android.gms.ads.reward.RewardItem
-import com.myniprojects.viruskiller.utils.Log
 
 class GameViewModel(application: Application) : AndroidViewModel(application)
 {
@@ -56,9 +54,8 @@ class GameViewModel(application: Application) : AndroidViewModel(application)
         gameState.loadMoneyAndBonuses()
     }
 
-    fun rewardAttack(r: RewardItem)
+    fun rewardAttack()
     {
-        Log.i("${r.amount} ${r.type}")
         _gameState.bonusAttack(120_000)
     }
 

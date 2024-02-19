@@ -12,11 +12,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.reward.RewardItem
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.myniprojects.viruskiller.MainActivity
@@ -28,7 +30,7 @@ import com.myniprojects.viruskiller.utils.Log
 import es.dmoral.toasty.Toasty
 
 
-class GameFragment : Fragment(), RewardedVideoAdListener
+class GameFragment : Fragment()
 {
     private val anim0: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.virus_click_0)
@@ -58,7 +60,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
 
 
     private lateinit var toast: Toast
-    private lateinit var mRewardedVideoAd: RewardedVideoAd
+    private var rewardedAd: RewardedAd? = null
     private lateinit var viewModel: GameViewModel
     private lateinit var binding: FragmentGameBinding
     private var wasRewarded: Boolean = false
@@ -91,13 +93,11 @@ class GameFragment : Fragment(), RewardedVideoAdListener
                 bonusesDataString,
                 viewModel.gameState.money.value!!
             )
-            MainActivity.showInterstitialAd()
+            MainActivity.showInterstitialAd(requireActivity())
             Navigation.findNavController(requireView()).navigate(action)
         }
 
         // rewarded ad
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context)
-        mRewardedVideoAd.rewardedVideoAdListener = this
         loadRewardedVideoAd()
 
         val animationDrawable =
@@ -127,9 +127,9 @@ class GameFragment : Fragment(), RewardedVideoAdListener
     {
         super.onViewCreated(view, savedInstanceState)
         binding.imgAdReward.setOnClickListener {
-            if (mRewardedVideoAd.isLoaded)
+            if (rewardedAd != null)
             {
-                mRewardedVideoAd.show()
+                rewardedAd?.show(requireActivity(), ::rewardUser)
                 binding.imgAdReward.setImageResource(R.drawable.ad_loading)
             }
             else
@@ -238,74 +238,74 @@ class GameFragment : Fragment(), RewardedVideoAdListener
 
     private fun loadRewardedVideoAd()
     {
-        mRewardedVideoAd.loadAd(
+        adLoadRequests++
+        val adRequest = AdRequest.Builder().build()
+        RewardedAd.load(
+            requireContext(),
             getString(R.string.reward_ad),
-            AdRequest.Builder().build()
+            adRequest,
+            object : RewardedAdLoadCallback()
+            {
+                override fun onAdFailedToLoad(adError: LoadAdError)
+                {
+                    rewardedAd = null
+                    loadRewardedVideoAd()
+                }
+
+                override fun onAdLoaded(ad: RewardedAd)
+                {
+                    adLoadRequests = 0
+                    rewardedAd = ad
+                    rewardedAd?.fullScreenContentCallback = adCallback
+                    binding.imgAdReward.setImageResource(R.drawable.ad_loaded)
+                }
+            }
         )
-        adLoadRequests = 0
     }
 
-    override fun onRewardedVideoAdClosed()
+    private val adCallback = object : FullScreenContentCallback()
     {
-        Log.i("onRewardedVideoAdClosed")
-        loadRewardedVideoAd()
-        if (wasRewarded)
+        override fun onAdClicked() = Unit
+        override fun onAdImpression() = Unit
+        override fun onAdShowedFullScreenContent() = Unit
+
+        override fun onAdDismissedFullScreenContent()
         {
-            MainActivity.showSnackbar(
-                binding.imgShop,
-                getString(R.string.snackbar_attack, 2),
-                getString(R.string.cool),
-                {
-                    Log.i("Snackbar cool clicked")
-                },
-                duration = Snackbar.LENGTH_LONG
-            )
-            wasRewarded = false
+            rewardedAd = null
+            loadRewardedVideoAd()
+            showSuccessSnackbar()
         }
 
-    }
-
-    override fun onRewardedVideoAdLeftApplication()
-    {
-        Log.i("onRewardedVideoAdLeftApplication")
-    }
-
-    override fun onRewardedVideoAdLoaded()
-    {
-        Log.i("onRewardedVideoAdLoaded")
-        binding.imgAdReward.setImageResource(R.drawable.ad_loaded)
-    }
-
-    override fun onRewardedVideoAdOpened()
-    {
-        Log.i("onRewardedVideoAdOpened")
-    }
-
-    override fun onRewardedVideoCompleted()
-    {
-        Log.i("onRewardedVideoCompleted")
-    }
-
-    override fun onRewarded(p0: RewardItem?)
-    {
-        Log.i("onRewarded")
-        wasRewarded = true
-        viewModel.rewardAttack(p0!!)
-    }
-
-    override fun onRewardedVideoStarted()
-    {
-        Log.i("onRewardedVideoStarted")
-    }
-
-    override fun onRewardedVideoAdFailedToLoad(p0: Int)
-    {
-        Log.i("onRewardedVideoAdFailedToLoad")
-        adLoadRequests++
-        if (adLoadRequests < 5)
+        override fun onAdFailedToShowFullScreenContent(adError: AdError)
         {
+            rewardedAd = null
             loadRewardedVideoAd()
         }
+    }
+
+    private fun rewardUser(rewardItem: RewardItem)
+    {
+        wasRewarded = true
+        loadRewardedVideoAd()
+    }
+
+    private fun showSuccessSnackbar()
+    {
+        if (!wasRewarded)
+        {
+            return
+        }
+        viewModel.rewardAttack()
+        MainActivity.showSnackbar(
+            binding.imgShop,
+            getString(R.string.snackbar_attack, 2),
+            getString(R.string.cool),
+            {
+                Log.i("Snackbar cool clicked")
+            },
+            duration = Snackbar.LENGTH_LONG
+        )
+        wasRewarded = false
     }
 
     //endregion

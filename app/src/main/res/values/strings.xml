@@ -21,13 +21,14 @@
 
     <string name="ad_mob_id">ca-app-pub-8557833758890885~4541898244</string>
 
-<!--        <string name="banner_bottom_id">ca-app-pub-3940256099942544/6300978111</string>-->
-<!--        <string name="fullscreen_ad">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--        <string name="reward_ad">ca-app-pub-3940256099942544/5224354917</string>-->
+    <!--    TEST IDS -->
+    <string name="banner_bottom_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="fullscreen_ad">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="reward_ad">ca-app-pub-3940256099942544/5224354917</string>
 
-    <string name="banner_bottom_id">ca-app-pub-8557833758890885/7631096012</string>
-    <string name="fullscreen_ad">ca-app-pub-8557833758890885/9366795612</string>
-    <string name="reward_ad">ca-app-pub-8557833758890885/9758565907</string>
+    <!--    <string name="banner_bottom_id">ca-app-pub-8557833758890885/7631096012</string>-->
+    <!--    <string name="fullscreen_ad">ca-app-pub-8557833758890885/9366795612</string>-->
+    <!--    <string name="reward_ad">ca-app-pub-8557833758890885/9758565907</string>-->
 
 
     <string name="masks">Masks</string>

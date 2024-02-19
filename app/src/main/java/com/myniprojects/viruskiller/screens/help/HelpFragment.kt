@@ -6,60 +6,66 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.myniprojects.viruskiller.R
-import com.myniprojects.viruskiller.utils.Log
-import kotlinx.android.synthetic.main.fragment_help.*
+import com.myniprojects.viruskiller.databinding.FragmentHelpBinding
 
 class HelpFragment : Fragment()
 {
-
+    private lateinit var binding: FragmentHelpBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
+    ): View
     {
-        return inflater.inflate(R.layout.fragment_help, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_help,
+            container,
+            false
+        )
+
+        return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
-        Log.i("Created")
-
-        val animationDrawable = back.background as AnimationDrawable
+        val animationDrawable = binding.back.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(0)
         animationDrawable.setExitFadeDuration(resources.getInteger(R.integer.background_animation_frame))
         animationDrawable.start()
 
         //region info click help
 
-        butBaseInfo.setOnClickListener {
+        binding.butBaseInfo.setOnClickListener {
             showDialog(R.string.base_info, R.string.base_info_desc)
         }
 
-        butAttacs.setOnClickListener {
+        binding.butAttacs.setOnClickListener {
             showDialog(R.string.attacks, R.string.attacks_desc)
         }
 
-        butKillingVirus.setOnClickListener {
+        binding.butKillingVirus.setOnClickListener {
             showDialog(R.string.killing_virus, R.string.killing_virus_desc)
         }
 
-        butSavedLives.setOnClickListener {
+        binding.butSavedLives.setOnClickListener {
             showDialog(R.string.saved_lives, R.string.saved_lives_desc)
         }
 
-        butStorage.setOnClickListener {
+        binding.butStorage.setOnClickListener {
             showDialog(R.string.storage, R.string.storage_desc_help)
         }
 
-        butAd.setOnClickListener {
+        binding.butAd.setOnClickListener {
             showDialog(R.string.ads, R.string.ads_desc)
         }
 
-        butCredits.setOnClickListener {
+        binding.butCredits.setOnClickListener {
             showDialog(R.string.credits, R.string.credits_desc)
         }
 

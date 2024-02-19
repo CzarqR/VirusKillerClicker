@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.gms.ads.AdRequest
@@ -27,12 +26,10 @@ import com.myniprojects.viruskiller.model.BonusesData
 import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.Log
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.fragment_game.*
 
 
 class GameFragment : Fragment(), RewardedVideoAdListener
 {
-
     private val anim0: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.virus_click_0)
     }
@@ -71,9 +68,8 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
+    ): View
     {
-        Log.i("Game ViewModel OnCreate")
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_game,
@@ -81,7 +77,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
             false
         )
 
-        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        viewModel = ViewModelProvider(this)[GameViewModel::class.java]
 
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
@@ -185,8 +181,7 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         }
 
 
-        viewModel.gameState.dmg.observe(viewLifecycleOwner, Observer {
-
+        viewModel.gameState.dmg.observe(viewLifecycleOwner) {
             with(binding.txtDmg)
             {
                 text = it
@@ -198,17 +193,12 @@ class GameFragment : Fragment(), RewardedVideoAdListener
                 animate().alpha(0.4F).scaleX(1.5F).scaleY(1.5F).translationY(-110F).setDuration(100)
                     .withEndAction { binding.txtDmg.text = "" }
             }
-        })
-
-
+        }
         //endregion
-
-
     }
 
     private fun infoToast(textId: Int)
     {
-
         if (this::toast.isInitialized)
         {
             toast.cancel()
@@ -224,7 +214,6 @@ class GameFragment : Fragment(), RewardedVideoAdListener
             true
         )
         toast.show()
-
     }
 
 
@@ -263,10 +252,10 @@ class GameFragment : Fragment(), RewardedVideoAdListener
         if (wasRewarded)
         {
             MainActivity.showSnackbar(
-                imgShop,
+                binding.imgShop,
                 getString(R.string.snackbar_attack, 2),
                 getString(R.string.cool),
-                View.OnClickListener {
+                {
                     Log.i("Snackbar cool clicked")
                 },
                 duration = Snackbar.LENGTH_LONG

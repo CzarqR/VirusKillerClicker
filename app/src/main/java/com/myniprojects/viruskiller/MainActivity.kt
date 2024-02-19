@@ -7,11 +7,14 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
+import com.myniprojects.viruskiller.databinding.ActivityMainBinding
 import com.myniprojects.viruskiller.utils.App
 import com.myniprojects.viruskiller.utils.Log
-import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 
@@ -23,7 +26,7 @@ class MainActivity : AppCompatActivity()
     private val animAd: Animation by lazy {
         AnimationUtils.loadAnimation(App.context, R.anim.zoom_ad)
     }
-
+    private lateinit var binding: ActivityMainBinding
 
     companion object
     {
@@ -49,7 +52,6 @@ class MainActivity : AppCompatActivity()
             duration: Int = Snackbar.LENGTH_SHORT
         )
         {
-
             val snack: Snackbar = Snackbar.make(v, content, duration)
             if (buttonText != null)
             {
@@ -71,21 +73,22 @@ class MainActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         MobileAds.initialize(this) {}
 
         // banner
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
-        adView.adListener = object : AdListener()
+        binding.adView.loadAd(adRequest)
+        binding.adView.adListener = object : AdListener()
         {
             override fun onAdFailedToLoad(p0: Int)
             {
                 super.onAdFailedToLoad(p0)
                 if (loadAdBannerRequests++ < 5)
                 {
-                    adView.loadAd(adRequest)
+                    binding.adView.loadAd(adRequest)
                 }
             }
 
@@ -129,12 +132,11 @@ class MainActivity : AppCompatActivity()
 
         Timber.plant(Timber.DebugTree())
 
-        adView.startAnimation(animAd)
+        binding.adView.startAnimation(animAd)
 
         //RxJava bus test
         //RxBus.publish(RxEvent.EventAdWatched("Attack"))
     }
-
 
     //Hide navigation bar permanently
 //    private fun fullScreenCall()
@@ -142,7 +144,5 @@ class MainActivity : AppCompatActivity()
 //        window.decorView.systemUiVisibility =
 //            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 //    }
-
-
 }
 

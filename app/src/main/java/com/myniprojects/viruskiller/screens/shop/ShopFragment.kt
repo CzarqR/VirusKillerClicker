@@ -16,12 +16,9 @@ import com.myniprojects.viruskiller.databinding.FragmentShopBinding
 import com.myniprojects.viruskiller.model.Bonuses
 import com.myniprojects.viruskiller.model.BonusesData
 import com.myniprojects.viruskiller.utils.BonusAdapter
-import kotlinx.android.synthetic.main.fragment_shop.*
-
 
 class ShopFragment : Fragment()
 {
-
     private lateinit var viewModel: ShopViewModel
     private lateinit var viewModelFactory: ShopViewModelFactory
     private lateinit var bonusAdapter: BonusAdapter
@@ -31,7 +28,7 @@ class ShopFragment : Fragment()
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
+    ): View
     {
         val gson = Gson()
         val bonusesData = gson.fromJson(
@@ -88,7 +85,7 @@ class ShopFragment : Fragment()
 
     private fun initRecyclerView()
     {
-        recycler_view.apply {
+        binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@ShopFragment.context)
             bonusAdapter = BonusAdapter()
             bonusAdapter.shopViewModel = viewModel

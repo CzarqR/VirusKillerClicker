@@ -1,27 +1,30 @@
 package com.myniprojects.viruskiller.utils
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.myniprojects.viruskiller.R
+import com.myniprojects.viruskiller.databinding.FragmentGameBinding
+import com.myniprojects.viruskiller.databinding.LayoutBonusListItemBinding
 import com.myniprojects.viruskiller.model.Bonus
 import com.myniprojects.viruskiller.screens.shop.ShopViewModel
-import kotlinx.android.synthetic.main.layout_bonus_list_item.view.*
 
 class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
     private var items: List<Bonus> = ArrayList()
     lateinit var shopViewModel: ShopViewModel
+    private lateinit var binding: FragmentGameBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
     {
-
         return BonusViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.layout_bonus_list_item, parent, false), shopViewModel
+            binding = LayoutBonusListItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ),
+            shopViewModel = shopViewModel
         )
     }
 
@@ -31,7 +34,6 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         {
             is BonusViewHolder ->
             {
-
                 holder.bind(items[position])
             }
         }
@@ -39,28 +41,26 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     override fun getItemCount(): Int
     {
-
         return items.size
     }
 
     fun initList(bonusList: List<Bonus>)
     {
         items = bonusList
-
     }
 
-    class BonusViewHolder constructor(
-        itemView: View, private var shopViewModel: ShopViewModel
-    ) : RecyclerView.ViewHolder(itemView)
+    class BonusViewHolder(
+        binding: LayoutBonusListItemBinding,
+        private var shopViewModel: ShopViewModel
+    ) : RecyclerView.ViewHolder(binding.root)
     {
-        private val price: TextView = itemView.txtPrice
-        private val img: ImageView = itemView.imgBonus
-        private val upgrade: TextView = itemView.txtUpdate
-        private val name: TextView = itemView.txtName
+        private val price: TextView = binding.txtPrice
+        private val img: ImageView = binding.imgBonus
+        private val upgrade: TextView = binding.txtUpdate
+        private val name: TextView = binding.txtName
 
         fun bind(bonus: Bonus)
         {
-
             img.setImageResource(bonus.image)
             price.text = bonus.currPriceString
             upgrade.text = bonus.updateString
@@ -91,12 +91,7 @@ class BonusAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
                         Log.i("Cannot update, not enough money")
                     }
                 }
-
             }
         }
-
-
-
-
     }
 }
